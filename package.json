@@ -1,0 +1,49 @@
+{
+  "name": "kalliom-content-engine",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "assets:seed": "node scripts/generate-assets.mjs",
+    "db:generate": "prisma generate",
+    "db:push": "node scripts/ensure-database.mjs && prisma db push",
+    "db:seed-demo": "node scripts/seed-demo-cache.mjs",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@prisma/adapter-better-sqlite3": "latest",
+    "@prisma/client": "latest",
+    "next": "latest",
+    "openai": "latest",
+    "pdf-lib": "^1.17.1",
+    "playwright": "latest",
+    "postcss": "^8.5.22",
+    "react": "latest",
+    "react-dom": "latest",
+    "sharp": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "latest",
+    "@testing-library/react": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "jsdom": "latest",
+    "prisma": "latest",
+    "tailwindcss": "latest",
+    "typescript": "^5.9.3",
+    "vitest": "latest"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "overrides": {
+    "postcss": "$postcss",
+    "sharp": "$sharp"
+  }
+}
