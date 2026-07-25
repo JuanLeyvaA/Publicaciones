@@ -15,6 +15,11 @@ export const createCarouselInputSchema = z.object({
   language: languageSchema,
   tone: toneSchema,
   callToAction: z.string().trim().max(TEXT_LIMITS.closing.cta).optional().transform((value) => value || undefined),
+  editorialProfile: z.enum(["kalliom-professional", "educator", "opinion", "executive", "case-study"]).optional(),
+  visualStyle: z.enum(["balanced", "minimal", "bold", "image-led", "text-led"]).optional(),
+  scheduledAt: z.string().datetime().optional(),
+  batchId: z.string().max(80).optional(),
+  avoidTopics: z.array(z.string().min(1).max(180)).max(12).optional(),
 }).strict();
 
 const tags = z.array(z.string().min(1).max(40)).min(1).max(6);

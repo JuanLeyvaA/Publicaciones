@@ -11,14 +11,14 @@ import type { CarouselProject, OverflowIssue } from "@/types/carousel";
 import { assetCatalog, getAssetById } from "@/lib/assets/catalog";
 import { assignAssetsToProject } from "@/lib/assets/selectAsset";
 
-type ExportOptions = { project: CarouselProject; baseUrl: string; workspaceRoot: string; assetAssignments?: Record<string, string> };
+type ExportOptions = { project: CarouselProject; baseUrl: string; workspaceRoot: string; assetAssignments?: Record<string, string>; persist?: boolean };
 
 function launchOptions() {
   const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || process.env.CHROME_PATH;
   return executablePath ? { executablePath, headless: true as const } : { headless: true as const };
 }
 
-export async function renderCarousel({ project: rawProject, baseUrl, workspaceRoot, assetAssignments = {} }: ExportOptions) {
+export async function renderCarousel({ project: rawProject, baseUrl, workspaceRoot, assetAssignments = {}, persist = true }: ExportOptions) {
   const validatedProject = carouselProjectSchema.parse(rawProject) as CarouselProject;
   const automaticAssignments = assignAssetsToProject(validatedProject, assetCatalog);
   const project: CarouselProject = {
@@ -69,16 +69,25 @@ export async function renderCarousel({ project: rawProject, baseUrl, workspaceRo
     }
   } finally { await browser.close(); }
 
+  if (!persist) {
+    await fs.rm(staging, { recursive: true, force: true });
+    return { directory: null, slideCount: pngPaths.length, pdfPath: null, zipPath: null, validated: true };
+  }
+
   const pdfPath = path.join(staging, "carousel.pdf");
   await createPdfFromPngs(pngPaths, pdfPath);
-  await fs.writeFile(path.join(staging, "carousel-data.json"), `${JSON.stringify(project, null, 2)}\n`);
-  await fs.writeFile(path.join(staging, "linkedin-copy.txt"), `${project.linkedInCopy.trim()}\n`);
 
   const exportsRoot = path.join(workspaceRoot, "exports");
   const finalDirectory = path.join(exportsRoot, project.id);
   await fs.mkdir(exportsRoot, { recursive: true });
   await fs.rm(finalDirectory, { recursive: true, force: true });
-  await fs.cp(staging, finalDirectory, { recursive: true, errorOnExist: true });
+  await fs.mkdir(finalDirectory, { recursive: true });
+  await fs.copyFile(pdfPath, path.join(finalDirectory, "carousel.pdf"));
   await fs.rm(staging, { recursive: true, force: true });
-  return { directory: finalDirectory, slideCount: pngPaths.length, pdfPath: path.join(finalDirectory, "carousel.pdf") };
+  return {
+    directory: finalDirectory,
+    slideCount: pngPaths.length,
+    pdfPath: path.join(finalDirectory, "carousel.pdf"),
+    validated: true,
+  };
 }

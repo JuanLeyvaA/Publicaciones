@@ -56,4 +56,20 @@ describe("hash y caché de generación", () => {
     expect(second.output).toEqual(first.output);
     expect(calls).toBe(1);
   });
+
+  it("permite regenerar de forma explícita aunque exista caché", async () => {
+    const repository = new MemoryRepository();
+    let calls = 0;
+    const model: CarouselModel = {
+      async generate() {
+        calls++;
+        return { output, raw: JSON.stringify(output), usage: { inputTokens: 10, outputTokens: 20, calls: 1, model: "fake-model" } };
+      },
+    };
+    await getOrGenerateCarousel(input, { repository, modelFactory: () => model });
+    const regenerated = await getOrGenerateCarousel(input, { repository, modelFactory: () => model, force: true });
+    expect(regenerated.cached).toBe(false);
+    expect(regenerated.usage.calls).toBe(1);
+    expect(calls).toBe(2);
+  });
 });

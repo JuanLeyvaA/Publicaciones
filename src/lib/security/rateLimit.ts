@@ -1,7 +1,7 @@
 type Bucket = { count: number; resetAt: number };
 const buckets = new Map<string, Bucket>();
 const WINDOW_MS = 60_000;
-const MAX_GENERATIONS = 5;
+const MAX_GENERATIONS = 25;
 
 export class RateLimitError extends Error {
   readonly code = "RATE_LIMITED";

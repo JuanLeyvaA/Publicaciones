@@ -741,15 +741,17 @@ Motor visual Next.js, canvas fijo 1080 × 1350, tres plantillas, preview, Playwr
 
 ### Fase 2 — completada
 
-- Biblioteca inicial de 40 SVG locales en `public/assets/library`.
+- Biblioteca de 111 recursos únicos: 100 SVG locales y 11 imágenes WebP originales en estilos 3D, fotográfico, clay, industrial, isométrico, risográfico, vidrio, neón, papercut y low-poly.
+- Nuevas escenas con robots, asistentes, colaboración humano-IA, equipos, automatización industrial, analítica y comercio digital.
+- 20 conceptos por categoría, con posiciones, escalas y orientaciones equilibradas.
 - Metadata tipada en `src/lib/assets/catalog.ts`.
 - Búsqueda por texto, categoría y etiquetas.
 - Scoring local: etiquetas, categoría, plantilla, orientación, repetición y uso reciente.
 - Desempate determinista basado en proyecto, página y asset.
-- Asignación automática sin repetir assets mientras existan candidatos disponibles.
+- Asignación automática sin repetir assets ni posiciones mientras existan candidatos disponibles.
 - Selector manual en cada página de la vista previa.
 - La selección manual se envía al endpoint y queda reflejada en PNG, PDF y `carousel-data.json`.
-- No se utiliza IA para ninguna operación de assets.
+- La búsqueda, selección, puntuación y reutilización de assets funcionan localmente y no llaman a la IA durante la creación o exportación de carruseles.
 
 Para reconstruir la biblioteca vectorial determinista:
 
@@ -788,9 +790,45 @@ Endpoints incorporados:
 
 ```text
 POST /api/projects/generate
+GET  /api/projects
 GET  /api/projects/:projectId
+PATCH /api/projects/:projectId
+POST /api/projects/:projectId/validate
 POST /api/projects/:projectId/export
+GET  /api/projects/:projectId/export?format=zip
+GET  /api/projects/:projectId/export?format=pdf
 GET  /render/:projectId/:slideId
 ```
+
+### Fase 4 — completada
+
+- Editor manual para títulos, subtítulos, cuerpos, destacados, CTA y descripción de LinkedIn.
+- Contadores y límites de caracteres visibles en cada campo.
+- Reordenamiento seguro de páginas de contenido, conservando portada y cierre.
+- Quince plantillas: cinco portadas, cinco composiciones de contenido y cinco cierres con jerarquías y uso del espacio diferentes.
+- Asignación local variada en proyectos nuevos y acción `Variar diseño` para remezclar proyectos existentes sin consumir tokens.
+- Dirección editorial creativa por tema para alternar contraste, tensión, errores, escenas, causa-efecto y principios contraintuitivos sin relajar la veracidad.
+- Cambio manual de asset persistido junto al proyecto.
+- Regeneración opcional y explícita, con advertencia de que consume una nueva llamada y reemplaza la caché.
+- Guardado transaccional en Prisma/SQLite sin llamadas adicionales de IA.
+- Historial ordenado por última modificación y reapertura con cero consumo.
+- Validación visual con Playwright: canvas, assets, safe area, dimensiones y overflow.
+
+### Fase 5 — completada
+
+- Producción por lotes de hasta 20 temas, con programación automática por intervalos.
+- Calendario editorial con estados de idea, revisión, aprobado, programado y publicado.
+- Memoria editorial que incluye publicaciones recientes en el prompt y alerta por similitud.
+- Cinco direcciones visuales: equilibrada, minimalista, impactante, assets protagonistas y texto protagonista.
+- Revisión local de calidad para repetición, clichés, CTA, variedad visual, assets e historial.
+- Regeneración parcial de título, página, CTA o copy de LinkedIn mediante una sola llamada estructurada.
+- Cinco perfiles editoriales reutilizables.
+- Espacio de trabajo compacto con vistas separadas para editar, crear y consultar el calendario.
+- Editor maestro-detalle: navegador de páginas, una sola vista previa activa y controles de edición en el mismo nivel, sin recorrer todas las diapositivas.
+- Historial lateral persistente, acciones de producción fijas y formularios de creación simple/lote conmutables.
+- Exportación simplificada: el único archivo persistido y descargable es `carousel.pdf`.
+- Estados de producción `draft`, `generated` y `exported`.
+
+La edición, validación, apertura del historial y exportación no importan ni invocan el motor de IA.
 
 La base `prisma/dev.db`, las claves y los archivos exportados están excluidos de Git.

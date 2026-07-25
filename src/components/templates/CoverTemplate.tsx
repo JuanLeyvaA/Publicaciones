@@ -8,7 +8,7 @@ type Props = { slide: CoverSlide; brand: string; index: number; total: number; a
 export function CoverTemplate({ slide, brand, index, total, asset }: Props) {
   const size = titleFontSize(slide.title, "cover");
   return (
-    <TemplateFrame slideId={slide.id} variant="cover" brand={brand} index={index} total={total} asset={asset}>
+    <TemplateFrame slideId={slide.id} variant="cover" templateId={slide.templateId} brand={brand} index={index} total={total} asset={asset}>
       <main className="cover-content" data-overflow-check="cover-content">
         <div className="eyebrow">Ideas que mueven empresas</div>
         <h1 style={{ fontSize: size, lineHeight: titleLineHeight(size) }}>{slide.title}</h1>

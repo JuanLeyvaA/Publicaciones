@@ -27,7 +27,14 @@ export const prismaGenerationRepository: GenerationRepository = {
   async save(record) {
     await prisma.generationCache.upsert({
       where: { key: record.key },
-      update: {},
+      update: {
+        normalizedInput: record.normalizedInput,
+        requestJson: record.requestJson,
+        responseJson: record.responseJson,
+        model: record.model,
+        inputTokens: record.inputTokens,
+        outputTokens: record.outputTokens,
+      },
       create: record,
     });
   },
@@ -37,6 +44,7 @@ type Dependencies = {
   repository?: GenerationRepository;
   modelFactory?: () => CarouselModel;
   beforeModelCall?: () => void | Promise<void>;
+  force?: boolean;
 };
 
 export type CachedGenerationResult = {
@@ -51,7 +59,7 @@ const inFlight = new Map<string, Promise<CachedGenerationResult>>();
 export async function getOrGenerateCarousel(input: CreateCarouselInput, dependencies: Dependencies = {}): Promise<CachedGenerationResult> {
   const repository = dependencies.repository ?? prismaGenerationRepository;
   const hash = createGenerationCacheKey(input);
-  const cached = await repository.find(hash.key);
+  const cached = dependencies.force ? null : await repository.find(hash.key);
   if (cached) {
     const output = validateOutputForInput(input, aiCarouselSchema.parse(JSON.parse(cached.responseJson)));
     return {

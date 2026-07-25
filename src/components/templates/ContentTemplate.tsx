@@ -8,7 +8,7 @@ type Props = { slide: ContentSlide; brand: string; index: number; total: number;
 export function ContentTemplate({ slide, brand, index, total, asset }: Props) {
   const titleSize = titleFontSize(slide.title, "content");
   return (
-    <TemplateFrame slideId={slide.id} variant="content" brand={brand} index={index} total={total} asset={asset}>
+    <TemplateFrame slideId={slide.id} variant="content" templateId={slide.templateId} brand={brand} index={index} total={total} asset={asset}>
       <main className="content-layout" data-overflow-check="content-layout">
         <section className="content-copy">
           <div className="section-number">{String(slide.number).padStart(2, "0")}</div>

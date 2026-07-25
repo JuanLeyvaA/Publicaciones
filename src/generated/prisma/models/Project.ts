@@ -28,11 +28,13 @@ export type AggregateProject = {
 
 export type ProjectAvgAggregateOutputType = {
   slideCount: number | null
+  qualityScore: number | null
   estimatedTokens: number | null
 }
 
 export type ProjectSumAggregateOutputType = {
   slideCount: number | null
+  qualityScore: number | null
   estimatedTokens: number | null
 }
 
@@ -47,6 +49,13 @@ export type ProjectMinAggregateOutputType = {
   language: string | null
   tone: string | null
   status: string | null
+  editorialStatus: string | null
+  editorialProfile: string | null
+  visualStyle: string | null
+  scheduledAt: Date | null
+  batchId: string | null
+  qualityScore: number | null
+  qualityReport: string | null
   linkedInCopy: string | null
   model: string | null
   estimatedTokens: number | null
@@ -65,6 +74,13 @@ export type ProjectMaxAggregateOutputType = {
   language: string | null
   tone: string | null
   status: string | null
+  editorialStatus: string | null
+  editorialProfile: string | null
+  visualStyle: string | null
+  scheduledAt: Date | null
+  batchId: string | null
+  qualityScore: number | null
+  qualityReport: string | null
   linkedInCopy: string | null
   model: string | null
   estimatedTokens: number | null
@@ -83,6 +99,13 @@ export type ProjectCountAggregateOutputType = {
   language: number
   tone: number
   status: number
+  editorialStatus: number
+  editorialProfile: number
+  visualStyle: number
+  scheduledAt: number
+  batchId: number
+  qualityScore: number
+  qualityReport: number
   linkedInCopy: number
   model: number
   estimatedTokens: number
@@ -94,11 +117,13 @@ export type ProjectCountAggregateOutputType = {
 
 export type ProjectAvgAggregateInputType = {
   slideCount?: true
+  qualityScore?: true
   estimatedTokens?: true
 }
 
 export type ProjectSumAggregateInputType = {
   slideCount?: true
+  qualityScore?: true
   estimatedTokens?: true
 }
 
@@ -113,6 +138,13 @@ export type ProjectMinAggregateInputType = {
   language?: true
   tone?: true
   status?: true
+  editorialStatus?: true
+  editorialProfile?: true
+  visualStyle?: true
+  scheduledAt?: true
+  batchId?: true
+  qualityScore?: true
+  qualityReport?: true
   linkedInCopy?: true
   model?: true
   estimatedTokens?: true
@@ -131,6 +163,13 @@ export type ProjectMaxAggregateInputType = {
   language?: true
   tone?: true
   status?: true
+  editorialStatus?: true
+  editorialProfile?: true
+  visualStyle?: true
+  scheduledAt?: true
+  batchId?: true
+  qualityScore?: true
+  qualityReport?: true
   linkedInCopy?: true
   model?: true
   estimatedTokens?: true
@@ -149,6 +188,13 @@ export type ProjectCountAggregateInputType = {
   language?: true
   tone?: true
   status?: true
+  editorialStatus?: true
+  editorialProfile?: true
+  visualStyle?: true
+  scheduledAt?: true
+  batchId?: true
+  qualityScore?: true
+  qualityReport?: true
   linkedInCopy?: true
   model?: true
   estimatedTokens?: true
@@ -254,6 +300,13 @@ export type ProjectGroupByOutputType = {
   language: string
   tone: string
   status: string
+  editorialStatus: string
+  editorialProfile: string
+  visualStyle: string
+  scheduledAt: Date | null
+  batchId: string | null
+  qualityScore: number
+  qualityReport: string
   linkedInCopy: string
   model: string
   estimatedTokens: number
@@ -295,6 +348,13 @@ export type ProjectWhereInput = {
   language?: Prisma.StringFilter<"Project"> | string
   tone?: Prisma.StringFilter<"Project"> | string
   status?: Prisma.StringFilter<"Project"> | string
+  editorialStatus?: Prisma.StringFilter<"Project"> | string
+  editorialProfile?: Prisma.StringFilter<"Project"> | string
+  visualStyle?: Prisma.StringFilter<"Project"> | string
+  scheduledAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  batchId?: Prisma.StringNullableFilter<"Project"> | string | null
+  qualityScore?: Prisma.IntFilter<"Project"> | number
+  qualityReport?: Prisma.StringFilter<"Project"> | string
   linkedInCopy?: Prisma.StringFilter<"Project"> | string
   model?: Prisma.StringFilter<"Project"> | string
   estimatedTokens?: Prisma.IntFilter<"Project"> | number
@@ -315,6 +375,13 @@ export type ProjectOrderByWithRelationInput = {
   language?: Prisma.SortOrder
   tone?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  editorialStatus?: Prisma.SortOrder
+  editorialProfile?: Prisma.SortOrder
+  visualStyle?: Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
@@ -338,6 +405,13 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   language?: Prisma.StringFilter<"Project"> | string
   tone?: Prisma.StringFilter<"Project"> | string
   status?: Prisma.StringFilter<"Project"> | string
+  editorialStatus?: Prisma.StringFilter<"Project"> | string
+  editorialProfile?: Prisma.StringFilter<"Project"> | string
+  visualStyle?: Prisma.StringFilter<"Project"> | string
+  scheduledAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  batchId?: Prisma.StringNullableFilter<"Project"> | string | null
+  qualityScore?: Prisma.IntFilter<"Project"> | number
+  qualityReport?: Prisma.StringFilter<"Project"> | string
   linkedInCopy?: Prisma.StringFilter<"Project"> | string
   model?: Prisma.StringFilter<"Project"> | string
   estimatedTokens?: Prisma.IntFilter<"Project"> | number
@@ -358,6 +432,13 @@ export type ProjectOrderByWithAggregationInput = {
   language?: Prisma.SortOrder
   tone?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  editorialStatus?: Prisma.SortOrder
+  editorialProfile?: Prisma.SortOrder
+  visualStyle?: Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
@@ -384,6 +465,13 @@ export type ProjectScalarWhereWithAggregatesInput = {
   language?: Prisma.StringWithAggregatesFilter<"Project"> | string
   tone?: Prisma.StringWithAggregatesFilter<"Project"> | string
   status?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  editorialStatus?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  editorialProfile?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  visualStyle?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  scheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  batchId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  qualityScore?: Prisma.IntWithAggregatesFilter<"Project"> | number
+  qualityReport?: Prisma.StringWithAggregatesFilter<"Project"> | string
   linkedInCopy?: Prisma.StringWithAggregatesFilter<"Project"> | string
   model?: Prisma.StringWithAggregatesFilter<"Project"> | string
   estimatedTokens?: Prisma.IntWithAggregatesFilter<"Project"> | number
@@ -401,6 +489,13 @@ export type ProjectCreateInput = {
   language: string
   tone: string
   status?: string
+  editorialStatus?: string
+  editorialProfile?: string
+  visualStyle?: string
+  scheduledAt?: Date | string | null
+  batchId?: string | null
+  qualityScore?: number
+  qualityReport?: string
   linkedInCopy: string
   model: string
   estimatedTokens?: number
@@ -421,6 +516,13 @@ export type ProjectUncheckedCreateInput = {
   language: string
   tone: string
   status?: string
+  editorialStatus?: string
+  editorialProfile?: string
+  visualStyle?: string
+  scheduledAt?: Date | string | null
+  batchId?: string | null
+  qualityScore?: number
+  qualityReport?: string
   linkedInCopy: string
   model: string
   estimatedTokens?: number
@@ -439,6 +541,13 @@ export type ProjectUpdateInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   tone?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
+  visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -459,6 +568,13 @@ export type ProjectUncheckedUpdateInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   tone?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
+  visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -478,6 +594,13 @@ export type ProjectCreateManyInput = {
   language: string
   tone: string
   status?: string
+  editorialStatus?: string
+  editorialProfile?: string
+  visualStyle?: string
+  scheduledAt?: Date | string | null
+  batchId?: string | null
+  qualityScore?: number
+  qualityReport?: string
   linkedInCopy: string
   model: string
   estimatedTokens?: number
@@ -495,6 +618,13 @@ export type ProjectUpdateManyMutationInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   tone?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
+  visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -513,6 +643,13 @@ export type ProjectUncheckedUpdateManyInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   tone?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
+  visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -541,6 +678,13 @@ export type ProjectCountOrderByAggregateInput = {
   language?: Prisma.SortOrder
   tone?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  editorialStatus?: Prisma.SortOrder
+  editorialProfile?: Prisma.SortOrder
+  visualStyle?: Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
@@ -550,6 +694,7 @@ export type ProjectCountOrderByAggregateInput = {
 
 export type ProjectAvgOrderByAggregateInput = {
   slideCount?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
 }
 
@@ -564,6 +709,13 @@ export type ProjectMaxOrderByAggregateInput = {
   language?: Prisma.SortOrder
   tone?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  editorialStatus?: Prisma.SortOrder
+  editorialProfile?: Prisma.SortOrder
+  visualStyle?: Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
@@ -582,6 +734,13 @@ export type ProjectMinOrderByAggregateInput = {
   language?: Prisma.SortOrder
   tone?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  editorialStatus?: Prisma.SortOrder
+  editorialProfile?: Prisma.SortOrder
+  visualStyle?: Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
@@ -591,6 +750,7 @@ export type ProjectMinOrderByAggregateInput = {
 
 export type ProjectSumOrderByAggregateInput = {
   slideCount?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
 }
 
@@ -641,6 +801,14 @@ export type ProjectUncheckedUpdateManyWithoutGenerationCacheNestedInput = {
   deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type ProjectCreateNestedOneWithoutSlidesInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutSlidesInput, Prisma.ProjectUncheckedCreateWithoutSlidesInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutSlidesInput
@@ -665,6 +833,13 @@ export type ProjectCreateWithoutGenerationCacheInput = {
   language: string
   tone: string
   status?: string
+  editorialStatus?: string
+  editorialProfile?: string
+  visualStyle?: string
+  scheduledAt?: Date | string | null
+  batchId?: string | null
+  qualityScore?: number
+  qualityReport?: string
   linkedInCopy: string
   model: string
   estimatedTokens?: number
@@ -683,6 +858,13 @@ export type ProjectUncheckedCreateWithoutGenerationCacheInput = {
   language: string
   tone: string
   status?: string
+  editorialStatus?: string
+  editorialProfile?: string
+  visualStyle?: string
+  scheduledAt?: Date | string | null
+  batchId?: string | null
+  qualityScore?: number
+  qualityReport?: string
   linkedInCopy: string
   model: string
   estimatedTokens?: number
@@ -730,6 +912,13 @@ export type ProjectScalarWhereInput = {
   language?: Prisma.StringFilter<"Project"> | string
   tone?: Prisma.StringFilter<"Project"> | string
   status?: Prisma.StringFilter<"Project"> | string
+  editorialStatus?: Prisma.StringFilter<"Project"> | string
+  editorialProfile?: Prisma.StringFilter<"Project"> | string
+  visualStyle?: Prisma.StringFilter<"Project"> | string
+  scheduledAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  batchId?: Prisma.StringNullableFilter<"Project"> | string | null
+  qualityScore?: Prisma.IntFilter<"Project"> | number
+  qualityReport?: Prisma.StringFilter<"Project"> | string
   linkedInCopy?: Prisma.StringFilter<"Project"> | string
   model?: Prisma.StringFilter<"Project"> | string
   estimatedTokens?: Prisma.IntFilter<"Project"> | number
@@ -747,6 +936,13 @@ export type ProjectCreateWithoutSlidesInput = {
   language: string
   tone: string
   status?: string
+  editorialStatus?: string
+  editorialProfile?: string
+  visualStyle?: string
+  scheduledAt?: Date | string | null
+  batchId?: string | null
+  qualityScore?: number
+  qualityReport?: string
   linkedInCopy: string
   model: string
   estimatedTokens?: number
@@ -766,6 +962,13 @@ export type ProjectUncheckedCreateWithoutSlidesInput = {
   language: string
   tone: string
   status?: string
+  editorialStatus?: string
+  editorialProfile?: string
+  visualStyle?: string
+  scheduledAt?: Date | string | null
+  batchId?: string | null
+  qualityScore?: number
+  qualityReport?: string
   linkedInCopy: string
   model: string
   estimatedTokens?: number
@@ -799,6 +1002,13 @@ export type ProjectUpdateWithoutSlidesInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   tone?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
+  visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -818,6 +1028,13 @@ export type ProjectUncheckedUpdateWithoutSlidesInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   tone?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
+  visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -835,6 +1052,13 @@ export type ProjectCreateManyGenerationCacheInput = {
   language: string
   tone: string
   status?: string
+  editorialStatus?: string
+  editorialProfile?: string
+  visualStyle?: string
+  scheduledAt?: Date | string | null
+  batchId?: string | null
+  qualityScore?: number
+  qualityReport?: string
   linkedInCopy: string
   model: string
   estimatedTokens?: number
@@ -852,6 +1076,13 @@ export type ProjectUpdateWithoutGenerationCacheInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   tone?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
+  visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -870,6 +1101,13 @@ export type ProjectUncheckedUpdateWithoutGenerationCacheInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   tone?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
+  visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -888,6 +1126,13 @@ export type ProjectUncheckedUpdateManyWithoutGenerationCacheInput = {
   language?: Prisma.StringFieldUpdateOperationsInput | string
   tone?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
+  visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -937,6 +1182,13 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   language?: boolean
   tone?: boolean
   status?: boolean
+  editorialStatus?: boolean
+  editorialProfile?: boolean
+  visualStyle?: boolean
+  scheduledAt?: boolean
+  batchId?: boolean
+  qualityScore?: boolean
+  qualityReport?: boolean
   linkedInCopy?: boolean
   model?: boolean
   estimatedTokens?: boolean
@@ -958,6 +1210,13 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   language?: boolean
   tone?: boolean
   status?: boolean
+  editorialStatus?: boolean
+  editorialProfile?: boolean
+  visualStyle?: boolean
+  scheduledAt?: boolean
+  batchId?: boolean
+  qualityScore?: boolean
+  qualityReport?: boolean
   linkedInCopy?: boolean
   model?: boolean
   estimatedTokens?: boolean
@@ -977,6 +1236,13 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   language?: boolean
   tone?: boolean
   status?: boolean
+  editorialStatus?: boolean
+  editorialProfile?: boolean
+  visualStyle?: boolean
+  scheduledAt?: boolean
+  batchId?: boolean
+  qualityScore?: boolean
+  qualityReport?: boolean
   linkedInCopy?: boolean
   model?: boolean
   estimatedTokens?: boolean
@@ -996,6 +1262,13 @@ export type ProjectSelectScalar = {
   language?: boolean
   tone?: boolean
   status?: boolean
+  editorialStatus?: boolean
+  editorialProfile?: boolean
+  visualStyle?: boolean
+  scheduledAt?: boolean
+  batchId?: boolean
+  qualityScore?: boolean
+  qualityReport?: boolean
   linkedInCopy?: boolean
   model?: boolean
   estimatedTokens?: boolean
@@ -1003,7 +1276,7 @@ export type ProjectSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cacheKey" | "topic" | "title" | "subtitle" | "slideCount" | "category" | "language" | "tone" | "status" | "linkedInCopy" | "model" | "estimatedTokens" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cacheKey" | "topic" | "title" | "subtitle" | "slideCount" | "category" | "language" | "tone" | "status" | "editorialStatus" | "editorialProfile" | "visualStyle" | "scheduledAt" | "batchId" | "qualityScore" | "qualityReport" | "linkedInCopy" | "model" | "estimatedTokens" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   generationCache?: boolean | Prisma.GenerationCacheDefaultArgs<ExtArgs>
   slides?: boolean | Prisma.Project$slidesArgs<ExtArgs>
@@ -1033,6 +1306,13 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     language: string
     tone: string
     status: string
+    editorialStatus: string
+    editorialProfile: string
+    visualStyle: string
+    scheduledAt: Date | null
+    batchId: string | null
+    qualityScore: number
+    qualityReport: string
     linkedInCopy: string
     model: string
     estimatedTokens: number
@@ -1473,6 +1753,13 @@ export interface ProjectFieldRefs {
   readonly language: Prisma.FieldRef<"Project", 'String'>
   readonly tone: Prisma.FieldRef<"Project", 'String'>
   readonly status: Prisma.FieldRef<"Project", 'String'>
+  readonly editorialStatus: Prisma.FieldRef<"Project", 'String'>
+  readonly editorialProfile: Prisma.FieldRef<"Project", 'String'>
+  readonly visualStyle: Prisma.FieldRef<"Project", 'String'>
+  readonly scheduledAt: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly batchId: Prisma.FieldRef<"Project", 'String'>
+  readonly qualityScore: Prisma.FieldRef<"Project", 'Int'>
+  readonly qualityReport: Prisma.FieldRef<"Project", 'String'>
   readonly linkedInCopy: Prisma.FieldRef<"Project", 'String'>
   readonly model: Prisma.FieldRef<"Project", 'String'>
   readonly estimatedTokens: Prisma.FieldRef<"Project", 'Int'>

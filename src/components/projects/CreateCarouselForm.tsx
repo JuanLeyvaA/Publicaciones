@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { editorialProfiles } from "@/lib/editorial/profiles";
 import type { CarouselProject } from "@/types/carousel";
 
 type GenerationMeta = {
@@ -29,6 +30,10 @@ export function CreateCarouselForm({ onGenerated }: Props) {
       language: data.get("language"),
       tone: data.get("tone"),
       callToAction: data.get("callToAction") || undefined,
+      editorialProfile: data.get("editorialProfile"),
+      visualStyle: data.get("visualStyle"),
+      scheduledAt: data.get("scheduledAt") ? new Date(String(data.get("scheduledAt"))).toISOString() : undefined,
+      force: data.get("force") === "on",
     };
     try {
       const response = await fetch("/api/projects/generate", {
@@ -54,7 +59,11 @@ export function CreateCarouselForm({ onGenerated }: Props) {
         <label className="field"><span>Categoría</span><select name="category" defaultValue="automation"><option value="automation">Automatización</option><option value="web">Web</option><option value="artificial-intelligence">Inteligencia artificial</option><option value="analytics">Analítica</option><option value="business">Negocios</option></select></label>
         <label className="field"><span>Idioma</span><select name="language" defaultValue="es"><option value="es">Español</option><option value="en">Inglés</option></select></label>
         <label className="field"><span>Tono</span><select name="tone" defaultValue="professional"><option value="educational">Educativo</option><option value="direct">Directo</option><option value="professional">Profesional</option></select></label>
+        <label className="field"><span>Perfil editorial</span><select name="editorialProfile" defaultValue="kalliom-professional">{editorialProfiles.map((profile) => <option key={profile.id} value={profile.id}>{profile.label}</option>)}</select></label>
+        <label className="field"><span>Estilo visual</span><select name="visualStyle" defaultValue="balanced"><option value="balanced">Equilibrado</option><option value="minimal">Minimalista</option><option value="bold">Impactante</option><option value="image-led">Assets protagonistas</option><option value="text-led">Texto protagonista</option></select></label>
+        <label className="field"><span>Programar</span><input type="datetime-local" name="scheduledAt" /></label>
         <label className="field field-wide"><span>CTA opcional</span><input name="callToAction" maxLength={100} placeholder="¿Qué proceso automatizarías primero?" /></label>
+        <label className="force-generation field-wide"><input type="checkbox" name="force" /><span>Regenerar aunque exista en caché <small>Consume una nueva llamada de IA y reemplaza la versión generada.</small></span></label>
         <div className="generator-actions field-wide">
           <p>{error ? <span className="form-error">{error}</span> : "Si la misma solicitud ya existe, se reutiliza sin llamar al modelo."}</p>
           <button className="generate-button" disabled={busy}>{busy ? "Generando…" : "Generar carrusel"}</button>

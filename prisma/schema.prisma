@@ -30,6 +30,13 @@ model Project {
   language         String
   tone             String
   status           String          @default("generated")
+  editorialStatus  String          @default("review")
+  editorialProfile String          @default("kalliom-professional")
+  visualStyle      String          @default("balanced")
+  scheduledAt      DateTime?
+  batchId          String?
+  qualityScore     Int             @default(0)
+  qualityReport    String          @default("{\"score\":0,\"issues\":[],\"checkedAt\":\"\"}")
   linkedInCopy     String
   model            String
   estimatedTokens  Int             @default(0)
@@ -39,6 +46,8 @@ model Project {
   slides           Slide[]
 
   @@index([cacheKey])
+  @@index([scheduledAt])
+  @@index([batchId])
 }
 
 model Slide {

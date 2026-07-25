@@ -1,0 +1,2615 @@
+[
+  {
+    "id": "automation-001",
+    "name": "workflow-orbit",
+    "motif": "network",
+    "path": "/assets/library/automation-01.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "workflow orbit",
+      "workflow",
+      "integration",
+      "process"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "right",
+    "scale": "compact",
+    "rotation": 4,
+    "active": true
+  },
+  {
+    "id": "automation-002",
+    "name": "robotic-arm",
+    "motif": "robot",
+    "path": "/assets/library/automation-02.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "robotic arm",
+      "robot",
+      "manufacturing"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-left",
+    "scale": "large",
+    "rotation": 6,
+    "active": true
+  },
+  {
+    "id": "automation-003",
+    "name": "connected-gears",
+    "motif": "gears",
+    "path": "/assets/library/automation-03.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "connected gears",
+      "operations",
+      "efficiency",
+      "system"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-left",
+    "scale": "standard",
+    "rotation": -7,
+    "active": true
+  },
+  {
+    "id": "automation-004",
+    "name": "process-pipeline",
+    "motif": "pipeline",
+    "path": "/assets/library/automation-04.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "process pipeline",
+      "pipeline",
+      "workflow",
+      "speed"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-right",
+    "scale": "compact",
+    "rotation": -5,
+    "active": true
+  },
+  {
+    "id": "automation-005",
+    "name": "smart-chat",
+    "motif": "chat",
+    "path": "/assets/library/automation-05.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "smart chat",
+      "chatbot",
+      "customer-service",
+      "communication"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-right",
+    "scale": "large",
+    "rotation": -3,
+    "active": true
+  },
+  {
+    "id": "automation-006",
+    "name": "automation-calendar",
+    "motif": "calendar",
+    "path": "/assets/library/automation-06.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "automation calendar",
+      "planning",
+      "scheduling",
+      "operations"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "standard",
+    "rotation": -1,
+    "active": true
+  },
+  {
+    "id": "automation-007",
+    "name": "cloud-sync",
+    "motif": "cloud",
+    "path": "/assets/library/automation-07.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "cloud sync",
+      "cloud",
+      "integration",
+      "sync"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "center",
+    "scale": "compact",
+    "rotation": 1,
+    "active": true
+  },
+  {
+    "id": "automation-008",
+    "name": "secure-flow",
+    "motif": "shield",
+    "path": "/assets/library/automation-08.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "secure flow",
+      "security",
+      "workflow",
+      "control"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "right",
+    "scale": "large",
+    "rotation": 3,
+    "active": true
+  },
+  {
+    "id": "automation-009",
+    "name": "task-board",
+    "motif": "cards",
+    "path": "/assets/library/automation-09.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "task board",
+      "tasks",
+      "planning",
+      "productivity"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-left",
+    "scale": "standard",
+    "rotation": 5,
+    "active": true
+  },
+  {
+    "id": "automation-010",
+    "name": "trigger-bolt",
+    "motif": "bolt",
+    "path": "/assets/library/automation-10.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "trigger bolt",
+      "trigger",
+      "speed",
+      "action"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-left",
+    "scale": "compact",
+    "rotation": 7,
+    "active": true
+  },
+  {
+    "id": "automation-011",
+    "name": "conveyor-system",
+    "motif": "factory",
+    "path": "/assets/library/automation-11.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "conveyor system",
+      "manufacturing",
+      "process",
+      "operations"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "top-right",
+    "scale": "large",
+    "rotation": -6,
+    "active": true
+  },
+  {
+    "id": "automation-012",
+    "name": "api-connections",
+    "motif": "api",
+    "path": "/assets/library/automation-12.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "api connections",
+      "api",
+      "integration",
+      "system"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-right",
+    "scale": "standard",
+    "rotation": -4,
+    "active": true
+  },
+  {
+    "id": "automation-013",
+    "name": "decision-tree",
+    "motif": "tree",
+    "path": "/assets/library/automation-13.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "decision tree",
+      "decision",
+      "workflow",
+      "logic"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "left",
+    "scale": "compact",
+    "rotation": -2,
+    "active": true
+  },
+  {
+    "id": "automation-014",
+    "name": "email-sequence",
+    "motif": "mail",
+    "path": "/assets/library/automation-14.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "email sequence",
+      "email",
+      "marketing",
+      "sequence"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "center",
+    "scale": "large",
+    "rotation": 0,
+    "active": true
+  },
+  {
+    "id": "automation-015",
+    "name": "document-flow",
+    "motif": "documents",
+    "path": "/assets/library/automation-15.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "document flow",
+      "documents",
+      "process",
+      "approval"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "right",
+    "scale": "standard",
+    "rotation": 2,
+    "active": true
+  },
+  {
+    "id": "automation-016",
+    "name": "automation-hub",
+    "motif": "hub",
+    "path": "/assets/library/automation-16.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "automation hub",
+      "system",
+      "orchestration",
+      "connection"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-left",
+    "scale": "compact",
+    "rotation": 4,
+    "active": true
+  },
+  {
+    "id": "automation-017",
+    "name": "timer-cycle",
+    "motif": "timer",
+    "path": "/assets/library/automation-17.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "timer cycle",
+      "time",
+      "efficiency",
+      "repeat"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-left",
+    "scale": "large",
+    "rotation": 6,
+    "active": true
+  },
+  {
+    "id": "automation-018",
+    "name": "data-transfer",
+    "motif": "arrows",
+    "path": "/assets/library/automation-18.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "data transfer",
+      "data",
+      "transfer",
+      "integration"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-right",
+    "scale": "standard",
+    "rotation": -7,
+    "active": true
+  },
+  {
+    "id": "automation-019",
+    "name": "quality-check",
+    "motif": "checklist",
+    "path": "/assets/library/automation-19.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "quality check",
+      "quality",
+      "control",
+      "operations"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-right",
+    "scale": "compact",
+    "rotation": -5,
+    "active": true
+  },
+  {
+    "id": "automation-020",
+    "name": "no-code-builder",
+    "motif": "blocks",
+    "path": "/assets/library/automation-20.svg",
+    "category": "automation",
+    "tags": [
+      "automation",
+      "no code builder",
+      "no-code",
+      "builder",
+      "workflow"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "large",
+    "rotation": -3,
+    "active": true
+  },
+  {
+    "id": "web-001",
+    "name": "browser-layout",
+    "motif": "browser",
+    "path": "/assets/library/web-01.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "browser layout",
+      "website",
+      "interface",
+      "browser"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-right",
+    "scale": "standard",
+    "rotation": 0,
+    "active": true
+  },
+  {
+    "id": "web-002",
+    "name": "responsive-devices",
+    "motif": "devices",
+    "path": "/assets/library/web-02.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "responsive devices",
+      "responsive",
+      "mobile",
+      "laptop"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "compact",
+    "rotation": 2,
+    "active": true
+  },
+  {
+    "id": "web-003",
+    "name": "code-window",
+    "motif": "code",
+    "path": "/assets/library/web-03.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "code window",
+      "development",
+      "code"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "center",
+    "scale": "large",
+    "rotation": 4,
+    "active": true
+  },
+  {
+    "id": "web-004",
+    "name": "ecommerce-cart",
+    "motif": "cart",
+    "path": "/assets/library/web-04.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "ecommerce cart",
+      "ecommerce",
+      "sales",
+      "website"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "right",
+    "scale": "standard",
+    "rotation": 6,
+    "active": true
+  },
+  {
+    "id": "web-005",
+    "name": "landing-page",
+    "motif": "landing",
+    "path": "/assets/library/web-05.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "landing page",
+      "landing-page",
+      "conversion",
+      "design"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-left",
+    "scale": "compact",
+    "rotation": -7,
+    "active": true
+  },
+  {
+    "id": "web-006",
+    "name": "mobile-interface",
+    "motif": "phone",
+    "path": "/assets/library/web-06.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "mobile interface",
+      "mobile",
+      "interface",
+      "app"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "top-left",
+    "scale": "large",
+    "rotation": -5,
+    "active": true
+  },
+  {
+    "id": "web-007",
+    "name": "global-network",
+    "motif": "globe",
+    "path": "/assets/library/web-07.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "global network",
+      "internet",
+      "global",
+      "connection"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-right",
+    "scale": "standard",
+    "rotation": -3,
+    "active": true
+  },
+  {
+    "id": "web-008",
+    "name": "cursor-click",
+    "motif": "cursor",
+    "path": "/assets/library/web-08.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "cursor click",
+      "interaction",
+      "click",
+      "ux"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-right",
+    "scale": "compact",
+    "rotation": -1,
+    "active": true
+  },
+  {
+    "id": "web-009",
+    "name": "component-system",
+    "motif": "components",
+    "path": "/assets/library/web-09.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "component system",
+      "components",
+      "design-system"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "left",
+    "scale": "large",
+    "rotation": 1,
+    "active": true
+  },
+  {
+    "id": "web-010",
+    "name": "web-performance",
+    "motif": "gauge",
+    "path": "/assets/library/web-10.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "web performance",
+      "performance",
+      "speed",
+      "website"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "center",
+    "scale": "standard",
+    "rotation": 3,
+    "active": true
+  },
+  {
+    "id": "web-011",
+    "name": "seo-search",
+    "motif": "search",
+    "path": "/assets/library/web-11.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "seo search",
+      "seo",
+      "search",
+      "growth"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "right",
+    "scale": "compact",
+    "rotation": 5,
+    "active": true
+  },
+  {
+    "id": "web-012",
+    "name": "domain-launch",
+    "motif": "rocket",
+    "path": "/assets/library/web-12.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "domain launch",
+      "launch",
+      "domain",
+      "website"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-left",
+    "scale": "large",
+    "rotation": 7,
+    "active": true
+  },
+  {
+    "id": "web-013",
+    "name": "wireframe-grid",
+    "motif": "wireframe",
+    "path": "/assets/library/web-13.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "wireframe grid",
+      "wireframe",
+      "ux",
+      "planning"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-left",
+    "scale": "standard",
+    "rotation": -6,
+    "active": true
+  },
+  {
+    "id": "web-014",
+    "name": "form-conversion",
+    "motif": "form",
+    "path": "/assets/library/web-14.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "form conversion",
+      "form",
+      "conversion",
+      "leads"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-right",
+    "scale": "compact",
+    "rotation": -4,
+    "active": true
+  },
+  {
+    "id": "web-015",
+    "name": "web-security",
+    "motif": "lock",
+    "path": "/assets/library/web-15.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "web security",
+      "security",
+      "privacy",
+      "website"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-right",
+    "scale": "large",
+    "rotation": -2,
+    "active": true
+  },
+  {
+    "id": "web-016",
+    "name": "content-stack",
+    "motif": "layers",
+    "path": "/assets/library/web-16.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "content stack",
+      "content",
+      "cms",
+      "pages"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "standard",
+    "rotation": 0,
+    "active": true
+  },
+  {
+    "id": "web-017",
+    "name": "hosting-cloud",
+    "motif": "server",
+    "path": "/assets/library/web-17.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "hosting cloud",
+      "hosting",
+      "cloud",
+      "deployment"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "center",
+    "scale": "compact",
+    "rotation": 2,
+    "active": true
+  },
+  {
+    "id": "web-018",
+    "name": "navigation-map",
+    "motif": "sitemap",
+    "path": "/assets/library/web-18.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "navigation map",
+      "navigation",
+      "architecture",
+      "website"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "right",
+    "scale": "large",
+    "rotation": 4,
+    "active": true
+  },
+  {
+    "id": "web-019",
+    "name": "pixel-canvas",
+    "motif": "pixels",
+    "path": "/assets/library/web-19.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "pixel canvas",
+      "design",
+      "creative",
+      "digital"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-left",
+    "scale": "standard",
+    "rotation": 6,
+    "active": true
+  },
+  {
+    "id": "web-020",
+    "name": "web-analytics",
+    "motif": "webstats",
+    "path": "/assets/library/web-20.svg",
+    "category": "web",
+    "tags": [
+      "web",
+      "web analytics",
+      "analytics",
+      "metrics",
+      "website"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-left",
+    "scale": "compact",
+    "rotation": -7,
+    "active": true
+  },
+  {
+    "id": "ai-001",
+    "name": "neural-brain",
+    "motif": "brain",
+    "path": "/assets/library/ai-01.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "neural brain",
+      "neural",
+      "intelligence"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-left",
+    "scale": "large",
+    "rotation": -4,
+    "active": true
+  },
+  {
+    "id": "ai-002",
+    "name": "ai-chip",
+    "motif": "chip",
+    "path": "/assets/library/ai-02.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "ai chip",
+      "processor",
+      "technology"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-left",
+    "scale": "standard",
+    "rotation": -2,
+    "active": true
+  },
+  {
+    "id": "ai-003",
+    "name": "assistant-bot",
+    "motif": "bot",
+    "path": "/assets/library/ai-03.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "assistant bot",
+      "assistant",
+      "chatbot"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-right",
+    "scale": "compact",
+    "rotation": 0,
+    "active": true
+  },
+  {
+    "id": "ai-004",
+    "name": "vision-eye",
+    "motif": "eye",
+    "path": "/assets/library/ai-04.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "vision eye",
+      "vision",
+      "recognition"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-right",
+    "scale": "large",
+    "rotation": 2,
+    "active": true
+  },
+  {
+    "id": "ai-005",
+    "name": "prompt-window",
+    "motif": "prompt",
+    "path": "/assets/library/ai-05.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "prompt window",
+      "prompt",
+      "generative-ai",
+      "interface"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "left",
+    "scale": "standard",
+    "rotation": 4,
+    "active": true
+  },
+  {
+    "id": "ai-006",
+    "name": "model-layers",
+    "motif": "modelstack",
+    "path": "/assets/library/ai-06.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "model layers",
+      "model",
+      "layers",
+      "machine-learning"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "center",
+    "scale": "compact",
+    "rotation": 6,
+    "active": true
+  },
+  {
+    "id": "ai-007",
+    "name": "data-cube",
+    "motif": "cube",
+    "path": "/assets/library/ai-07.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "data cube",
+      "data",
+      "model",
+      "training"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "right",
+    "scale": "large",
+    "rotation": -7,
+    "active": true
+  },
+  {
+    "id": "ai-008",
+    "name": "spark-intelligence",
+    "motif": "spark",
+    "path": "/assets/library/ai-08.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "spark intelligence",
+      "innovation",
+      "generative-ai",
+      "future"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-left",
+    "scale": "standard",
+    "rotation": -5,
+    "active": true
+  },
+  {
+    "id": "ai-009",
+    "name": "language-network",
+    "motif": "language",
+    "path": "/assets/library/ai-09.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "language network",
+      "language",
+      "nlp",
+      "communication"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-left",
+    "scale": "compact",
+    "rotation": -3,
+    "active": true
+  },
+  {
+    "id": "ai-010",
+    "name": "learning-loop",
+    "motif": "loop",
+    "path": "/assets/library/ai-10.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "learning loop",
+      "learning",
+      "training",
+      "iteration"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-right",
+    "scale": "large",
+    "rotation": -1,
+    "active": true
+  },
+  {
+    "id": "ai-011",
+    "name": "ai-hand",
+    "motif": "hand",
+    "path": "/assets/library/ai-11.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "ai hand",
+      "human-ai",
+      "collaboration",
+      "future"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-right",
+    "scale": "standard",
+    "rotation": 1,
+    "active": true
+  },
+  {
+    "id": "ai-012",
+    "name": "knowledge-tree",
+    "motif": "knowledge",
+    "path": "/assets/library/ai-12.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "knowledge tree",
+      "knowledge",
+      "reasoning"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "compact",
+    "rotation": 3,
+    "active": true
+  },
+  {
+    "id": "ai-013",
+    "name": "prediction-orbit",
+    "motif": "orbit",
+    "path": "/assets/library/ai-13.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "prediction orbit",
+      "prediction",
+      "model",
+      "analytics"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "center",
+    "scale": "large",
+    "rotation": 5,
+    "active": true
+  },
+  {
+    "id": "ai-014",
+    "name": "model-weights",
+    "motif": "sliders",
+    "path": "/assets/library/ai-14.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "model weights",
+      "parameters",
+      "model",
+      "control"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "right",
+    "scale": "standard",
+    "rotation": 7,
+    "active": true
+  },
+  {
+    "id": "ai-015",
+    "name": "agent-workflow",
+    "motif": "agents",
+    "path": "/assets/library/ai-15.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "agent workflow",
+      "agents",
+      "workflow",
+      "automation"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-left",
+    "scale": "compact",
+    "rotation": -6,
+    "active": true
+  },
+  {
+    "id": "ai-016",
+    "name": "semantic-search",
+    "motif": "semantic",
+    "path": "/assets/library/ai-16.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "semantic search",
+      "semantic",
+      "search",
+      "knowledge"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "top-left",
+    "scale": "large",
+    "rotation": -4,
+    "active": true
+  },
+  {
+    "id": "ai-017",
+    "name": "multimodal-grid",
+    "motif": "multimodal",
+    "path": "/assets/library/ai-17.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "multimodal grid",
+      "multimodal",
+      "image",
+      "audio"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-right",
+    "scale": "standard",
+    "rotation": -2,
+    "active": true
+  },
+  {
+    "id": "ai-018",
+    "name": "safe-ai",
+    "motif": "aiguard",
+    "path": "/assets/library/ai-18.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "safe ai",
+      "responsible-ai",
+      "security",
+      "governance"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-right",
+    "scale": "compact",
+    "rotation": 0,
+    "active": true
+  },
+  {
+    "id": "ai-019",
+    "name": "ai-lab",
+    "motif": "lab",
+    "path": "/assets/library/ai-19.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "ai lab",
+      "research",
+      "experiment",
+      "innovation"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "left",
+    "scale": "large",
+    "rotation": 2,
+    "active": true
+  },
+  {
+    "id": "ai-020",
+    "name": "future-core",
+    "motif": "core",
+    "path": "/assets/library/ai-20.svg",
+    "category": "artificial-intelligence",
+    "tags": [
+      "artificial-intelligence",
+      "ai",
+      "future core",
+      "future",
+      "technology",
+      "intelligence"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "center",
+    "scale": "standard",
+    "rotation": 4,
+    "active": true
+  },
+  {
+    "id": "analytics-001",
+    "name": "growth-bars",
+    "motif": "bars",
+    "path": "/assets/library/analytics-01.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "growth bars",
+      "growth",
+      "metrics",
+      "performance"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "compact",
+    "rotation": 7,
+    "active": true
+  },
+  {
+    "id": "analytics-002",
+    "name": "trend-line",
+    "motif": "line",
+    "path": "/assets/library/analytics-02.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "trend line",
+      "trend",
+      "forecast"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "center",
+    "scale": "large",
+    "rotation": -6,
+    "active": true
+  },
+  {
+    "id": "analytics-003",
+    "name": "market-pie",
+    "motif": "pie",
+    "path": "/assets/library/analytics-03.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "market pie",
+      "distribution",
+      "market",
+      "data"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "right",
+    "scale": "standard",
+    "rotation": -4,
+    "active": true
+  },
+  {
+    "id": "analytics-004",
+    "name": "performance-gauge",
+    "motif": "speedometer",
+    "path": "/assets/library/analytics-04.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "performance gauge",
+      "kpi",
+      "performance",
+      "dashboard"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-left",
+    "scale": "compact",
+    "rotation": -2,
+    "active": true
+  },
+  {
+    "id": "analytics-005",
+    "name": "sales-funnel",
+    "motif": "funnel",
+    "path": "/assets/library/analytics-05.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "sales funnel",
+      "sales",
+      "conversion",
+      "funnel"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-left",
+    "scale": "large",
+    "rotation": 0,
+    "active": true
+  },
+  {
+    "id": "analytics-006",
+    "name": "data-table",
+    "motif": "table",
+    "path": "/assets/library/analytics-06.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "data table",
+      "data",
+      "report",
+      "table"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "top-right",
+    "scale": "standard",
+    "rotation": 2,
+    "active": true
+  },
+  {
+    "id": "analytics-007",
+    "name": "scatter-insights",
+    "motif": "scatter",
+    "path": "/assets/library/analytics-07.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "scatter insights",
+      "correlation",
+      "insight",
+      "data"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-right",
+    "scale": "compact",
+    "rotation": 4,
+    "active": true
+  },
+  {
+    "id": "analytics-008",
+    "name": "heatmap-grid",
+    "motif": "heatmap",
+    "path": "/assets/library/analytics-08.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "heatmap grid",
+      "heatmap",
+      "behavior"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "large",
+    "rotation": 6,
+    "active": true
+  },
+  {
+    "id": "analytics-009",
+    "name": "executive-dashboard",
+    "motif": "dashboard",
+    "path": "/assets/library/analytics-09.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "executive dashboard",
+      "dashboard",
+      "kpi",
+      "business"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "center",
+    "scale": "standard",
+    "rotation": -7,
+    "active": true
+  },
+  {
+    "id": "analytics-010",
+    "name": "goal-target",
+    "motif": "target",
+    "path": "/assets/library/analytics-10.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "goal target",
+      "goals",
+      "performance",
+      "strategy"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "right",
+    "scale": "compact",
+    "rotation": -5,
+    "active": true
+  },
+  {
+    "id": "analytics-011",
+    "name": "geo-metrics",
+    "motif": "map",
+    "path": "/assets/library/analytics-11.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "geo metrics",
+      "location",
+      "market",
+      "data"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-left",
+    "scale": "large",
+    "rotation": -3,
+    "active": true
+  },
+  {
+    "id": "analytics-012",
+    "name": "cohort-rings",
+    "motif": "rings",
+    "path": "/assets/library/analytics-12.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "cohort rings",
+      "cohort",
+      "segments",
+      "retention"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-left",
+    "scale": "standard",
+    "rotation": -1,
+    "active": true
+  },
+  {
+    "id": "analytics-013",
+    "name": "retention-curve",
+    "motif": "curve",
+    "path": "/assets/library/analytics-13.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "retention curve",
+      "retention",
+      "customers",
+      "trend"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-right",
+    "scale": "compact",
+    "rotation": 1,
+    "active": true
+  },
+  {
+    "id": "analytics-014",
+    "name": "comparison-columns",
+    "motif": "columns",
+    "path": "/assets/library/analytics-14.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "comparison columns",
+      "comparison",
+      "metrics",
+      "report"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-right",
+    "scale": "large",
+    "rotation": 3,
+    "active": true
+  },
+  {
+    "id": "analytics-015",
+    "name": "live-pulse",
+    "motif": "pulse",
+    "path": "/assets/library/analytics-15.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "live pulse",
+      "realtime",
+      "monitoring",
+      "data"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "left",
+    "scale": "standard",
+    "rotation": 5,
+    "active": true
+  },
+  {
+    "id": "analytics-016",
+    "name": "data-filter",
+    "motif": "filter",
+    "path": "/assets/library/analytics-16.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "data filter",
+      "filter",
+      "segments",
+      "analysis"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "center",
+    "scale": "compact",
+    "rotation": 7,
+    "active": true
+  },
+  {
+    "id": "analytics-017",
+    "name": "insight-lens",
+    "motif": "lens",
+    "path": "/assets/library/analytics-17.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "insight lens",
+      "insight",
+      "research",
+      "analysis"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "right",
+    "scale": "large",
+    "rotation": -6,
+    "active": true
+  },
+  {
+    "id": "analytics-018",
+    "name": "forecast-cloud",
+    "motif": "forecast",
+    "path": "/assets/library/analytics-18.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "forecast cloud",
+      "forecast",
+      "prediction",
+      "planning"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-left",
+    "scale": "standard",
+    "rotation": -4,
+    "active": true
+  },
+  {
+    "id": "analytics-019",
+    "name": "metric-cards",
+    "motif": "scorecards",
+    "path": "/assets/library/analytics-19.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "metric cards",
+      "metrics",
+      "dashboard",
+      "kpi"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-left",
+    "scale": "compact",
+    "rotation": -2,
+    "active": true
+  },
+  {
+    "id": "analytics-020",
+    "name": "data-story",
+    "motif": "story",
+    "path": "/assets/library/analytics-20.svg",
+    "category": "analytics",
+    "tags": [
+      "analytics",
+      "data story",
+      "storytelling",
+      "report",
+      "insights"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-right",
+    "scale": "large",
+    "rotation": 0,
+    "active": true
+  },
+  {
+    "id": "business-001",
+    "name": "city-growth",
+    "motif": "buildings",
+    "path": "/assets/library/business-01.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "city growth",
+      "growth",
+      "company"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "top-left",
+    "scale": "standard",
+    "rotation": 3,
+    "active": true
+  },
+  {
+    "id": "business-002",
+    "name": "team-circle",
+    "motif": "people",
+    "path": "/assets/library/business-02.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "team circle",
+      "team",
+      "culture",
+      "collaboration"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-right",
+    "scale": "compact",
+    "rotation": 5,
+    "active": true
+  },
+  {
+    "id": "business-003",
+    "name": "strategy-chess",
+    "motif": "chess",
+    "path": "/assets/library/business-03.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "strategy chess",
+      "strategy",
+      "planning",
+      "leadership"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-right",
+    "scale": "large",
+    "rotation": 7,
+    "active": true
+  },
+  {
+    "id": "business-004",
+    "name": "sales-target",
+    "motif": "bullseye",
+    "path": "/assets/library/business-04.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "sales target",
+      "sales",
+      "goals",
+      "growth"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "standard",
+    "rotation": -6,
+    "active": true
+  },
+  {
+    "id": "business-005",
+    "name": "business-roadmap",
+    "motif": "roadmap",
+    "path": "/assets/library/business-05.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "business roadmap",
+      "roadmap",
+      "strategy",
+      "future"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "center",
+    "scale": "compact",
+    "rotation": -4,
+    "active": true
+  },
+  {
+    "id": "business-006",
+    "name": "idea-light",
+    "motif": "bulb",
+    "path": "/assets/library/business-06.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "idea light",
+      "idea",
+      "innovation"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "right",
+    "scale": "large",
+    "rotation": -2,
+    "active": true
+  },
+  {
+    "id": "business-007",
+    "name": "market-megaphone",
+    "motif": "megaphone",
+    "path": "/assets/library/business-07.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "market megaphone",
+      "marketing",
+      "communication",
+      "growth"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-left",
+    "scale": "standard",
+    "rotation": 0,
+    "active": true
+  },
+  {
+    "id": "business-008",
+    "name": "value-briefcase",
+    "motif": "briefcase",
+    "path": "/assets/library/business-08.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "value briefcase",
+      "value",
+      "professional"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "top-left",
+    "scale": "compact",
+    "rotation": 2,
+    "active": true
+  },
+  {
+    "id": "business-009",
+    "name": "partnership-link",
+    "motif": "handshake",
+    "path": "/assets/library/business-09.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "partnership link",
+      "partnership",
+      "connection",
+      "trust"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-right",
+    "scale": "large",
+    "rotation": 4,
+    "active": true
+  },
+  {
+    "id": "business-010",
+    "name": "startup-rocket",
+    "motif": "startuplaunch",
+    "path": "/assets/library/business-10.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "startup rocket",
+      "startup",
+      "launch",
+      "growth"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-right",
+    "scale": "standard",
+    "rotation": 6,
+    "active": true
+  },
+  {
+    "id": "business-011",
+    "name": "revenue-coins",
+    "motif": "coins",
+    "path": "/assets/library/business-11.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "revenue coins",
+      "revenue",
+      "finance",
+      "sales"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "compact",
+    "rotation": -7,
+    "active": true
+  },
+  {
+    "id": "business-012",
+    "name": "storefront-brand",
+    "motif": "storefront",
+    "path": "/assets/library/business-12.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "storefront brand",
+      "brand",
+      "retail",
+      "customers"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "center",
+    "scale": "large",
+    "rotation": -5,
+    "active": true
+  },
+  {
+    "id": "business-013",
+    "name": "factory-scale",
+    "motif": "industrial",
+    "path": "/assets/library/business-13.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "factory scale",
+      "industry",
+      "scale",
+      "operations"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "right",
+    "scale": "standard",
+    "rotation": -3,
+    "active": true
+  },
+  {
+    "id": "business-014",
+    "name": "leadership-flag",
+    "motif": "flag",
+    "path": "/assets/library/business-14.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "leadership flag",
+      "leadership",
+      "vision",
+      "team"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "bottom-left",
+    "scale": "compact",
+    "rotation": -1,
+    "active": true
+  },
+  {
+    "id": "business-015",
+    "name": "customer-heart",
+    "motif": "heart",
+    "path": "/assets/library/business-15.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "customer heart",
+      "customer",
+      "loyalty",
+      "experience"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "top-left",
+    "scale": "large",
+    "rotation": 1,
+    "active": true
+  },
+  {
+    "id": "business-016",
+    "name": "global-business",
+    "motif": "worldtrade",
+    "path": "/assets/library/business-16.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "global business",
+      "global",
+      "market",
+      "expansion"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content",
+      "closing"
+    ],
+    "placement": "top-right",
+    "scale": "standard",
+    "rotation": 3,
+    "active": true
+  },
+  {
+    "id": "business-017",
+    "name": "organization-chart",
+    "motif": "orgchart",
+    "path": "/assets/library/business-17.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "organization chart",
+      "organization",
+      "team",
+      "structure"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "bottom-right",
+    "scale": "compact",
+    "rotation": 5,
+    "active": true
+  },
+  {
+    "id": "business-018",
+    "name": "negotiation-balance",
+    "motif": "balance",
+    "path": "/assets/library/business-18.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "negotiation balance",
+      "negotiation",
+      "decision",
+      "value"
+    ],
+    "orientation": "vertical",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "left",
+    "scale": "large",
+    "rotation": 7,
+    "active": true
+  },
+  {
+    "id": "business-019",
+    "name": "business-shield",
+    "motif": "riskguard",
+    "path": "/assets/library/business-19.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "business shield",
+      "risk",
+      "security"
+    ],
+    "orientation": "square",
+    "transparent": true,
+    "compatibleLayouts": [
+      "cover",
+      "content"
+    ],
+    "placement": "center",
+    "scale": "standard",
+    "rotation": -6,
+    "active": true
+  },
+  {
+    "id": "business-020",
+    "name": "next-horizon",
+    "motif": "horizon",
+    "path": "/assets/library/business-20.svg",
+    "category": "business",
+    "tags": [
+      "business",
+      "next horizon",
+      "future",
+      "vision",
+      "innovation"
+    ],
+    "orientation": "horizontal",
+    "transparent": true,
+    "compatibleLayouts": [
+      "content",
+      "closing"
+    ],
+    "placement": "right",
+    "scale": "compact",
+    "rotation": -4,
+    "active": true
+  },
+  {
+    "id": "raster-001",
+    "name": "robot-portal-assistant",
+    "motif": "cinematic-robot-portal",
+    "path": "/assets/raster/robot-portal.webp",
+    "category": "artificial-intelligence",
+    "tags": ["ai", "assistant", "robot", "agent", "mobile", "chatbot", "future"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content", "closing"],
+    "placement": "right",
+    "scale": "large",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "cinematic",
+    "active": true
+  },
+  {
+    "id": "raster-002",
+    "name": "human-hologram-collaboration",
+    "motif": "photographic-human-ai-cafe",
+    "path": "/assets/raster/human-hologram.webp",
+    "category": "business",
+    "tags": ["business", "human-ai", "collaboration", "assistant", "workflow", "small-business"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content"],
+    "placement": "left",
+    "scale": "large",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "photographic",
+    "active": true
+  },
+  {
+    "id": "raster-003",
+    "name": "clay-robot-analyst",
+    "motif": "clay-robot-dashboard",
+    "path": "/assets/raster/clay-analyst.webp",
+    "category": "analytics",
+    "tags": ["analytics", "robot", "dashboard", "growth", "metrics", "assistant"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content", "closing"],
+    "placement": "bottom-left",
+    "scale": "standard",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "clay",
+    "active": true
+  },
+  {
+    "id": "raster-004",
+    "name": "industrial-human-cobot",
+    "motif": "cinematic-industrial-cobot",
+    "path": "/assets/raster/industrial-cobot.webp",
+    "category": "automation",
+    "tags": ["automation", "robot", "manufacturing", "human-machine", "operations", "precision"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content"],
+    "placement": "bottom-right",
+    "scale": "large",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "industrial",
+    "active": true
+  },
+  {
+    "id": "raster-005",
+    "name": "isometric-business-workflow",
+    "motif": "isometric-connected-operations",
+    "path": "/assets/raster/isometric-workflow.webp",
+    "category": "automation",
+    "tags": ["automation", "workflow", "sales", "calendar", "customer-success", "team", "process"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["content", "closing"],
+    "placement": "center",
+    "scale": "standard",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "isometric",
+    "active": true
+  },
+  {
+    "id": "raster-006",
+    "name": "editorial-ai-copilot-collage",
+    "motif": "risograph-ai-business-collage",
+    "path": "/assets/raster/editorial-ai-collage.webp",
+    "category": "artificial-intelligence",
+    "tags": ["ai", "copilot", "team", "documents", "strategy", "collaboration", "editorial"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content"],
+    "placement": "top-left",
+    "scale": "large",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "risograph",
+    "active": true
+  },
+  {
+    "id": "raster-007",
+    "name": "glass-data-brain",
+    "motif": "glass-neural-decision-sculpture",
+    "path": "/assets/raster/glass-data-brain.webp",
+    "category": "artificial-intelligence",
+    "tags": ["ai", "brain", "data", "decision", "reasoning", "neural", "innovation"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content", "closing"],
+    "placement": "bottom-right",
+    "scale": "large",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "glass",
+    "active": true
+  },
+  {
+    "id": "raster-008",
+    "name": "neon-customer-support-bot",
+    "motif": "neon-support-orbit",
+    "path": "/assets/raster/neon-support-bot.webp",
+    "category": "automation",
+    "tags": ["automation", "robot", "customer-service", "chatbot", "calendar", "routing", "support"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content", "closing"],
+    "placement": "top-right",
+    "scale": "standard",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "neon",
+    "active": true
+  },
+  {
+    "id": "raster-009",
+    "name": "executive-analytics-team",
+    "motif": "photographic-leadership-dashboard",
+    "path": "/assets/raster/executive-analytics-team.webp",
+    "category": "analytics",
+    "tags": ["analytics", "leadership", "team", "dashboard", "strategy", "decision", "business"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content"],
+    "placement": "left",
+    "scale": "large",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "photographic",
+    "active": true
+  },
+  {
+    "id": "raster-010",
+    "name": "responsive-commerce-robot",
+    "motif": "low-poly-responsive-store",
+    "path": "/assets/raster/responsive-commerce.webp",
+    "category": "web",
+    "tags": ["web", "ecommerce", "responsive", "mobile", "website", "robot", "delivery"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content"],
+    "placement": "right",
+    "scale": "large",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "low-poly",
+    "active": true
+  },
+  {
+    "id": "raster-011",
+    "name": "papercut-robot-guardian",
+    "motif": "papercut-governance-guardian",
+    "path": "/assets/raster/papercut-guardian.webp",
+    "category": "business",
+    "tags": ["business", "robot", "governance", "security", "documents", "data", "people", "trust"],
+    "orientation": "square",
+    "transparent": false,
+    "compatibleLayouts": ["cover", "content", "closing"],
+    "placement": "bottom-left",
+    "scale": "large",
+    "rotation": 0,
+    "mediaType": "raster",
+    "visualStyle": "papercut",
+    "active": true
+  }
+]

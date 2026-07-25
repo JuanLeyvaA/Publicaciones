@@ -563,10 +563,6 @@ export type SlideUncheckedUpdateManyWithoutProjectNestedInput = {
   deleteMany?: Prisma.SlideScalarWhereInput | Prisma.SlideScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type SlideCreateWithoutProjectInput = {
   id: string
   order: number

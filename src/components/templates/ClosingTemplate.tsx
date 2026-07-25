@@ -8,7 +8,7 @@ type Props = { slide: ClosingSlide; brand: string; website: string; index: numbe
 export function ClosingTemplate({ slide, brand, website, index, total, asset }: Props) {
   const titleSize = titleFontSize(slide.title, "closing");
   return (
-    <TemplateFrame slideId={slide.id} variant="closing" brand={brand} index={index} total={total} asset={asset}>
+    <TemplateFrame slideId={slide.id} variant="closing" templateId={slide.templateId} brand={brand} index={index} total={total} asset={asset}>
       <main className="closing-content" data-overflow-check="closing-content">
         <div className="closing-emblem">K</div>
         <div className="eyebrow">El siguiente paso</div>

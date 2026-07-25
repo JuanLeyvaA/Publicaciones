@@ -14,6 +14,8 @@ export function normalizeCarouselInput(input: CreateCarouselInput) {
     language: input.language,
     tone: input.tone,
     callToAction: normalizeText(input.callToAction),
+    editorialProfile: input.editorialProfile ?? "kalliom-professional",
+    visualStyle: input.visualStyle ?? "balanced",
   };
 }
 

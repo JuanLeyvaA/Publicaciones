@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { ZodError } from "zod";
+import { z, ZodError } from "zod";
 import { toPublicOpenAIError } from "@/lib/ai/openaiError";
 import { AiOutputError, createCarouselInputSchema } from "@/lib/ai/schemas";
 import { getOrGenerateCarousel } from "@/lib/cache/generationCache";
-import { persistGeneratedProject } from "@/lib/projects/repository";
+import { persistGeneratedProject, recentEditorialMemory } from "@/lib/projects/repository";
 import { assertGenerationRateLimit, RateLimitError } from "@/lib/security/rateLimit";
 
 export const runtime = "nodejs";
@@ -11,10 +11,16 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const input = createCarouselInputSchema.parse(await request.json());
+    const payload = createCarouselInputSchema.extend({ force: z.boolean().optional() }).parse(await request.json());
+    const { force = false, ...rawInput } = payload;
+    const input = {
+      ...rawInput,
+      avoidTopics: rawInput.avoidTopics?.length ? rawInput.avoidTopics : await recentEditorialMemory(),
+    };
     const identifier = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
     const generation = await getOrGenerateCarousel(input, {
       beforeModelCall: () => assertGenerationRateLimit(identifier),
+      force,
     });
     const project = await persistGeneratedProject(
       input,

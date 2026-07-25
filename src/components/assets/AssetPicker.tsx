@@ -33,7 +33,7 @@ export function AssetPicker({ assets, selectedId, onSelect }: Props) {
     <details className="asset-picker">
       <summary>
         <span>{selected ? <img src={selected.path} alt="" /> : null}</span>
-        <div><small>Asset visual</small><strong>{selected?.id ?? "Sin asignar"}</strong></div>
+        <div><small>{selected?.placement ?? "Asset visual"}</small><strong>{selected?.name ?? "Sin asignar"}</strong></div>
         <b>Cambiar</b>
       </summary>
       <div className="asset-picker-panel">
@@ -46,7 +46,7 @@ export function AssetPicker({ assets, selectedId, onSelect }: Props) {
         <div className="asset-options">
           {filtered.map((asset) => (
             <button key={asset.id} type="button" className={asset.id === selectedId ? "selected" : ""} onClick={() => onSelect(asset.id)}>
-              <img src={asset.path} alt="" /><span>{asset.id}</span>
+              <img src={asset.path} alt="" /><span title={asset.name}>{asset.name}</span>
             </button>
           ))}
           {!filtered.length && <p>No hay assets compatibles con la búsqueda.</p>}
