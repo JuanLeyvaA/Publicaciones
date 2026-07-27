@@ -53,6 +53,10 @@ export type ProjectMinAggregateOutputType = {
   editorialProfile: string | null
   visualStyle: string | null
   scheduledAt: Date | null
+  linkedInStatus: string | null
+  linkedInPostId: string | null
+  linkedInPublishedAt: Date | null
+  linkedInError: string | null
   batchId: string | null
   qualityScore: number | null
   qualityReport: string | null
@@ -78,6 +82,10 @@ export type ProjectMaxAggregateOutputType = {
   editorialProfile: string | null
   visualStyle: string | null
   scheduledAt: Date | null
+  linkedInStatus: string | null
+  linkedInPostId: string | null
+  linkedInPublishedAt: Date | null
+  linkedInError: string | null
   batchId: string | null
   qualityScore: number | null
   qualityReport: string | null
@@ -103,6 +111,10 @@ export type ProjectCountAggregateOutputType = {
   editorialProfile: number
   visualStyle: number
   scheduledAt: number
+  linkedInStatus: number
+  linkedInPostId: number
+  linkedInPublishedAt: number
+  linkedInError: number
   batchId: number
   qualityScore: number
   qualityReport: number
@@ -142,6 +154,10 @@ export type ProjectMinAggregateInputType = {
   editorialProfile?: true
   visualStyle?: true
   scheduledAt?: true
+  linkedInStatus?: true
+  linkedInPostId?: true
+  linkedInPublishedAt?: true
+  linkedInError?: true
   batchId?: true
   qualityScore?: true
   qualityReport?: true
@@ -167,6 +183,10 @@ export type ProjectMaxAggregateInputType = {
   editorialProfile?: true
   visualStyle?: true
   scheduledAt?: true
+  linkedInStatus?: true
+  linkedInPostId?: true
+  linkedInPublishedAt?: true
+  linkedInError?: true
   batchId?: true
   qualityScore?: true
   qualityReport?: true
@@ -192,6 +212,10 @@ export type ProjectCountAggregateInputType = {
   editorialProfile?: true
   visualStyle?: true
   scheduledAt?: true
+  linkedInStatus?: true
+  linkedInPostId?: true
+  linkedInPublishedAt?: true
+  linkedInError?: true
   batchId?: true
   qualityScore?: true
   qualityReport?: true
@@ -304,6 +328,10 @@ export type ProjectGroupByOutputType = {
   editorialProfile: string
   visualStyle: string
   scheduledAt: Date | null
+  linkedInStatus: string
+  linkedInPostId: string | null
+  linkedInPublishedAt: Date | null
+  linkedInError: string | null
   batchId: string | null
   qualityScore: number
   qualityReport: string
@@ -352,6 +380,10 @@ export type ProjectWhereInput = {
   editorialProfile?: Prisma.StringFilter<"Project"> | string
   visualStyle?: Prisma.StringFilter<"Project"> | string
   scheduledAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  linkedInStatus?: Prisma.StringFilter<"Project"> | string
+  linkedInPostId?: Prisma.StringNullableFilter<"Project"> | string | null
+  linkedInPublishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  linkedInError?: Prisma.StringNullableFilter<"Project"> | string | null
   batchId?: Prisma.StringNullableFilter<"Project"> | string | null
   qualityScore?: Prisma.IntFilter<"Project"> | number
   qualityReport?: Prisma.StringFilter<"Project"> | string
@@ -379,6 +411,10 @@ export type ProjectOrderByWithRelationInput = {
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedInStatus?: Prisma.SortOrder
+  linkedInPostId?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedInPublishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedInError?: Prisma.SortOrderInput | Prisma.SortOrder
   batchId?: Prisma.SortOrderInput | Prisma.SortOrder
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
@@ -409,6 +445,10 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   editorialProfile?: Prisma.StringFilter<"Project"> | string
   visualStyle?: Prisma.StringFilter<"Project"> | string
   scheduledAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  linkedInStatus?: Prisma.StringFilter<"Project"> | string
+  linkedInPostId?: Prisma.StringNullableFilter<"Project"> | string | null
+  linkedInPublishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  linkedInError?: Prisma.StringNullableFilter<"Project"> | string | null
   batchId?: Prisma.StringNullableFilter<"Project"> | string | null
   qualityScore?: Prisma.IntFilter<"Project"> | number
   qualityReport?: Prisma.StringFilter<"Project"> | string
@@ -436,6 +476,10 @@ export type ProjectOrderByWithAggregationInput = {
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedInStatus?: Prisma.SortOrder
+  linkedInPostId?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedInPublishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedInError?: Prisma.SortOrderInput | Prisma.SortOrder
   batchId?: Prisma.SortOrderInput | Prisma.SortOrder
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
@@ -469,6 +513,10 @@ export type ProjectScalarWhereWithAggregatesInput = {
   editorialProfile?: Prisma.StringWithAggregatesFilter<"Project"> | string
   visualStyle?: Prisma.StringWithAggregatesFilter<"Project"> | string
   scheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  linkedInStatus?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  linkedInPostId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  linkedInPublishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  linkedInError?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   batchId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   qualityScore?: Prisma.IntWithAggregatesFilter<"Project"> | number
   qualityReport?: Prisma.StringWithAggregatesFilter<"Project"> | string
@@ -493,6 +541,10 @@ export type ProjectCreateInput = {
   editorialProfile?: string
   visualStyle?: string
   scheduledAt?: Date | string | null
+  linkedInStatus?: string
+  linkedInPostId?: string | null
+  linkedInPublishedAt?: Date | string | null
+  linkedInError?: string | null
   batchId?: string | null
   qualityScore?: number
   qualityReport?: string
@@ -520,6 +572,10 @@ export type ProjectUncheckedCreateInput = {
   editorialProfile?: string
   visualStyle?: string
   scheduledAt?: Date | string | null
+  linkedInStatus?: string
+  linkedInPostId?: string | null
+  linkedInPublishedAt?: Date | string | null
+  linkedInError?: string | null
   batchId?: string | null
   qualityScore?: number
   qualityReport?: string
@@ -545,6 +601,10 @@ export type ProjectUpdateInput = {
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedInPublishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
@@ -572,6 +632,10 @@ export type ProjectUncheckedUpdateInput = {
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedInPublishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
@@ -598,6 +662,10 @@ export type ProjectCreateManyInput = {
   editorialProfile?: string
   visualStyle?: string
   scheduledAt?: Date | string | null
+  linkedInStatus?: string
+  linkedInPostId?: string | null
+  linkedInPublishedAt?: Date | string | null
+  linkedInError?: string | null
   batchId?: string | null
   qualityScore?: number
   qualityReport?: string
@@ -622,6 +690,10 @@ export type ProjectUpdateManyMutationInput = {
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedInPublishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
@@ -647,6 +719,10 @@ export type ProjectUncheckedUpdateManyInput = {
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedInPublishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
@@ -682,6 +758,10 @@ export type ProjectCountOrderByAggregateInput = {
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
+  linkedInStatus?: Prisma.SortOrder
+  linkedInPostId?: Prisma.SortOrder
+  linkedInPublishedAt?: Prisma.SortOrder
+  linkedInError?: Prisma.SortOrder
   batchId?: Prisma.SortOrder
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
@@ -713,6 +793,10 @@ export type ProjectMaxOrderByAggregateInput = {
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
+  linkedInStatus?: Prisma.SortOrder
+  linkedInPostId?: Prisma.SortOrder
+  linkedInPublishedAt?: Prisma.SortOrder
+  linkedInError?: Prisma.SortOrder
   batchId?: Prisma.SortOrder
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
@@ -738,6 +822,10 @@ export type ProjectMinOrderByAggregateInput = {
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
+  linkedInStatus?: Prisma.SortOrder
+  linkedInPostId?: Prisma.SortOrder
+  linkedInPublishedAt?: Prisma.SortOrder
+  linkedInError?: Prisma.SortOrder
   batchId?: Prisma.SortOrder
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
@@ -837,6 +925,10 @@ export type ProjectCreateWithoutGenerationCacheInput = {
   editorialProfile?: string
   visualStyle?: string
   scheduledAt?: Date | string | null
+  linkedInStatus?: string
+  linkedInPostId?: string | null
+  linkedInPublishedAt?: Date | string | null
+  linkedInError?: string | null
   batchId?: string | null
   qualityScore?: number
   qualityReport?: string
@@ -862,6 +954,10 @@ export type ProjectUncheckedCreateWithoutGenerationCacheInput = {
   editorialProfile?: string
   visualStyle?: string
   scheduledAt?: Date | string | null
+  linkedInStatus?: string
+  linkedInPostId?: string | null
+  linkedInPublishedAt?: Date | string | null
+  linkedInError?: string | null
   batchId?: string | null
   qualityScore?: number
   qualityReport?: string
@@ -916,6 +1012,10 @@ export type ProjectScalarWhereInput = {
   editorialProfile?: Prisma.StringFilter<"Project"> | string
   visualStyle?: Prisma.StringFilter<"Project"> | string
   scheduledAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  linkedInStatus?: Prisma.StringFilter<"Project"> | string
+  linkedInPostId?: Prisma.StringNullableFilter<"Project"> | string | null
+  linkedInPublishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  linkedInError?: Prisma.StringNullableFilter<"Project"> | string | null
   batchId?: Prisma.StringNullableFilter<"Project"> | string | null
   qualityScore?: Prisma.IntFilter<"Project"> | number
   qualityReport?: Prisma.StringFilter<"Project"> | string
@@ -940,6 +1040,10 @@ export type ProjectCreateWithoutSlidesInput = {
   editorialProfile?: string
   visualStyle?: string
   scheduledAt?: Date | string | null
+  linkedInStatus?: string
+  linkedInPostId?: string | null
+  linkedInPublishedAt?: Date | string | null
+  linkedInError?: string | null
   batchId?: string | null
   qualityScore?: number
   qualityReport?: string
@@ -966,6 +1070,10 @@ export type ProjectUncheckedCreateWithoutSlidesInput = {
   editorialProfile?: string
   visualStyle?: string
   scheduledAt?: Date | string | null
+  linkedInStatus?: string
+  linkedInPostId?: string | null
+  linkedInPublishedAt?: Date | string | null
+  linkedInError?: string | null
   batchId?: string | null
   qualityScore?: number
   qualityReport?: string
@@ -1006,6 +1114,10 @@ export type ProjectUpdateWithoutSlidesInput = {
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedInPublishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1032,6 +1144,10 @@ export type ProjectUncheckedUpdateWithoutSlidesInput = {
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedInPublishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1056,6 +1172,10 @@ export type ProjectCreateManyGenerationCacheInput = {
   editorialProfile?: string
   visualStyle?: string
   scheduledAt?: Date | string | null
+  linkedInStatus?: string
+  linkedInPostId?: string | null
+  linkedInPublishedAt?: Date | string | null
+  linkedInError?: string | null
   batchId?: string | null
   qualityScore?: number
   qualityReport?: string
@@ -1080,6 +1200,10 @@ export type ProjectUpdateWithoutGenerationCacheInput = {
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedInPublishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1105,6 +1229,10 @@ export type ProjectUncheckedUpdateWithoutGenerationCacheInput = {
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedInPublishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1130,6 +1258,10 @@ export type ProjectUncheckedUpdateManyWithoutGenerationCacheInput = {
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedInPublishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  linkedInError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1186,6 +1318,10 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   editorialProfile?: boolean
   visualStyle?: boolean
   scheduledAt?: boolean
+  linkedInStatus?: boolean
+  linkedInPostId?: boolean
+  linkedInPublishedAt?: boolean
+  linkedInError?: boolean
   batchId?: boolean
   qualityScore?: boolean
   qualityReport?: boolean
@@ -1214,6 +1350,10 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   editorialProfile?: boolean
   visualStyle?: boolean
   scheduledAt?: boolean
+  linkedInStatus?: boolean
+  linkedInPostId?: boolean
+  linkedInPublishedAt?: boolean
+  linkedInError?: boolean
   batchId?: boolean
   qualityScore?: boolean
   qualityReport?: boolean
@@ -1240,6 +1380,10 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   editorialProfile?: boolean
   visualStyle?: boolean
   scheduledAt?: boolean
+  linkedInStatus?: boolean
+  linkedInPostId?: boolean
+  linkedInPublishedAt?: boolean
+  linkedInError?: boolean
   batchId?: boolean
   qualityScore?: boolean
   qualityReport?: boolean
@@ -1266,6 +1410,10 @@ export type ProjectSelectScalar = {
   editorialProfile?: boolean
   visualStyle?: boolean
   scheduledAt?: boolean
+  linkedInStatus?: boolean
+  linkedInPostId?: boolean
+  linkedInPublishedAt?: boolean
+  linkedInError?: boolean
   batchId?: boolean
   qualityScore?: boolean
   qualityReport?: boolean
@@ -1276,7 +1424,7 @@ export type ProjectSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cacheKey" | "topic" | "title" | "subtitle" | "slideCount" | "category" | "language" | "tone" | "status" | "editorialStatus" | "editorialProfile" | "visualStyle" | "scheduledAt" | "batchId" | "qualityScore" | "qualityReport" | "linkedInCopy" | "model" | "estimatedTokens" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cacheKey" | "topic" | "title" | "subtitle" | "slideCount" | "category" | "language" | "tone" | "status" | "editorialStatus" | "editorialProfile" | "visualStyle" | "scheduledAt" | "linkedInStatus" | "linkedInPostId" | "linkedInPublishedAt" | "linkedInError" | "batchId" | "qualityScore" | "qualityReport" | "linkedInCopy" | "model" | "estimatedTokens" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   generationCache?: boolean | Prisma.GenerationCacheDefaultArgs<ExtArgs>
   slides?: boolean | Prisma.Project$slidesArgs<ExtArgs>
@@ -1310,6 +1458,10 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     editorialProfile: string
     visualStyle: string
     scheduledAt: Date | null
+    linkedInStatus: string
+    linkedInPostId: string | null
+    linkedInPublishedAt: Date | null
+    linkedInError: string | null
     batchId: string | null
     qualityScore: number
     qualityReport: string
@@ -1757,6 +1909,10 @@ export interface ProjectFieldRefs {
   readonly editorialProfile: Prisma.FieldRef<"Project", 'String'>
   readonly visualStyle: Prisma.FieldRef<"Project", 'String'>
   readonly scheduledAt: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly linkedInStatus: Prisma.FieldRef<"Project", 'String'>
+  readonly linkedInPostId: Prisma.FieldRef<"Project", 'String'>
+  readonly linkedInPublishedAt: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly linkedInError: Prisma.FieldRef<"Project", 'String'>
   readonly batchId: Prisma.FieldRef<"Project", 'String'>
   readonly qualityScore: Prisma.FieldRef<"Project", 'Int'>
   readonly qualityReport: Prisma.FieldRef<"Project", 'String'>

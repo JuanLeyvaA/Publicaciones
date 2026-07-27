@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ProjectHistoryItem } from "@/lib/projects/repository";
 import type { EditorialStatus } from "@/types/carousel";
 
@@ -28,6 +28,18 @@ function localDateTime(value?: string) {
 
 export function EditorialCalendar({ projects, busy, onOpen, onUpdated }: Props) {
   const [savingId, setSavingId] = useState("");
+  const [publishingId, setPublishingId] = useState("");
+  const [linkedInConfigured, setLinkedInConfigured] = useState(false);
+  const [linkedInAuthor, setLinkedInAuthor] = useState("");
+  useEffect(() => {
+    void fetch("/api/linkedin/status", { cache: "no-store" })
+      .then((response) => response.json())
+      .then((result) => {
+        setLinkedInConfigured(Boolean(result.configured));
+        setLinkedInAuthor(String(result.author ?? ""));
+      })
+      .catch(() => setLinkedInConfigured(false));
+  }, []);
   const ordered = [...projects].sort((left, right) => {
     if (!left.scheduledAt) return 1;
     if (!right.scheduledAt) return -1;
@@ -58,9 +70,31 @@ export function EditorialCalendar({ projects, busy, onOpen, onUpdated }: Props) 
     }
   }
 
+  async function publishNow(project: ProjectHistoryItem) {
+    if (!window.confirm(`¿Publicar ahora “${project.title}” en LinkedIn? Esta acción es externa y no se puede deshacer desde Kalliom.`)) return;
+    setPublishingId(project.id);
+    try {
+      const response = await fetch(`/api/projects/${encodeURIComponent(project.id)}/linkedin`, { method: "POST" });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error ?? "No fue posible publicar en LinkedIn.");
+      onUpdated(`Publicado realmente en LinkedIn: ${result.postId}.`);
+    } catch (error) {
+      onUpdated(error instanceof Error ? error.message : "No fue posible publicar en LinkedIn.");
+    } finally {
+      setPublishingId("");
+    }
+  }
+
   return (
     <details className="calendar-panel" open>
       <summary><span>Calendario editorial</span><small>{projects.filter((project) => project.scheduledAt).length} programados</small></summary>
+      <div className={`linkedin-connection ${linkedInConfigured ? "connected" : "disconnected"}`}>
+        <div>
+          <strong>{linkedInConfigured ? "LinkedIn conectado" : "LinkedIn pendiente de conexión"}</strong>
+          <small>{linkedInConfigured ? `${linkedInAuthor} · los vencimientos pueden enviarse mediante el despachador` : "El calendario guarda fechas, pero no publicará externamente hasta configurar las credenciales."}</small>
+        </div>
+        <span>{linkedInConfigured ? "API activa" : "Solo calendario interno"}</span>
+      </div>
       <div className="calendar-grid">
         {ordered.map((project) => (
           <form key={project.id} className={`calendar-card status-${project.editorialStatus}`} onSubmit={(event) => { event.preventDefault(); void update(project, event.currentTarget); }}>
@@ -72,7 +106,23 @@ export function EditorialCalendar({ projects, busy, onOpen, onUpdated }: Props) 
               </select>
               <input type="datetime-local" name="scheduledAt" defaultValue={localDateTime(project.scheduledAt)} />
               <button className="secondary-button" disabled={savingId === project.id}>{savingId === project.id ? "…" : "Guardar"}</button>
+              {linkedInConfigured && project.linkedInStatus !== "published" && (
+                <button type="button" className="linkedin-publish" disabled={publishingId === project.id} onClick={() => void publishNow(project)}>
+                  {publishingId === project.id ? "Publicando…" : "Publicar ahora"}
+                </button>
+              )}
             </div>
+            <small className={`linkedin-delivery delivery-${project.linkedInStatus}`}>
+              {project.linkedInStatus === "published"
+                ? `LinkedIn publicado${project.linkedInPublishedAt ? ` · ${new Date(project.linkedInPublishedAt).toLocaleString("es-CO", { dateStyle: "short", timeStyle: "short" })}` : ""}`
+                : project.linkedInStatus === "error"
+                  ? `Error LinkedIn: ${project.linkedInError ?? "reintento pendiente"}`
+                  : project.linkedInStatus === "publishing"
+                    ? "Enviando a LinkedIn…"
+                    : project.linkedInStatus === "scheduled"
+                      ? "LinkedIn pendiente de despacho"
+                      : "Sin envío externo"}
+            </small>
             <span className={`quality-badge quality-${project.qualityScore >= 85 ? "good" : project.qualityScore >= 65 ? "medium" : "low"}`}>{project.qualityScore}/100</span>
           </form>
         ))}

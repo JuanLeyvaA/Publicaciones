@@ -10,8 +10,24 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
-export const batchSchema = z.object({
-  topics: z.array(z.string().trim().min(3).max(180)).min(1).max(20),
+const batchItemSchema = z.object({
+  topic: z.string().trim().min(3).max(240),
+  slideCount: z.coerce.number().int().min(3).max(10),
+  category: z.enum(["automation", "web", "artificial-intelligence", "analytics", "business"]),
+  language: z.enum(["es", "en"]),
+  tone: z.enum(["educational", "direct", "professional"]),
+  editorialProfile: z.enum(["kalliom-professional", "educator", "opinion", "executive", "case-study"]),
+  visualStyle: z.enum(["balanced", "minimal", "bold", "image-led", "text-led"]),
+  scheduledAt: z.string().datetime().optional(),
+}).strict();
+
+const independentBatchSchema = z.object({
+  items: z.array(batchItemSchema).min(1).max(20),
+  force: z.boolean().default(false),
+}).strict();
+
+const legacyBatchSchema = z.object({
+  topics: z.array(z.string().trim().min(3).max(240)).min(1).max(20),
   slideCount: z.coerce.number().int().min(3).max(10),
   category: z.enum(["automation", "web", "artificial-intelligence", "analytics", "business"]),
   language: z.enum(["es", "en"]),
@@ -22,6 +38,25 @@ export const batchSchema = z.object({
   intervalDays: z.coerce.number().int().min(0).max(30).default(1),
   force: z.boolean().default(false),
 }).strict();
+
+export const batchSchema = z.union([independentBatchSchema, legacyBatchSchema]).transform((payload) => {
+  if ("items" in payload) return payload;
+  return {
+    force: payload.force,
+    items: payload.topics.map((topic, index) => ({
+      topic,
+      slideCount: payload.slideCount,
+      category: payload.category,
+      language: payload.language,
+      tone: payload.tone,
+      editorialProfile: payload.editorialProfile,
+      visualStyle: payload.visualStyle,
+      scheduledAt: payload.startDate
+        ? new Date(new Date(payload.startDate).getTime() + index * payload.intervalDays * 86_400_000).toISOString()
+        : undefined,
+    })),
+  };
+});
 
 export async function POST(request: Request) {
   try {
@@ -35,20 +70,10 @@ export async function POST(request: Request) {
     let inputTokens = 0;
     let outputTokens = 0;
 
-    for (const [index, topic] of payload.topics.entries()) {
+    for (const item of payload.items) {
       try {
-        const scheduledAt = payload.startDate
-          ? new Date(new Date(payload.startDate).getTime() + index * payload.intervalDays * 86_400_000).toISOString()
-          : undefined;
         const input = createCarouselInputSchema.parse({
-          topic,
-          slideCount: payload.slideCount,
-          category: payload.category,
-          language: payload.language,
-          tone: payload.tone,
-          editorialProfile: payload.editorialProfile,
-          visualStyle: payload.visualStyle,
-          scheduledAt,
+          ...item,
           batchId,
           avoidTopics: [...memory, ...generatedTitles].slice(-12),
         });
@@ -69,7 +94,7 @@ export async function POST(request: Request) {
         inputTokens += generation.usage.inputTokens;
         outputTokens += generation.usage.outputTokens;
       } catch (error) {
-        failures.push({ topic, error: error instanceof Error ? error.message : "No fue posible generar." });
+        failures.push({ topic: item.topic, error: error instanceof Error ? error.message : "No fue posible generar." });
       }
     }
 

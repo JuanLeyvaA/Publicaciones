@@ -8,7 +8,7 @@ const plainText = (minimum: number, maximum: number) => z.string().min(minimum).
   .refine((value) => !/<\/?[a-z][^>]*>/i.test(value), "No se permite HTML.");
 
 export const createCarouselInputSchema = z.object({
-  topic: z.string().trim().min(3).max(180),
+  topic: z.string().trim().min(3).max(240),
   customTitle: z.string().trim().max(TEXT_LIMITS.cover.title).optional().transform((value) => value || undefined),
   slideCount: z.coerce.number().int().min(3).max(10),
   category: categorySchema,
@@ -19,7 +19,7 @@ export const createCarouselInputSchema = z.object({
   visualStyle: z.enum(["balanced", "minimal", "bold", "image-led", "text-led"]).optional(),
   scheduledAt: z.string().datetime().optional(),
   batchId: z.string().max(80).optional(),
-  avoidTopics: z.array(z.string().min(1).max(180)).max(12).optional(),
+  avoidTopics: z.array(z.string().min(1).max(240)).max(12).optional(),
 }).strict();
 
 const tags = z.array(z.string().min(1).max(40)).min(1).max(6);
@@ -51,9 +51,9 @@ export const aiCarouselSchema = z.object({
   category: categorySchema,
   slides: z.array(z.discriminatedUnion("type", [coverOutputSchema, contentOutputSchema, closingOutputSchema])).min(3).max(10),
   linkedin: z.object({
-    hook: plainText(1, 300),
-    body: plainText(1, 1600),
-    question: plainText(1, 200),
+    hook: plainText(1, 400),
+    body: plainText(1, 2100),
+    question: plainText(1, 300),
     hashtags: z.array(z.string().regex(/^#[^\s#]+$/)).min(2).max(6),
   }).strict(),
 }).strict();

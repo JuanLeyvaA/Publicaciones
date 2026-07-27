@@ -816,7 +816,8 @@ GET  /render/:projectId/:slideId
 
 ### Fase 5 — completada
 
-- Producción por lotes de hasta 20 temas, con programación automática por intervalos.
+- Producción por lotes de hasta 20 temas, cada uno con su propia fecha opcional.
+- Configuración independiente por publicación del lote: páginas, categoría, idioma, tono, perfil, estilo visual y fecha.
 - Calendario editorial con estados de idea, revisión, aprobado, programado y publicado.
 - Memoria editorial que incluye publicaciones recientes en el prompt y alerta por similitud.
 - Cinco direcciones visuales: equilibrada, minimalista, impactante, assets protagonistas y texto protagonista.
@@ -826,9 +827,35 @@ GET  /render/:projectId/:slideId
 - Espacio de trabajo compacto con vistas separadas para editar, crear y consultar el calendario.
 - Editor maestro-detalle: navegador de páginas, una sola vista previa activa y controles de edición en el mismo nivel, sin recorrer todas las diapositivas.
 - Historial lateral persistente, acciones de producción fijas y formularios de creación simple/lote conmutables.
+- Veinticuatro plantillas: ocho portadas, ocho páginas de contenido y ocho cierres.
+- Límites editoriales ampliados con reducción tipográfica progresiva para textos largos.
+- Integración opcional con LinkedIn para cargar el PDF como documento y crear una publicación real.
 - Exportación simplificada: el único archivo persistido y descargable es `carousel.pdf`.
 - Estados de producción `draft`, `generated` y `exported`.
 
 La edición, validación, apertura del historial y exportación no importan ni invocan el motor de IA.
 
 La base `prisma/dev.db`, las claves y los archivos exportados están excluidos de Git.
+
+### Publicación real en LinkedIn
+
+El calendario interno no puede publicar por sí solo si LinkedIn no ha aprobado y autenticado la aplicación. Para activar el envío real:
+
+1. Solicita acceso al producto **Community Management API** en LinkedIn Developers.
+2. Obtén `w_organization_social` para una página administrada o `w_member_social` para el perfil autenticado.
+3. Configura `LINKEDIN_ACCESS_TOKEN`, `LINKEDIN_AUTHOR_URN`, `LINKEDIN_API_VERSION` y `CRON_SECRET` en `.env.local`.
+4. Invoca cada minuto el despachador protegido:
+
+```bash
+curl -H "Authorization: Bearer $CRON_SECRET" https://tu-dominio/api/linkedin/dispatch
+```
+
+También aparece **Publicar ahora** en el calendario cuando las credenciales están configuradas. El sistema genera o reutiliza `carousel.pdf`, inicializa el documento, lo carga a LinkedIn, crea el post y conserva el identificador y resultado del envío. La fecha queda realmente automatizada cuando un cron externo llama al despachador; un proceso web local detenido no puede ejecutar tareas futuras.
+
+Para una instalación local que permanece encendida, ejecuta en otra terminal:
+
+```bash
+KALLIOM_BASE_URL=http://localhost:3000 npm run linkedin:scheduler
+```
+
+El proceso consulta cada minuto qué publicaciones vencieron. En producción conviene usar el programador de tareas de la plataforma de alojamiento para llamar al mismo endpoint.

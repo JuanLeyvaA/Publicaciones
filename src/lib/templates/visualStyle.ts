@@ -3,29 +3,29 @@ import type { CarouselProject, CarouselSlide, TemplateId, VisualStyle } from "@/
 
 const preferences: Record<VisualStyle, Record<CarouselSlide["type"], TemplateId[]>> = {
   balanced: {
-    cover: ["cover", "cover-frame", "cover-split"],
-    content: ["content", "content-steps", "content-data"],
-    closing: ["closing", "closing-panel", "closing-minimal"],
+    cover: ["cover", "cover-frame", "cover-split", "cover-stack"],
+    content: ["content", "content-steps", "content-data", "content-cards"],
+    closing: ["closing", "closing-panel", "closing-minimal", "closing-split"],
   },
   minimal: {
-    cover: ["cover-minimal", "cover", "cover-poster"],
-    content: ["content-focus", "content-steps", "content-quote"],
-    closing: ["closing-minimal", "closing-question", "closing"],
+    cover: ["cover-minimal", "cover", "cover-poster", "cover-stack"],
+    content: ["content-focus", "content-steps", "content-quote", "content-timeline"],
+    closing: ["closing-minimal", "closing-question", "closing", "closing-banner"],
   },
   bold: {
-    cover: ["cover-poster", "cover-frame", "cover-split"],
-    content: ["content-quote", "content-data", "content-steps"],
-    closing: ["closing-question", "closing-brand", "closing-panel"],
+    cover: ["cover-poster", "cover-frame", "cover-split", "cover-diagonal"],
+    content: ["content-quote", "content-data", "content-steps", "content-magazine"],
+    closing: ["closing-question", "closing-brand", "closing-panel", "closing-banner"],
   },
   "image-led": {
-    cover: ["cover-split", "cover-frame", "cover-poster"],
-    content: ["content-data", "content", "content-steps"],
-    closing: ["closing-brand", "closing-panel", "closing"],
+    cover: ["cover-split", "cover-frame", "cover-poster", "cover-sidebar"],
+    content: ["content-data", "content", "content-steps", "content-magazine"],
+    closing: ["closing-brand", "closing-panel", "closing", "closing-orbit"],
   },
   "text-led": {
-    cover: ["cover-minimal", "cover", "cover-poster"],
-    content: ["content-focus", "content-quote", "content-steps"],
-    closing: ["closing-minimal", "closing-question", "closing-panel"],
+    cover: ["cover-minimal", "cover", "cover-poster", "cover-stack"],
+    content: ["content-focus", "content-quote", "content-steps", "content-timeline"],
+    closing: ["closing-minimal", "closing-question", "closing-panel", "closing-split"],
   },
 };
 

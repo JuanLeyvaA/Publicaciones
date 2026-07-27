@@ -10,6 +10,7 @@
     "db:push": "node scripts/ensure-database.mjs && prisma db push",
     "db:seed-demo": "node scripts/seed-demo-cache.mjs",
     "start": "next start",
+    "linkedin:scheduler": "node --env-file-if-exists=.env.local scripts/linkedin-scheduler.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"

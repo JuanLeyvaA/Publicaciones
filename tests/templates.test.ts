@@ -4,12 +4,12 @@ import { buildCarouselPrompt, creativeDirectionFor, SYSTEM_PROMPT } from "@/lib/
 import { selectTemplateId, templateCatalog, templatesForType } from "@/lib/templates/catalog";
 
 describe("Sistema de plantillas", () => {
-  it("ofrece cinco composiciones por tipo sin ids repetidos", () => {
-    expect(templateCatalog).toHaveLength(15);
-    expect(new Set(templateCatalog.map((template) => template.id)).size).toBe(15);
-    expect(templatesForType("cover")).toHaveLength(5);
-    expect(templatesForType("content")).toHaveLength(5);
-    expect(templatesForType("closing")).toHaveLength(5);
+  it("ofrece ocho composiciones por tipo sin ids repetidos", () => {
+    expect(templateCatalog).toHaveLength(24);
+    expect(new Set(templateCatalog.map((template) => template.id)).size).toBe(24);
+    expect(templatesForType("cover")).toHaveLength(8);
+    expect(templatesForType("content")).toHaveLength(8);
+    expect(templatesForType("closing")).toHaveLength(8);
   });
 
   it("asigna plantillas de forma estable y varía páginas de contenido", () => {

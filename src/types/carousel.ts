@@ -5,16 +5,25 @@ export type TemplateId =
   | "cover-poster"
   | "cover-minimal"
   | "cover-frame"
+  | "cover-sidebar"
+  | "cover-stack"
+  | "cover-diagonal"
   | "content"
   | "content-focus"
   | "content-steps"
   | "content-quote"
   | "content-data"
+  | "content-cards"
+  | "content-timeline"
+  | "content-magazine"
   | "closing"
   | "closing-minimal"
   | "closing-panel"
   | "closing-question"
-  | "closing-brand";
+  | "closing-brand"
+  | "closing-split"
+  | "closing-banner"
+  | "closing-orbit";
 export type AssetCategory = "automation" | "web" | "artificial-intelligence" | "analytics" | "business";
 export type AssetOrientation = "vertical" | "horizontal" | "square";
 export type AssetPlacement = "left" | "right" | "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center";
@@ -100,6 +109,10 @@ export type CarouselProject = {
   editorialProfile: EditorialProfileId;
   visualStyle: VisualStyle;
   scheduledAt?: string;
+  linkedInStatus?: "idle" | "scheduled" | "publishing" | "published" | "error";
+  linkedInPostId?: string;
+  linkedInPublishedAt?: string;
+  linkedInError?: string;
   batchId?: string;
   qualityReport: QualityReport;
   brand: { name: string; website: string };

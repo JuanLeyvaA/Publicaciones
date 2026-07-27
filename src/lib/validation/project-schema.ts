@@ -10,14 +10,14 @@ const base = {
 };
 
 const slideSchema = z.discriminatedUnion("type", [
-  z.object({ ...base, type: z.literal("cover"), templateId: z.enum(["cover", "cover-split", "cover-poster", "cover-minimal", "cover-frame"]), title: z.string().min(1).max(TEXT_LIMITS.cover.title), subtitle: z.string().min(1).max(TEXT_LIMITS.cover.subtitle) }),
-  z.object({ ...base, type: z.literal("content"), templateId: z.enum(["content", "content-focus", "content-steps", "content-quote", "content-data"]), number: z.number().int().positive(), title: z.string().min(1).max(TEXT_LIMITS.content.title), body: z.string().min(1).max(TEXT_LIMITS.content.body), highlight: z.string().min(1).max(TEXT_LIMITS.content.highlight) }),
-  z.object({ ...base, type: z.literal("closing"), templateId: z.enum(["closing", "closing-minimal", "closing-panel", "closing-question", "closing-brand"]), title: z.string().min(1).max(TEXT_LIMITS.closing.title), body: z.string().min(1).max(TEXT_LIMITS.closing.body), cta: z.string().min(1).max(TEXT_LIMITS.closing.cta) }),
+  z.object({ ...base, type: z.literal("cover"), templateId: z.enum(["cover", "cover-split", "cover-poster", "cover-minimal", "cover-frame", "cover-sidebar", "cover-stack", "cover-diagonal"]), title: z.string().min(1).max(TEXT_LIMITS.cover.title), subtitle: z.string().min(1).max(TEXT_LIMITS.cover.subtitle) }),
+  z.object({ ...base, type: z.literal("content"), templateId: z.enum(["content", "content-focus", "content-steps", "content-quote", "content-data", "content-cards", "content-timeline", "content-magazine"]), number: z.number().int().positive(), title: z.string().min(1).max(TEXT_LIMITS.content.title), body: z.string().min(1).max(TEXT_LIMITS.content.body), highlight: z.string().min(1).max(TEXT_LIMITS.content.highlight) }),
+  z.object({ ...base, type: z.literal("closing"), templateId: z.enum(["closing", "closing-minimal", "closing-panel", "closing-question", "closing-brand", "closing-split", "closing-banner", "closing-orbit"]), title: z.string().min(1).max(TEXT_LIMITS.closing.title), body: z.string().min(1).max(TEXT_LIMITS.closing.body), cta: z.string().min(1).max(TEXT_LIMITS.closing.cta) }),
 ]);
 
 export const carouselProjectSchema = z.object({
   id: z.string().min(1).max(80).regex(/^[a-z0-9-]+$/),
-  topic: z.string().min(3).max(180),
+  topic: z.string().min(3).max(240),
   title: z.string().min(1).max(TEXT_LIMITS.cover.title),
   subtitle: z.string().min(1).max(TEXT_LIMITS.cover.subtitle),
   slideCount: z.number().int().min(3).max(10),
@@ -29,6 +29,10 @@ export const carouselProjectSchema = z.object({
   editorialProfile: z.enum(["kalliom-professional", "educator", "opinion", "executive", "case-study"]),
   visualStyle: z.enum(["balanced", "minimal", "bold", "image-led", "text-led"]),
   scheduledAt: z.string().datetime().optional(),
+  linkedInStatus: z.enum(["idle", "scheduled", "publishing", "published", "error"]).optional(),
+  linkedInPostId: z.string().max(160).optional(),
+  linkedInPublishedAt: z.string().datetime().optional(),
+  linkedInError: z.string().max(500).optional(),
   batchId: z.string().max(80).optional(),
   qualityReport: z.object({
     score: z.number().int().min(0).max(100),

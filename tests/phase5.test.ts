@@ -23,6 +23,21 @@ describe("Fase 5", () => {
     expect(batchSchema.safeParse({ ...base, topics: Array.from({ length: 21 }, (_, index) => `Tema válido ${index}`) }).success).toBe(false);
   });
 
+  it("acepta ajustes y fechas independientes dentro del mismo lote", () => {
+    const result = batchSchema.safeParse({
+      items: [
+        { topic: "Tema uno", slideCount: 3, category: "automation", language: "es", tone: "direct", editorialProfile: "opinion", visualStyle: "bold" },
+        { topic: "Tema dos", slideCount: 10, category: "analytics", language: "en", tone: "educational", editorialProfile: "educator", visualStyle: "minimal", scheduledAt: "2026-08-10T14:00:00.000Z" },
+      ],
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.items[0]?.slideCount).toBe(3);
+      expect(result.data.items[1]?.slideCount).toBe(10);
+      expect(result.data.items[0]?.visualStyle).not.toBe(result.data.items[1]?.visualStyle);
+    }
+  });
+
   it("incluye cinco perfiles editoriales reutilizables", () => {
     expect(editorialProfiles).toHaveLength(5);
     expect(new Set(editorialProfiles.map((profile) => profile.id)).size).toBe(5);
