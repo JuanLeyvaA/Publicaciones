@@ -27,7 +27,7 @@ export class OpenAICarouselModel implements CarouselModel {
     const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY;
     if (!apiKey) throw new Error("OPENAI_API_KEY_NOT_CONFIGURED");
     this.client = new OpenAI({ apiKey });
-    this.model = options.model ?? process.env.OPENAI_MODEL ?? "gpt-5.6-luna";
+    this.model = options.model ?? process.env.OPENAI_MODEL ?? "gpt-5.6-terra";
   }
 
   async generate(input: CreateCarouselInput): Promise<GenerationResult> {

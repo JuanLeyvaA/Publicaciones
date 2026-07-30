@@ -13,6 +13,7 @@ export const demoProject: CarouselProject = {
   editorialStatus: "approved",
   editorialProfile: "kalliom-professional",
   visualStyle: "balanced",
+  contentState: "new",
   qualityReport: { score: 100, issues: [], checkedAt: "2026-01-01T00:00:00.000Z" },
   brand: { name: "Kalliom", website: "kalliom.com" },
   slides: [

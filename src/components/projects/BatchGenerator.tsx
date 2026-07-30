@@ -140,7 +140,7 @@ export function BatchGenerator({ onCompleted }: Props) {
               <label className="field"><span>Tono</span><select value={item.tone} onChange={(event) => updateItem(item.id, { tone: event.target.value as BatchItem["tone"] })}><option value="educational">Educativo</option><option value="direct">Directo</option><option value="professional">Profesional</option></select></label>
               <label className="field"><span>Perfil</span><select value={item.editorialProfile} onChange={(event) => updateItem(item.id, { editorialProfile: event.target.value as EditorialProfileId })}>{editorialProfiles.map((profile) => <option key={profile.id} value={profile.id}>{profile.label}</option>)}</select></label>
               <label className="field"><span>Estilo visual</span><select value={item.visualStyle} onChange={(event) => updateItem(item.id, { visualStyle: event.target.value as VisualStyle })}>{visualOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
-              <label className="field"><span>Fecha LinkedIn</span><input type="datetime-local" value={item.scheduledAt} onChange={(event) => updateItem(item.id, { scheduledAt: event.target.value })} /></label>
+              <label className="field"><span>Fecha editorial</span><input type="datetime-local" value={item.scheduledAt} onChange={(event) => updateItem(item.id, { scheduledAt: event.target.value })} /></label>
               <button type="button" className="batch-remove" disabled={items.length === 1} onClick={() => setItems((current) => current.filter((candidate) => candidate.id !== item.id))}>Eliminar</button>
             </fieldset>
           ))}

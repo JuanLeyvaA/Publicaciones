@@ -10,9 +10,9 @@ const base = {
 };
 
 const slideSchema = z.discriminatedUnion("type", [
-  z.object({ ...base, type: z.literal("cover"), templateId: z.enum(["cover", "cover-split", "cover-poster", "cover-minimal", "cover-frame", "cover-sidebar", "cover-stack", "cover-diagonal"]), title: z.string().min(1).max(TEXT_LIMITS.cover.title), subtitle: z.string().min(1).max(TEXT_LIMITS.cover.subtitle) }),
-  z.object({ ...base, type: z.literal("content"), templateId: z.enum(["content", "content-focus", "content-steps", "content-quote", "content-data", "content-cards", "content-timeline", "content-magazine"]), number: z.number().int().positive(), title: z.string().min(1).max(TEXT_LIMITS.content.title), body: z.string().min(1).max(TEXT_LIMITS.content.body), highlight: z.string().min(1).max(TEXT_LIMITS.content.highlight) }),
-  z.object({ ...base, type: z.literal("closing"), templateId: z.enum(["closing", "closing-minimal", "closing-panel", "closing-question", "closing-brand", "closing-split", "closing-banner", "closing-orbit"]), title: z.string().min(1).max(TEXT_LIMITS.closing.title), body: z.string().min(1).max(TEXT_LIMITS.closing.body), cta: z.string().min(1).max(TEXT_LIMITS.closing.cta) }),
+  z.object({ ...base, type: z.literal("cover"), templateId: z.enum(["cover", "cover-split", "cover-poster", "cover-minimal", "cover-frame", "cover-sidebar", "cover-stack", "cover-diagonal", "cover-grid", "cover-spotlight", "cover-terminal", "cover-bento", "cover-ribbon", "cover-portal", "cover-editorial", "cover-wave", "cover-typographic", "cover-collage", "cover-arch", "cover-radar", "cover-staircase"]), title: z.string().min(1).max(TEXT_LIMITS.cover.title), subtitle: z.string().min(1).max(TEXT_LIMITS.cover.subtitle) }),
+  z.object({ ...base, type: z.literal("content"), templateId: z.enum(["content", "content-focus", "content-steps", "content-quote", "content-data", "content-cards", "content-timeline", "content-magazine", "content-blueprint", "content-console", "content-duo", "content-rings", "content-dashboard", "content-index", "content-spotlight", "content-wave", "content-radial", "content-staircase", "content-poster", "content-circuit", "content-collage"]), number: z.number().int().positive(), title: z.string().min(1).max(TEXT_LIMITS.content.title), body: z.string().min(1).max(TEXT_LIMITS.content.body), highlight: z.string().min(1).max(TEXT_LIMITS.content.highlight) }),
+  z.object({ ...base, type: z.literal("closing"), templateId: z.enum(["closing", "closing-minimal", "closing-panel", "closing-question", "closing-brand", "closing-split", "closing-banner", "closing-orbit", "closing-stamp", "closing-window", "closing-horizon", "closing-grid", "closing-card", "closing-signal", "closing-editorial", "closing-wave", "closing-arch", "closing-radar", "closing-ticket", "closing-poster", "closing-collage"]), title: z.string().min(1).max(TEXT_LIMITS.closing.title), body: z.string().min(1).max(TEXT_LIMITS.closing.body), cta: z.string().min(1).max(TEXT_LIMITS.closing.cta) }),
 ]);
 
 export const carouselProjectSchema = z.object({
@@ -28,11 +28,8 @@ export const carouselProjectSchema = z.object({
   editorialStatus: z.enum(["idea", "review", "approved", "scheduled", "published"]),
   editorialProfile: z.enum(["kalliom-professional", "educator", "opinion", "executive", "case-study"]),
   visualStyle: z.enum(["balanced", "minimal", "bold", "image-led", "text-led"]),
+  contentState: z.enum(["new", "used", "discarded"]),
   scheduledAt: z.string().datetime().optional(),
-  linkedInStatus: z.enum(["idle", "scheduled", "publishing", "published", "error"]).optional(),
-  linkedInPostId: z.string().max(160).optional(),
-  linkedInPublishedAt: z.string().datetime().optional(),
-  linkedInError: z.string().max(500).optional(),
   batchId: z.string().max(80).optional(),
   qualityReport: z.object({
     score: z.number().int().min(0).max(100),

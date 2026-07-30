@@ -52,6 +52,7 @@ export type ProjectMinAggregateOutputType = {
   editorialStatus: string | null
   editorialProfile: string | null
   visualStyle: string | null
+  contentState: string | null
   scheduledAt: Date | null
   linkedInStatus: string | null
   linkedInPostId: string | null
@@ -81,6 +82,7 @@ export type ProjectMaxAggregateOutputType = {
   editorialStatus: string | null
   editorialProfile: string | null
   visualStyle: string | null
+  contentState: string | null
   scheduledAt: Date | null
   linkedInStatus: string | null
   linkedInPostId: string | null
@@ -110,6 +112,7 @@ export type ProjectCountAggregateOutputType = {
   editorialStatus: number
   editorialProfile: number
   visualStyle: number
+  contentState: number
   scheduledAt: number
   linkedInStatus: number
   linkedInPostId: number
@@ -153,6 +156,7 @@ export type ProjectMinAggregateInputType = {
   editorialStatus?: true
   editorialProfile?: true
   visualStyle?: true
+  contentState?: true
   scheduledAt?: true
   linkedInStatus?: true
   linkedInPostId?: true
@@ -182,6 +186,7 @@ export type ProjectMaxAggregateInputType = {
   editorialStatus?: true
   editorialProfile?: true
   visualStyle?: true
+  contentState?: true
   scheduledAt?: true
   linkedInStatus?: true
   linkedInPostId?: true
@@ -211,6 +216,7 @@ export type ProjectCountAggregateInputType = {
   editorialStatus?: true
   editorialProfile?: true
   visualStyle?: true
+  contentState?: true
   scheduledAt?: true
   linkedInStatus?: true
   linkedInPostId?: true
@@ -327,6 +333,7 @@ export type ProjectGroupByOutputType = {
   editorialStatus: string
   editorialProfile: string
   visualStyle: string
+  contentState: string
   scheduledAt: Date | null
   linkedInStatus: string
   linkedInPostId: string | null
@@ -379,6 +386,7 @@ export type ProjectWhereInput = {
   editorialStatus?: Prisma.StringFilter<"Project"> | string
   editorialProfile?: Prisma.StringFilter<"Project"> | string
   visualStyle?: Prisma.StringFilter<"Project"> | string
+  contentState?: Prisma.StringFilter<"Project"> | string
   scheduledAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   linkedInStatus?: Prisma.StringFilter<"Project"> | string
   linkedInPostId?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -410,6 +418,7 @@ export type ProjectOrderByWithRelationInput = {
   editorialStatus?: Prisma.SortOrder
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
+  contentState?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   linkedInStatus?: Prisma.SortOrder
   linkedInPostId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -444,6 +453,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   editorialStatus?: Prisma.StringFilter<"Project"> | string
   editorialProfile?: Prisma.StringFilter<"Project"> | string
   visualStyle?: Prisma.StringFilter<"Project"> | string
+  contentState?: Prisma.StringFilter<"Project"> | string
   scheduledAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   linkedInStatus?: Prisma.StringFilter<"Project"> | string
   linkedInPostId?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -475,6 +485,7 @@ export type ProjectOrderByWithAggregationInput = {
   editorialStatus?: Prisma.SortOrder
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
+  contentState?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   linkedInStatus?: Prisma.SortOrder
   linkedInPostId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -512,6 +523,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   editorialStatus?: Prisma.StringWithAggregatesFilter<"Project"> | string
   editorialProfile?: Prisma.StringWithAggregatesFilter<"Project"> | string
   visualStyle?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  contentState?: Prisma.StringWithAggregatesFilter<"Project"> | string
   scheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
   linkedInStatus?: Prisma.StringWithAggregatesFilter<"Project"> | string
   linkedInPostId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
@@ -540,6 +552,7 @@ export type ProjectCreateInput = {
   editorialStatus?: string
   editorialProfile?: string
   visualStyle?: string
+  contentState?: string
   scheduledAt?: Date | string | null
   linkedInStatus?: string
   linkedInPostId?: string | null
@@ -571,6 +584,7 @@ export type ProjectUncheckedCreateInput = {
   editorialStatus?: string
   editorialProfile?: string
   visualStyle?: string
+  contentState?: string
   scheduledAt?: Date | string | null
   linkedInStatus?: string
   linkedInPostId?: string | null
@@ -600,6 +614,7 @@ export type ProjectUpdateInput = {
   editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  contentState?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -631,6 +646,7 @@ export type ProjectUncheckedUpdateInput = {
   editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  contentState?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -661,6 +677,7 @@ export type ProjectCreateManyInput = {
   editorialStatus?: string
   editorialProfile?: string
   visualStyle?: string
+  contentState?: string
   scheduledAt?: Date | string | null
   linkedInStatus?: string
   linkedInPostId?: string | null
@@ -689,6 +706,7 @@ export type ProjectUpdateManyMutationInput = {
   editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  contentState?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -718,6 +736,7 @@ export type ProjectUncheckedUpdateManyInput = {
   editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  contentState?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -757,6 +776,7 @@ export type ProjectCountOrderByAggregateInput = {
   editorialStatus?: Prisma.SortOrder
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
+  contentState?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   linkedInStatus?: Prisma.SortOrder
   linkedInPostId?: Prisma.SortOrder
@@ -792,6 +812,7 @@ export type ProjectMaxOrderByAggregateInput = {
   editorialStatus?: Prisma.SortOrder
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
+  contentState?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   linkedInStatus?: Prisma.SortOrder
   linkedInPostId?: Prisma.SortOrder
@@ -821,6 +842,7 @@ export type ProjectMinOrderByAggregateInput = {
   editorialStatus?: Prisma.SortOrder
   editorialProfile?: Prisma.SortOrder
   visualStyle?: Prisma.SortOrder
+  contentState?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   linkedInStatus?: Prisma.SortOrder
   linkedInPostId?: Prisma.SortOrder
@@ -924,6 +946,7 @@ export type ProjectCreateWithoutGenerationCacheInput = {
   editorialStatus?: string
   editorialProfile?: string
   visualStyle?: string
+  contentState?: string
   scheduledAt?: Date | string | null
   linkedInStatus?: string
   linkedInPostId?: string | null
@@ -953,6 +976,7 @@ export type ProjectUncheckedCreateWithoutGenerationCacheInput = {
   editorialStatus?: string
   editorialProfile?: string
   visualStyle?: string
+  contentState?: string
   scheduledAt?: Date | string | null
   linkedInStatus?: string
   linkedInPostId?: string | null
@@ -1011,6 +1035,7 @@ export type ProjectScalarWhereInput = {
   editorialStatus?: Prisma.StringFilter<"Project"> | string
   editorialProfile?: Prisma.StringFilter<"Project"> | string
   visualStyle?: Prisma.StringFilter<"Project"> | string
+  contentState?: Prisma.StringFilter<"Project"> | string
   scheduledAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   linkedInStatus?: Prisma.StringFilter<"Project"> | string
   linkedInPostId?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -1039,6 +1064,7 @@ export type ProjectCreateWithoutSlidesInput = {
   editorialStatus?: string
   editorialProfile?: string
   visualStyle?: string
+  contentState?: string
   scheduledAt?: Date | string | null
   linkedInStatus?: string
   linkedInPostId?: string | null
@@ -1069,6 +1095,7 @@ export type ProjectUncheckedCreateWithoutSlidesInput = {
   editorialStatus?: string
   editorialProfile?: string
   visualStyle?: string
+  contentState?: string
   scheduledAt?: Date | string | null
   linkedInStatus?: string
   linkedInPostId?: string | null
@@ -1113,6 +1140,7 @@ export type ProjectUpdateWithoutSlidesInput = {
   editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  contentState?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1143,6 +1171,7 @@ export type ProjectUncheckedUpdateWithoutSlidesInput = {
   editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  contentState?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1171,6 +1200,7 @@ export type ProjectCreateManyGenerationCacheInput = {
   editorialStatus?: string
   editorialProfile?: string
   visualStyle?: string
+  contentState?: string
   scheduledAt?: Date | string | null
   linkedInStatus?: string
   linkedInPostId?: string | null
@@ -1199,6 +1229,7 @@ export type ProjectUpdateWithoutGenerationCacheInput = {
   editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  contentState?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1228,6 +1259,7 @@ export type ProjectUncheckedUpdateWithoutGenerationCacheInput = {
   editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  contentState?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1257,6 +1289,7 @@ export type ProjectUncheckedUpdateManyWithoutGenerationCacheInput = {
   editorialStatus?: Prisma.StringFieldUpdateOperationsInput | string
   editorialProfile?: Prisma.StringFieldUpdateOperationsInput | string
   visualStyle?: Prisma.StringFieldUpdateOperationsInput | string
+  contentState?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   linkedInStatus?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1317,6 +1350,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   editorialStatus?: boolean
   editorialProfile?: boolean
   visualStyle?: boolean
+  contentState?: boolean
   scheduledAt?: boolean
   linkedInStatus?: boolean
   linkedInPostId?: boolean
@@ -1349,6 +1383,7 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   editorialStatus?: boolean
   editorialProfile?: boolean
   visualStyle?: boolean
+  contentState?: boolean
   scheduledAt?: boolean
   linkedInStatus?: boolean
   linkedInPostId?: boolean
@@ -1379,6 +1414,7 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   editorialStatus?: boolean
   editorialProfile?: boolean
   visualStyle?: boolean
+  contentState?: boolean
   scheduledAt?: boolean
   linkedInStatus?: boolean
   linkedInPostId?: boolean
@@ -1409,6 +1445,7 @@ export type ProjectSelectScalar = {
   editorialStatus?: boolean
   editorialProfile?: boolean
   visualStyle?: boolean
+  contentState?: boolean
   scheduledAt?: boolean
   linkedInStatus?: boolean
   linkedInPostId?: boolean
@@ -1424,7 +1461,7 @@ export type ProjectSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cacheKey" | "topic" | "title" | "subtitle" | "slideCount" | "category" | "language" | "tone" | "status" | "editorialStatus" | "editorialProfile" | "visualStyle" | "scheduledAt" | "linkedInStatus" | "linkedInPostId" | "linkedInPublishedAt" | "linkedInError" | "batchId" | "qualityScore" | "qualityReport" | "linkedInCopy" | "model" | "estimatedTokens" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cacheKey" | "topic" | "title" | "subtitle" | "slideCount" | "category" | "language" | "tone" | "status" | "editorialStatus" | "editorialProfile" | "visualStyle" | "contentState" | "scheduledAt" | "linkedInStatus" | "linkedInPostId" | "linkedInPublishedAt" | "linkedInError" | "batchId" | "qualityScore" | "qualityReport" | "linkedInCopy" | "model" | "estimatedTokens" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   generationCache?: boolean | Prisma.GenerationCacheDefaultArgs<ExtArgs>
   slides?: boolean | Prisma.Project$slidesArgs<ExtArgs>
@@ -1457,7 +1494,11 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     editorialStatus: string
     editorialProfile: string
     visualStyle: string
+    contentState: string
     scheduledAt: Date | null
+    /**
+     * Campos heredados, conservados únicamente para no destruir datos locales.
+     */
     linkedInStatus: string
     linkedInPostId: string | null
     linkedInPublishedAt: Date | null
@@ -1908,6 +1949,7 @@ export interface ProjectFieldRefs {
   readonly editorialStatus: Prisma.FieldRef<"Project", 'String'>
   readonly editorialProfile: Prisma.FieldRef<"Project", 'String'>
   readonly visualStyle: Prisma.FieldRef<"Project", 'String'>
+  readonly contentState: Prisma.FieldRef<"Project", 'String'>
   readonly scheduledAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly linkedInStatus: Prisma.FieldRef<"Project", 'String'>
   readonly linkedInPostId: Prisma.FieldRef<"Project", 'String'>

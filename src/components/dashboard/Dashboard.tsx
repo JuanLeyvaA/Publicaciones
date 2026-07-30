@@ -5,16 +5,17 @@ import { CreateCarouselForm } from "@/components/projects/CreateCarouselForm";
 import { BatchGenerator } from "@/components/projects/BatchGenerator";
 import { EditorialCalendar } from "@/components/projects/EditorialCalendar";
 import { EditorialControls } from "@/components/projects/EditorialControls";
+import { ContentLibrary } from "@/components/projects/ContentLibrary";
 import { ProjectEditor } from "@/components/projects/ProjectEditor";
 import { ProjectHistory } from "@/components/projects/ProjectHistory";
 import type { ProjectHistoryItem } from "@/lib/projects/repository";
-import type { CarouselProject } from "@/types/carousel";
+import type { CarouselProject, ContentState } from "@/types/carousel";
 
 type GenerationMeta = {
   cached: boolean;
   usage: { inputTokens: number; outputTokens: number; calls: number; model: string };
 };
-type WorkspaceView = "editor" | "create" | "calendar";
+type WorkspaceView = "editor" | "create" | "library" | "calendar";
 type CreationMode = "single" | "batch";
 
 export function Dashboard({ project }: { project: CarouselProject }) {
@@ -23,7 +24,6 @@ export function Dashboard({ project }: { project: CarouselProject }) {
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);
   const [dirty, setDirty] = useState(false);
-  const [exportReady, setExportReady] = useState(false);
   const [generationMeta, setGenerationMeta] = useState<GenerationMeta | null>(null);
   const [view, setView] = useState<WorkspaceView>("editor");
   const [creationMode, setCreationMode] = useState<CreationMode>("single");
@@ -40,7 +40,6 @@ export function Dashboard({ project }: { project: CarouselProject }) {
   function changeProject(nextProject: CarouselProject) {
     setActiveProject(nextProject);
     setDirty(true);
-    setExportReady(false);
   }
 
   async function saveProject(projectToSave = activeProject) {
@@ -66,7 +65,7 @@ export function Dashboard({ project }: { project: CarouselProject }) {
     setStatus("Guardando cambios…");
     try {
       await saveProject();
-      setStatus("Proyecto guardado. Editar y guardar no consume tokens.");
+      setStatus("Cambios guardados.");
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "No fue posible guardar.");
     } finally { setBusy(false); }
@@ -74,23 +73,22 @@ export function Dashboard({ project }: { project: CarouselProject }) {
 
   async function validateProject() {
     setBusy(true);
-    setStatus("Validando dimensiones, assets y desbordamientos…");
+    setStatus("Revisando que todas las páginas se vean completas…");
     try {
       const persisted = dirty ? await saveProject() : activeProject;
-      if (persisted.id === "kalliom-demo") throw new Error("Genera o abre un proyecto para validarlo.");
+      if (persisted.id === "kalliom-demo") throw new Error("Genera o abre un proyecto para revisarlo.");
       const response = await fetch(`/api/projects/${encodeURIComponent(persisted.id)}/validate`, { method: "POST" });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error ?? "La validación visual falló.");
-      setStatus(`Validación aprobada: ${result.slideCount} páginas miden 1080 × 1350 y no tienen overflow.`);
+      if (!response.ok) throw new Error(result.error ?? "La revisión visual falló.");
+      setStatus(`Diseño revisado: las ${result.slideCount} páginas están completas y listas para PDF.`);
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : "Error de validación.");
+      setStatus(error instanceof Error ? error.message : "No fue posible revisar el diseño.");
     } finally { setBusy(false); }
   }
 
   async function exportProject() {
     setBusy(true);
-    setExportReady(false);
-    setStatus("Guardando, renderizando y validando las diapositivas…");
+    setStatus("Preparando y descargando el PDF…");
     try {
       const persisted = activeProject.id === "kalliom-demo" ? activeProject : (dirty ? await saveProject() : activeProject);
       const response = await fetch(`/api/projects/${encodeURIComponent(persisted.id)}/export`, {
@@ -103,9 +101,15 @@ export function Dashboard({ project }: { project: CarouselProject }) {
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error ?? "No fue posible exportar.");
+      const anchor = document.createElement("a");
+      const safeName = persisted.title.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-|-$/g, "").toLowerCase().slice(0, 70) || "carrusel";
+      anchor.href = `/api/projects/${encodeURIComponent(persisted.id)}/export?format=pdf`;
+      anchor.download = `${safeName}.pdf`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
       setActiveProject({ ...persisted, status: "exported" });
-      setExportReady(true);
-      setStatus(`PDF listo: ${result.slideCount} páginas validadas.`);
+      setStatus(`PDF descargado: ${result.slideCount} páginas validadas.`);
       await refreshHistory();
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "Error de exportación");
@@ -114,7 +118,7 @@ export function Dashboard({ project }: { project: CarouselProject }) {
 
   async function reviewQuality() {
     setBusy(true);
-    setStatus("Revisando claridad, variedad, CTA y similitud con el historial…");
+    setStatus("Revisando claridad, variedad y utilidad editorial…");
     try {
       const persisted = dirty ? await saveProject() : activeProject;
       const response = await fetch(`/api/projects/${encodeURIComponent(persisted.id)}/quality`, { method: "POST" });
@@ -144,8 +148,7 @@ export function Dashboard({ project }: { project: CarouselProject }) {
       if (!response.ok) throw new Error(result.error ?? "No fue posible regenerar.");
       setActiveProject(result.project);
       setDirty(false);
-      setExportReady(false);
-      setStatus(`Fragmento regenerado con ${result.usage.calls} llamada y ${result.usage.inputTokens + result.usage.outputTokens} tokens.`);
+      setStatus("Texto mejorado y guardado.");
       await refreshHistory();
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "No fue posible regenerar.");
@@ -165,46 +168,68 @@ export function Dashboard({ project }: { project: CarouselProject }) {
       setActiveProject(result.project);
       setGenerationMeta(null);
       setDirty(false);
-      setExportReady(false);
-      setStatus("Proyecto abierto desde el historial: 0 llamadas de IA.");
+      setStatus("Proyecto abierto.");
       setView("editor");
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "No fue posible abrir.");
     } finally { setBusy(false); }
   }
 
+  async function moveContentState(id: string, contentState: ContentState) {
+    const previous = history;
+    setHistory((items) => items.map((item) => item.id === id ? { ...item, contentState } : item));
+    if (activeProject.id === id) setActiveProject((current) => ({ ...current, contentState }));
+    setStatus("Moviendo publicación…");
+    try {
+      const response = await fetch(`/api/projects/${encodeURIComponent(id)}/state`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ contentState }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error ?? "No fue posible mover la publicación.");
+      setStatus(contentState === "new" ? "Publicación devuelta a Nuevas." : contentState === "used" ? "Publicación marcada como usada." : "Publicación movida a No me interesan.");
+      await refreshHistory();
+    } catch (error) {
+      setHistory(previous);
+      if (activeProject.id === id) setActiveProject((current) => ({ ...current, contentState: previous.find((item) => item.id === id)?.contentState ?? "new" }));
+      setStatus(error instanceof Error ? error.message : "No fue posible mover la publicación.");
+    }
+  }
+
   return (
     <div className="app-shell">
       <header className="app-header">
-        <div className="app-brand"><span className="app-brand-icon">K</span><div>Kalliom Content Engine<small>Internal publishing studio</small></div></div>
-        <span className="phase-chip">Fase 5 · Producción editorial</span>
+        <div className="app-brand"><span className="app-brand-icon">K</span><div>Kalliom Content Engine<small>Estudio de contenido</small></div></div>
+        <span className="phase-chip">Carruseles listos para PDF</span>
       </header>
       <main className="dashboard">
         <section className="workspace-toolbar">
           <nav className="workspace-tabs" aria-label="Secciones principales">
             <button type="button" className={view === "editor" ? "active" : ""} onClick={() => setView("editor")}><span>01</span> Editor</button>
             <button type="button" className={view === "create" ? "active" : ""} onClick={() => setView("create")}><span>02</span> Crear</button>
-            <button type="button" className={view === "calendar" ? "active" : ""} onClick={() => setView("calendar")}><span>03</span> Calendario</button>
+            <button type="button" className={view === "library" ? "active" : ""} onClick={() => setView("library")}><span>03</span> Organizar</button>
+            <button type="button" className={view === "calendar" ? "active" : ""} onClick={() => setView("calendar")}><span>04</span> Calendario</button>
           </nav>
           {view === "editor" && (
             <div className="production-actions">
-              <button className="secondary-button" disabled={busy || activeProject.id === "kalliom-demo"} onClick={handleSave}>{dirty ? "Guardar" : "Guardado"}</button>
-              <button className="secondary-button" disabled={busy || activeProject.id === "kalliom-demo"} onClick={validateProject}>Validar</button>
-              <button className="export-button" disabled={busy} onClick={exportProject}>{busy ? "Procesando…" : "Crear PDF"}</button>
+              <button className="secondary-button" disabled={busy || !dirty || activeProject.id === "kalliom-demo"} onClick={handleSave}>{dirty ? "Guardar cambios" : "Guardado"}</button>
+              <button className="secondary-button" disabled={busy || activeProject.id === "kalliom-demo"} onClick={validateProject}>Revisar diseño</button>
+              <button className="export-button" disabled={busy} onClick={exportProject}>{busy ? "Espera…" : "Descargar PDF"}</button>
             </div>
           )}
         </section>
         <div className="workspace-layout">
           <aside className="workspace-sidebar">
             <div className="sidebar-heading"><span>Proyectos</span><button type="button" onClick={() => setView("create")}>＋ Nuevo</button></div>
-            <ProjectHistory projects={history} activeId={activeProject.id} busy={busy} onOpen={openProject} />
+            <ProjectHistory projects={history.filter((project) => project.contentState === "new")} activeId={activeProject.id} busy={busy} onOpen={openProject} />
           </aside>
           <section className="workspace-content">
             {status && <p className="status-message" role="status">{status}</p>}
             {view === "create" && (
               <>
                 <div className="view-heading">
-                  <div><span>Producción</span><h1>Crear contenido</h1><p>Elige un carrusel o un lote de hasta 20 temas.</p></div>
+                  <div><span>Producción</span><h1>Crear contenido</h1><p>Escribe un tema, ajusta lo necesario y genera. Puedes crear hasta 20 a la vez.</p></div>
                   <div className="segmented-control">
                     <button type="button" className={creationMode === "single" ? "active" : ""} onClick={() => setCreationMode("single")}>Un carrusel</button>
                     <button type="button" className={creationMode === "batch" ? "active" : ""} onClick={() => setCreationMode("batch")}>Lote</button>
@@ -214,7 +239,6 @@ export function Dashboard({ project }: { project: CarouselProject }) {
                   <BatchGenerator onCompleted={(projects, message) => {
                     if (projects[0]) setActiveProject(projects[0]);
                     setDirty(false);
-                    setExportReady(false);
                     setStatus(message);
                     setView("editor");
                     void refreshHistory();
@@ -224,32 +248,32 @@ export function Dashboard({ project }: { project: CarouselProject }) {
                     setActiveProject(nextProject);
                     setGenerationMeta(meta);
                     setDirty(false);
-                    setExportReady(false);
                     setView("editor");
                     void refreshHistory();
-                    setStatus(meta.cached ? "Contenido recuperado de caché: 0 llamadas nuevas." : `Contenido generado con ${meta.usage.calls} llamada${meta.usage.calls === 1 ? "" : "s"} y guardado en caché.`);
+                    setStatus(meta.cached ? "Se abrió una versión que ya estaba guardada." : "Carrusel creado y listo para editar.");
                   }} />
                 )}
               </>
             )}
             {view === "calendar" && (
               <>
-                <div className="view-heading"><div><span>Planificación</span><h1>Calendario editorial</h1><p>Programa y cambia estados sin abrir cada proyecto.</p></div></div>
+                <div className="view-heading"><div><span>Planificación</span><h1>Calendario editorial</h1><p>Organiza fechas y estados internos sin abrir cada proyecto.</p></div></div>
                 <EditorialCalendar projects={history} busy={busy} onOpen={openProject} onUpdated={(message) => { setStatus(message); void refreshHistory(); }} />
+              </>
+            )}
+            {view === "library" && (
+              <>
+                <div className="view-heading"><div><span>Biblioteca</span><h1>Organizar publicaciones</h1><p>Arrastra cada publicación según lo que quieras hacer con ella.</p></div></div>
+                <ContentLibrary projects={history} busy={busy} onOpen={openProject} onMove={moveContentState} />
               </>
             )}
             {view === "editor" && (
               <>
-                {exportReady && (
-                  <div className="download-bar">
-                    <span>PDF listo</span>
-                    <a href={`/api/projects/${encodeURIComponent(activeProject.id)}/export?format=pdf`}>Descargar PDF</a>
-                  </div>
-                )}
                 <section className="project-summary">
                   <div><strong>{activeProject.title}</strong><span>{dirty ? "Cambios sin guardar" : `Estado: ${activeProject.status}`}</span></div>
                   <span>{activeProject.slideCount} páginas · {activeProject.category} · {activeProject.language.toUpperCase()}</span>
-                  {generationMeta && <em className={generationMeta.cached ? "cache-hit" : "cache-new"}>{generationMeta.cached ? "Caché reutilizada" : `${generationMeta.usage.model} · ${generationMeta.usage.inputTokens + generationMeta.usage.outputTokens} tokens`}</em>}
+                  {activeProject.contentState === "new" && <em className="content-state-badge state-new">Nuevo</em>}
+                  {generationMeta && <em className={generationMeta.cached ? "cache-hit" : "cache-new"}>{generationMeta.cached ? "Versión guardada" : "Creado con IA"}</em>}
                 </section>
                 <EditorialControls project={activeProject} busy={busy} onQuality={reviewQuality} onRegenerate={(target) => void regeneratePart(target)} />
                 <ProjectEditor project={activeProject} onChange={changeProject} busy={busy} onRegenerateSlide={(slideId) => void regeneratePart({ kind: "slide", slideId })} />

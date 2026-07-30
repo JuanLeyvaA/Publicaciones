@@ -33,7 +33,9 @@ model Project {
   editorialStatus  String          @default("review")
   editorialProfile String          @default("kalliom-professional")
   visualStyle      String          @default("balanced")
+  contentState     String          @default("new")
   scheduledAt      DateTime?
+  /// Campos heredados, conservados únicamente para no destruir datos locales.
   linkedInStatus   String          @default("idle")
   linkedInPostId   String?
   linkedInPublishedAt DateTime?
@@ -51,6 +53,7 @@ model Project {
 
   @@index([cacheKey])
   @@index([scheduledAt])
+  @@index([contentState, updatedAt])
   @@index([linkedInStatus, scheduledAt])
   @@index([batchId])
 }

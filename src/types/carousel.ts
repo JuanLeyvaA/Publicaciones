@@ -8,6 +8,19 @@ export type TemplateId =
   | "cover-sidebar"
   | "cover-stack"
   | "cover-diagonal"
+  | "cover-grid"
+  | "cover-spotlight"
+  | "cover-terminal"
+  | "cover-bento"
+  | "cover-ribbon"
+  | "cover-portal"
+  | "cover-editorial"
+  | "cover-wave"
+  | "cover-typographic"
+  | "cover-collage"
+  | "cover-arch"
+  | "cover-radar"
+  | "cover-staircase"
   | "content"
   | "content-focus"
   | "content-steps"
@@ -16,6 +29,19 @@ export type TemplateId =
   | "content-cards"
   | "content-timeline"
   | "content-magazine"
+  | "content-blueprint"
+  | "content-console"
+  | "content-duo"
+  | "content-rings"
+  | "content-dashboard"
+  | "content-index"
+  | "content-spotlight"
+  | "content-wave"
+  | "content-radial"
+  | "content-staircase"
+  | "content-poster"
+  | "content-circuit"
+  | "content-collage"
   | "closing"
   | "closing-minimal"
   | "closing-panel"
@@ -23,7 +49,20 @@ export type TemplateId =
   | "closing-brand"
   | "closing-split"
   | "closing-banner"
-  | "closing-orbit";
+  | "closing-orbit"
+  | "closing-stamp"
+  | "closing-window"
+  | "closing-horizon"
+  | "closing-grid"
+  | "closing-card"
+  | "closing-signal"
+  | "closing-editorial"
+  | "closing-wave"
+  | "closing-arch"
+  | "closing-radar"
+  | "closing-ticket"
+  | "closing-poster"
+  | "closing-collage";
 export type AssetCategory = "automation" | "web" | "artificial-intelligence" | "analytics" | "business";
 export type AssetOrientation = "vertical" | "horizontal" | "square";
 export type AssetPlacement = "left" | "right" | "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center";
@@ -31,6 +70,7 @@ export type AssetScale = "compact" | "standard" | "large";
 export type EditorialStatus = "idea" | "review" | "approved" | "scheduled" | "published";
 export type EditorialProfileId = "kalliom-professional" | "educator" | "opinion" | "executive" | "case-study";
 export type VisualStyle = "balanced" | "minimal" | "bold" | "image-led" | "text-led";
+export type ContentState = "new" | "used" | "discarded";
 
 export type QualityIssue = {
   code: string;
@@ -108,11 +148,8 @@ export type CarouselProject = {
   editorialStatus: EditorialStatus;
   editorialProfile: EditorialProfileId;
   visualStyle: VisualStyle;
+  contentState: ContentState;
   scheduledAt?: string;
-  linkedInStatus?: "idle" | "scheduled" | "publishing" | "published" | "error";
-  linkedInPostId?: string;
-  linkedInPublishedAt?: string;
-  linkedInError?: string;
   batchId?: string;
   qualityReport: QualityReport;
   brand: { name: string; website: string };

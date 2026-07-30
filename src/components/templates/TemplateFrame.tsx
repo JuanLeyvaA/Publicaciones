@@ -23,6 +23,9 @@ export function TemplateFrame({ children, slideId, variant, templateId, brand, i
       <div className="background-art" aria-hidden="true" />
       <div className="ambient-orb orb-one" aria-hidden="true" />
       <div className="ambient-orb orb-two" aria-hidden="true" />
+      <div className="template-decor decor-one" aria-hidden="true" />
+      <div className="template-decor decor-two" aria-hidden="true" />
+      <div className="template-decor decor-three" aria-hidden="true" />
       <div className="noise" aria-hidden="true" />
       <AssetVisual asset={asset} variant={variant} />
       <div className="safe-area" data-safe-area="true">

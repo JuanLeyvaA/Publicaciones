@@ -705,6 +705,7 @@ export const ProjectScalarFieldEnum = {
   editorialStatus: 'editorialStatus',
   editorialProfile: 'editorialProfile',
   visualStyle: 'visualStyle',
+  contentState: 'contentState',
   scheduledAt: 'scheduledAt',
   linkedInStatus: 'linkedInStatus',
   linkedInPostId: 'linkedInPostId',

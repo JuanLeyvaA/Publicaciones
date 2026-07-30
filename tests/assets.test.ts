@@ -1,17 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { demoProject } from "@/data/demo-project";
-import { assetCatalog, searchAssets } from "@/lib/assets/catalog";
+import { assetCatalog, recommendedAssetCatalog, searchAssets } from "@/lib/assets/catalog";
 import { scoreAsset } from "@/lib/assets/scoreAsset";
 import { assignAssetsToProject, selectAssetForSlide } from "@/lib/assets/selectAsset";
 import type { AssetPlacement } from "@/types/carousel";
 
 describe("biblioteca local de assets", () => {
   it("contiene más de 100 assets distintos, activos y con rutas internas", () => {
-    expect(assetCatalog).toHaveLength(111);
+    expect(assetCatalog).toHaveLength(116);
     expect(assetCatalog.every((asset) => asset.active && asset.path.startsWith("/assets/"))).toBe(true);
-    expect(new Set(assetCatalog.map((asset) => asset.name)).size).toBe(111);
-    expect(new Set(assetCatalog.map((asset) => asset.motif)).size).toBe(111);
-    expect(new Set(assetCatalog.map((asset) => asset.path)).size).toBe(111);
+    expect(new Set(assetCatalog.map((asset) => asset.name)).size).toBe(116);
+    expect(new Set(assetCatalog.map((asset) => asset.motif)).size).toBe(116);
+    expect(new Set(assetCatalog.map((asset) => asset.path)).size).toBe(116);
   });
 
   it("distribuye la biblioteca entre categorías, posiciones, escalas y orientaciones", () => {
@@ -23,12 +23,18 @@ describe("biblioteca local de assets", () => {
     expect(new Set(assetCatalog.map((asset) => asset.orientation)).size).toBe(3);
   });
 
-  it("incluye once recursos raster originales en estilos visuales diferentes", () => {
+  it("incluye dieciséis recursos raster originales en estilos visuales diferentes", () => {
     const raster = assetCatalog.filter((asset) => asset.mediaType === "raster");
-    expect(raster).toHaveLength(11);
+    expect(raster).toHaveLength(16);
     expect(new Set(raster.map((asset) => asset.visualStyle)).size).toBeGreaterThanOrEqual(10);
     expect(raster.filter((asset) => asset.tags.includes("robot")).length).toBeGreaterThanOrEqual(6);
     expect(raster.every((asset) => asset.transparent === false && asset.path.endsWith(".webp"))).toBe(true);
+  });
+
+  it("expone una selección curada sin perder la biblioteca completa", () => {
+    expect(recommendedAssetCatalog.length).toBeGreaterThanOrEqual(30);
+    expect(recommendedAssetCatalog.length).toBeLessThan(assetCatalog.length);
+    expect(recommendedAssetCatalog.every((asset) => asset.active)).toBe(true);
   });
 
   it("busca por categoría y etiquetas sin IA", () => {

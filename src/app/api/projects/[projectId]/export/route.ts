@@ -48,14 +48,17 @@ export async function GET(request: Request, { params }: { params: Promise<{ proj
   if (!/^(project-[a-f0-9]{20}|kalliom-demo)$/.test(projectId)) return NextResponse.json({ error: "ID inválido." }, { status: 400 });
   const format = new URL(request.url).searchParams.get("format") ?? "pdf";
   if (format !== "pdf") return NextResponse.json({ error: "Solo está disponible la descarga en PDF." }, { status: 400 });
+  const project = projectId === demoProject.id ? demoProject : await getProjectById(projectId);
+  if (!project) return NextResponse.json({ error: "Proyecto no encontrado." }, { status: 404 });
   const fileName = "carousel.pdf";
   const filePath = path.join(process.cwd(), "exports", projectId, fileName);
+  const downloadName = project.title.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-|-$/g, "").toLowerCase().slice(0, 70) || "carrusel";
   try {
     const data = await fs.readFile(filePath);
     return new NextResponse(data, {
       headers: {
         "content-type": "application/pdf",
-        "content-disposition": `attachment; filename="${projectId}-${fileName}"`,
+        "content-disposition": `attachment; filename="${downloadName}.pdf"`,
         "cache-control": "no-store",
       },
     });

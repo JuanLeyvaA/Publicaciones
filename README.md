@@ -741,7 +741,7 @@ Motor visual Next.js, canvas fijo 1080 × 1350, tres plantillas, preview, Playwr
 
 ### Fase 2 — completada
 
-- Biblioteca de 111 recursos únicos: 100 SVG locales y 11 imágenes WebP originales en estilos 3D, fotográfico, clay, industrial, isométrico, risográfico, vidrio, neón, papercut y low-poly.
+- Biblioteca de 116 recursos únicos: 100 SVG locales y 16 imágenes WebP originales en estilos 3D, fotográfico, clay, industrial, isométrico, risográfico, vidrio, neón, papercut, low-poly y cinematográfico.
 - Nuevas escenas con robots, asistentes, colaboración humano-IA, equipos, automatización industrial, analítica y comercio digital.
 - 20 conceptos por categoría, con posiciones, escalas y orientaciones equilibradas.
 - Metadata tipada en `src/lib/assets/catalog.ts`.
@@ -749,7 +749,7 @@ Motor visual Next.js, canvas fijo 1080 × 1350, tres plantillas, preview, Playwr
 - Scoring local: etiquetas, categoría, plantilla, orientación, repetición y uso reciente.
 - Desempate determinista basado en proyecto, página y asset.
 - Asignación automática sin repetir assets ni posiciones mientras existan candidatos disponibles.
-- Selector manual en cada página de la vista previa.
+- Selector manual curado en cada página: primero muestra los visuales de mayor calidad y conserva la biblioteca completa para compatibilidad.
 - La selección manual se envía al endpoint y queda reflejada en PNG, PDF y `carousel-data.json`.
 - La búsqueda, selección, puntuación y reutilización de assets funcionan localmente y no llaman a la IA durante la creación o exportación de carruseles.
 
@@ -764,7 +764,7 @@ npm run assets:seed
 - Formulario con tema, título opcional, 3–10 páginas, categoría, idioma, tono y CTA.
 - Responses API con Structured Outputs y schema Zod.
 - Una solicitud que genera todo el carrusel y el copy de LinkedIn.
-- `gpt-5.6-luna` como modelo inicial de bajo consumo, configurable mediante `OPENAI_MODEL`.
+- `gpt-5.6-terra` como modelo equilibrado entre calidad y consumo, configurable mediante `OPENAI_MODEL`.
 - Máximo de un reintento, exclusivamente para reparar JSON sintácticamente inválido.
 - Hash SHA-256 sobre la entrada normalizada.
 - Caché idempotente en Prisma/SQLite.
@@ -793,9 +793,9 @@ POST /api/projects/generate
 GET  /api/projects
 GET  /api/projects/:projectId
 PATCH /api/projects/:projectId
+PATCH /api/projects/:projectId/state
 POST /api/projects/:projectId/validate
 POST /api/projects/:projectId/export
-GET  /api/projects/:projectId/export?format=zip
 GET  /api/projects/:projectId/export?format=pdf
 GET  /render/:projectId/:slideId
 ```
@@ -822,40 +822,23 @@ GET  /render/:projectId/:slideId
 - Memoria editorial que incluye publicaciones recientes en el prompt y alerta por similitud.
 - Cinco direcciones visuales: equilibrada, minimalista, impactante, assets protagonistas y texto protagonista.
 - Revisión local de calidad para repetición, clichés, CTA, variedad visual, assets e historial.
-- Regeneración parcial de título, página, CTA o copy de LinkedIn mediante una sola llamada estructurada.
+- Regeneración parcial de título, página, CTA o descripción mediante una sola llamada estructurada.
 - Cinco perfiles editoriales reutilizables.
 - Espacio de trabajo compacto con vistas separadas para editar, crear y consultar el calendario.
 - Editor maestro-detalle: navegador de páginas, una sola vista previa activa y controles de edición en el mismo nivel, sin recorrer todas las diapositivas.
 - Historial lateral persistente, acciones de producción fijas y formularios de creación simple/lote conmutables.
-- Veinticuatro plantillas: ocho portadas, ocho páginas de contenido y ocho cierres.
+- Catálogo visible de sesenta y tres plantillas: veintiuna portadas, veintiuna páginas de contenido y veintiún cierres.
+- Dieciocho familias nuevas rompen la retícula convencional con ondas, arcos, radares, collages, escaleras, circuitos, tickets y tipografía monumental, conservando únicamente la paleta Kalliom.
+- Cuarenta y una construcciones de fondo diferenciadas con retículas, terminales, mosaicos, portales, planos técnicos, dashboards, focos, franjas, horizontes y ondas; todas conservan la paleta Kalliom.
+- Selección automática distribuida por proyecto y tema para evitar que publicaciones con el mismo estilo visual reciban siempre la misma portada.
+- Ajuste tipográfico por densidad y detección geométrica de colisiones entre título, cuerpo, destacado y CTA.
+- Fallback visual seguro durante la exportación: si una composición elegida no admite un texto excepcionalmente largo, el PDF usa automáticamente una plantilla compatible sin bloquear la descarga.
 - Límites editoriales ampliados con reducción tipográfica progresiva para textos largos.
-- Integración opcional con LinkedIn para cargar el PDF como documento y crear una publicación real.
-- Exportación simplificada: el único archivo persistido y descargable es `carousel.pdf`.
+- Exportación simplificada: el botón genera y descarga directamente un PDF con el título del proyecto como nombre.
+- Biblioteca visual de publicaciones con arrastre entre `Nuevas`, `Ya usadas` y `No me interesan`; el estado queda persistido y cada bandeja tiene desplazamiento propio.
+- La integración externa de LinkedIn fue retirada; el calendario se conserva como planificación interna y la publicación se realiza manualmente con el PDF descargado.
 - Estados de producción `draft`, `generated` y `exported`.
 
 La edición, validación, apertura del historial y exportación no importan ni invocan el motor de IA.
 
 La base `prisma/dev.db`, las claves y los archivos exportados están excluidos de Git.
-
-### Publicación real en LinkedIn
-
-El calendario interno no puede publicar por sí solo si LinkedIn no ha aprobado y autenticado la aplicación. Para activar el envío real:
-
-1. Solicita acceso al producto **Community Management API** en LinkedIn Developers.
-2. Obtén `w_organization_social` para una página administrada o `w_member_social` para el perfil autenticado.
-3. Configura `LINKEDIN_ACCESS_TOKEN`, `LINKEDIN_AUTHOR_URN`, `LINKEDIN_API_VERSION` y `CRON_SECRET` en `.env.local`.
-4. Invoca cada minuto el despachador protegido:
-
-```bash
-curl -H "Authorization: Bearer $CRON_SECRET" https://tu-dominio/api/linkedin/dispatch
-```
-
-También aparece **Publicar ahora** en el calendario cuando las credenciales están configuradas. El sistema genera o reutiliza `carousel.pdf`, inicializa el documento, lo carga a LinkedIn, crea el post y conserva el identificador y resultado del envío. La fecha queda realmente automatizada cuando un cron externo llama al despachador; un proceso web local detenido no puede ejecutar tareas futuras.
-
-Para una instalación local que permanece encendida, ejecuta en otra terminal:
-
-```bash
-KALLIOM_BASE_URL=http://localhost:3000 npm run linkedin:scheduler
-```
-
-El proceso consulta cada minuto qué publicaciones vencieron. En producción conviene usar el programador de tareas de la plataforma de alojamiento para llamar al mismo endpoint.

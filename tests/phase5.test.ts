@@ -8,6 +8,7 @@ import { editorialProfiles } from "@/lib/editorial/profiles";
 import { reviewProject } from "@/lib/quality/reviewProject";
 import { isTemplateCompatible } from "@/lib/templates/catalog";
 import { applyVisualStyle } from "@/lib/templates/visualStyle";
+import { carouselProjectSchema } from "@/lib/validation/project-schema";
 
 describe("Fase 5", () => {
   it("acepta lotes de hasta 20 publicaciones", () => {
@@ -51,6 +52,15 @@ describe("Fase 5", () => {
     }
   });
 
+  it("varía la composición entre proyectos aunque compartan dirección visual", () => {
+    const covers = Array.from({ length: 12 }, (_, index) => applyVisualStyle({
+      ...demoProject,
+      id: `project-variation-${index}`,
+      topic: `Tema editorial distinto ${index}`,
+    }, "balanced").slides[0]?.templateId);
+    expect(new Set(covers).size).toBeGreaterThanOrEqual(4);
+  });
+
   it("detecta repetición interna e histórica sin usar IA", () => {
     const duplicate = {
       ...demoProject,
@@ -65,6 +75,7 @@ describe("Fase 5", () => {
     const rendering = await fs.readFile(path.resolve("src/lib/rendering/renderSlides.ts"), "utf8");
     const route = await fs.readFile(path.resolve("src/app/api/projects/[projectId]/export/route.ts"), "utf8");
     expect(rendering).not.toMatch(/createZipFromDirectory|linkedin-copy|carousel-data/);
+    expect(rendering).toMatch(/collisionElements|safeTemplate/);
     expect(route).toContain('format !== "pdf"');
   });
 
@@ -73,5 +84,16 @@ describe("Fase 5", () => {
     expect(route).toMatch(/title|slide|cta|linkedin/);
     expect(route).toMatch(/regenerateProjectPart/);
     expect(route).not.toMatch(/getOrGenerateCarousel/);
+  });
+
+  it("persiste y organiza publicaciones en tres estados mediante arrastre", async () => {
+    for (const contentState of ["new", "used", "discarded"] as const) {
+      expect(carouselProjectSchema.safeParse({ ...demoProject, contentState }).success).toBe(true);
+    }
+    const library = await fs.readFile(path.resolve("src/components/projects/ContentLibrary.tsx"), "utf8");
+    const stateRoute = await fs.readFile(path.resolve("src/app/api/projects/[projectId]/state/route.ts"), "utf8");
+    expect(library).toMatch(/draggable|onDrop/);
+    expect(library).toMatch(/Nuevas|Ya usadas|No me interesan/);
+    expect(stateRoute).toMatch(/updateContentState/);
   });
 });

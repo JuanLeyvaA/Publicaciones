@@ -27,9 +27,14 @@ export function EditorialControls({ project, busy, onQuality, onRegenerate }: Pr
       </div>
       <div className="quality-actions">
         <button className="secondary-button" disabled={busy || project.id === "kalliom-demo"} onClick={onQuality}>Revisar calidad</button>
-        <button className="secondary-button" disabled={busy || project.id === "kalliom-demo"} onClick={() => onRegenerate({ kind: "title" })}>Regenerar título</button>
-        <button className="secondary-button" disabled={busy || project.id === "kalliom-demo"} onClick={() => onRegenerate({ kind: "cta" })}>Regenerar CTA</button>
-        <button className="secondary-button" disabled={busy || project.id === "kalliom-demo"} onClick={() => onRegenerate({ kind: "linkedin" })}>Regenerar copy</button>
+        <details className="quality-tools">
+          <summary>Mejorar con IA</summary>
+          <div>
+            <button className="secondary-button" disabled={busy || project.id === "kalliom-demo"} onClick={() => onRegenerate({ kind: "title" })}>Mejorar título</button>
+            <button className="secondary-button" disabled={busy || project.id === "kalliom-demo"} onClick={() => onRegenerate({ kind: "cta" })}>Mejorar cierre</button>
+            <button className="secondary-button" disabled={busy || project.id === "kalliom-demo"} onClick={() => onRegenerate({ kind: "linkedin" })}>Mejorar descripción</button>
+          </div>
+        </details>
       </div>
     </section>
   );

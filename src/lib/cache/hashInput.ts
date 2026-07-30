@@ -5,8 +5,11 @@ function normalizeText(value?: string) {
   return value?.normalize("NFKC").trim().replace(/\s+/g, " ").toLowerCase() || undefined;
 }
 
+const GENERATION_VERSION = "editorial-quality-v2";
+
 export function normalizeCarouselInput(input: CreateCarouselInput) {
   return {
+    generationVersion: GENERATION_VERSION,
     topic: normalizeText(input.topic)!,
     customTitle: normalizeText(input.customTitle),
     slideCount: input.slideCount,

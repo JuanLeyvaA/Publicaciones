@@ -1,4 +1,4 @@
-import { assetCatalog } from "@/lib/assets/catalog";
+import { recommendedAssetCatalog } from "@/lib/assets/catalog";
 import { assignAssetsToProject } from "@/lib/assets/selectAsset";
 import type { AiCarouselOutput, CreateCarouselInput } from "@/lib/ai/schemas";
 import { prisma } from "@/lib/db";
@@ -40,8 +40,8 @@ export async function persistGeneratedProject(input: CreateCarouselInput, cacheK
     editorialStatus: input.scheduledAt ? "scheduled" : "review",
     editorialProfile: input.editorialProfile ?? "kalliom-professional",
     visualStyle: input.visualStyle ?? "balanced",
+    contentState: "new",
     scheduledAt: input.scheduledAt,
-    linkedInStatus: input.scheduledAt ? "scheduled" : "idle",
     batchId: input.batchId,
     qualityReport: { score: 0, issues: [], checkedAt: "" },
     brand: { name: "Kalliom", website: "kalliom.com" },
@@ -49,7 +49,7 @@ export async function persistGeneratedProject(input: CreateCarouselInput, cacheK
     linkedInCopy: linkedInCopy(output),
   };
   const styledProject = { ...applyVisualStyle(baseProject, input.visualStyle ?? "balanced"), status: "generated" as const };
-  const assignments = assignAssetsToProject(styledProject, assetCatalog);
+  const assignments = assignAssetsToProject(styledProject, recommendedAssetCatalog);
   const previousTitles = await prisma.project.findMany({ where: { id: { not: id } }, orderBy: { updatedAt: "desc" }, take: 20, select: { title: true } });
   const projectWithAssets = { ...styledProject, slides: styledProject.slides.map((slide) => ({ ...slide, assetId: assignments[slide.id] })) };
   const project = { ...projectWithAssets, qualityReport: reviewProject(projectWithAssets, previousTitles.map((item) => item.title)) };
@@ -67,11 +67,8 @@ export async function persistGeneratedProject(input: CreateCarouselInput, cacheK
         editorialStatus: project.editorialStatus,
         editorialProfile: project.editorialProfile,
         visualStyle: project.visualStyle,
+        contentState: "new",
         scheduledAt: project.scheduledAt ? new Date(project.scheduledAt) : null,
-        linkedInStatus: project.scheduledAt ? "scheduled" : "idle",
-        linkedInPostId: null,
-        linkedInPublishedAt: null,
-        linkedInError: null,
         batchId: project.batchId,
         qualityScore: project.qualityReport.score,
         qualityReport: JSON.stringify(project.qualityReport),
@@ -90,8 +87,8 @@ export async function persistGeneratedProject(input: CreateCarouselInput, cacheK
         editorialStatus: project.editorialStatus,
         editorialProfile: project.editorialProfile,
         visualStyle: project.visualStyle,
+        contentState: "new",
         scheduledAt: project.scheduledAt ? new Date(project.scheduledAt) : null,
-        linkedInStatus: project.scheduledAt ? "scheduled" : "idle",
         batchId: project.batchId,
         qualityScore: project.qualityReport.score,
         qualityReport: JSON.stringify(project.qualityReport),
@@ -153,11 +150,8 @@ export async function getProjectById(id: string): Promise<CarouselProject | null
     editorialStatus: record.editorialStatus as CarouselProject["editorialStatus"],
     editorialProfile: record.editorialProfile as CarouselProject["editorialProfile"],
     visualStyle: record.visualStyle as CarouselProject["visualStyle"],
+    contentState: record.contentState as CarouselProject["contentState"],
     scheduledAt: record.scheduledAt?.toISOString(),
-    linkedInStatus: record.linkedInStatus as CarouselProject["linkedInStatus"],
-    linkedInPostId: record.linkedInPostId ?? undefined,
-    linkedInPublishedAt: record.linkedInPublishedAt?.toISOString(),
-    linkedInError: record.linkedInError ?? undefined,
     batchId: record.batchId ?? undefined,
     qualityReport,
     brand: { name: "Kalliom", website: "kalliom.com" },
@@ -187,6 +181,7 @@ export async function updateProject(id: string, rawProject: unknown): Promise<Ca
         editorialStatus: project.editorialStatus,
         editorialProfile: project.editorialProfile,
         visualStyle: project.visualStyle,
+        contentState: project.contentState,
         scheduledAt: project.scheduledAt ? new Date(project.scheduledAt) : null,
         batchId: project.batchId,
         qualityScore: qualityReport.score,
@@ -227,11 +222,8 @@ export type ProjectHistoryItem = {
   status: CarouselProject["status"];
   category: CarouselProject["category"];
   editorialStatus: CarouselProject["editorialStatus"];
+  contentState: CarouselProject["contentState"];
   scheduledAt?: string;
-  linkedInStatus: NonNullable<CarouselProject["linkedInStatus"]>;
-  linkedInPostId?: string;
-  linkedInPublishedAt?: string;
-  linkedInError?: string;
   qualityScore: number;
   batchId?: string;
   createdAt: string;
@@ -250,11 +242,8 @@ export async function listProjects(limit = 30): Promise<ProjectHistoryItem[]> {
       status: true,
       category: true,
       editorialStatus: true,
+      contentState: true,
       scheduledAt: true,
-      linkedInStatus: true,
-      linkedInPostId: true,
-      linkedInPublishedAt: true,
-      linkedInError: true,
       qualityScore: true,
       batchId: true,
       createdAt: true,
@@ -266,11 +255,8 @@ export async function listProjects(limit = 30): Promise<ProjectHistoryItem[]> {
     status: project.status as CarouselProject["status"],
     category: project.category as CarouselProject["category"],
     editorialStatus: project.editorialStatus as CarouselProject["editorialStatus"],
+    contentState: project.contentState as CarouselProject["contentState"],
     scheduledAt: project.scheduledAt?.toISOString(),
-    linkedInStatus: project.linkedInStatus as ProjectHistoryItem["linkedInStatus"],
-    linkedInPostId: project.linkedInPostId ?? undefined,
-    linkedInPublishedAt: project.linkedInPublishedAt?.toISOString(),
-    linkedInError: project.linkedInError ?? undefined,
     qualityScore: project.qualityScore,
     batchId: project.batchId ?? undefined,
     createdAt: project.createdAt.toISOString(),
@@ -296,54 +282,18 @@ export async function updateEditorialSchedule(id: string, input: {
     data: {
       editorialStatus: input.editorialStatus,
       scheduledAt: input.scheduledAt ? new Date(input.scheduledAt) : null,
-      linkedInStatus: input.editorialStatus === "scheduled" ? "scheduled" : input.editorialStatus === "published" ? "published" : "idle",
-      linkedInError: null,
     },
   });
   return getProjectById(id);
 }
 
-export async function listDueLinkedInProjects(limit = 10) {
-  const records = await prisma.project.findMany({
-    where: {
-      editorialStatus: "scheduled",
-      scheduledAt: { lte: new Date() },
-      linkedInPostId: null,
-      linkedInStatus: { in: ["scheduled", "error"] },
-    },
-    orderBy: { scheduledAt: "asc" },
-    take: Math.min(Math.max(limit, 1), 20),
-    select: { id: true },
-  });
-  return records.map((record) => record.id);
-}
-
-export async function claimLinkedInPublication(id: string) {
-  const result = await prisma.project.updateMany({
-    where: { id, linkedInPostId: null, linkedInStatus: { in: ["idle", "scheduled", "error"] } },
-    data: { linkedInStatus: "publishing", linkedInError: null },
-  });
-  return result.count === 1;
-}
-
-export async function markLinkedInPublished(id: string, postId: string) {
-  await prisma.project.update({
+export async function updateContentState(id: string, contentState: CarouselProject["contentState"]) {
+  const project = await prisma.project.update({
     where: { id },
-    data: {
-      editorialStatus: "published",
-      linkedInStatus: "published",
-      linkedInPostId: postId,
-      linkedInPublishedAt: new Date(),
-      linkedInError: null,
-    },
+    data: { contentState },
+    select: { id: true, contentState: true },
   });
-}
-
-export async function markLinkedInError(id: string, message: string) {
-  await prisma.project.update({
-    where: { id },
-    data: { linkedInStatus: "error", linkedInError: message.slice(0, 500) },
-  });
+  return { id: project.id, contentState: project.contentState as CarouselProject["contentState"] };
 }
 
 export async function saveQualityReport(id: string, report: CarouselProject["qualityReport"]) {

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AssetPicker } from "@/components/assets/AssetPicker";
 import { PreviewFrame } from "@/components/preview/PreviewFrame";
 import { SlideRenderer } from "@/components/slides/SlideRenderer";
-import { assetCatalog, getAssetById } from "@/lib/assets/catalog";
+import { getAssetById, recommendedAssetCatalog } from "@/lib/assets/catalog";
 import { assignAssetsToProject } from "@/lib/assets/selectAsset";
 import { TEXT_LIMITS } from "@/lib/constants";
 import { templatesForType } from "@/lib/templates/catalog";
@@ -51,7 +51,7 @@ function TextField({ label, value, maxLength, multiline = false, onChange }: {
 
 export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = false }: Props) {
   const [selectedId, setSelectedId] = useState(project.slides[0]?.id ?? "");
-  const automaticAssignments = useMemo(() => assignAssetsToProject(project, assetCatalog), [project]);
+  const automaticAssignments = useMemo(() => assignAssetsToProject(project, recommendedAssetCatalog), [project]);
   const selectedIndex = Math.max(project.slides.findIndex((slide) => slide.id === selectedId), 0);
   const slide = project.slides[selectedIndex]!;
 
@@ -80,8 +80,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
     const slides = project.slides.map((slide) => {
       const options = templatesForType(slide.type);
       const currentIndex = Math.max(options.findIndex((template) => template.id === slide.templateId), 0);
-      const step = slide.type === "content" ? slide.order : 1;
-      return { ...slide, templateId: options[(currentIndex + step) % options.length]!.id };
+      return { ...slide, templateId: options[(currentIndex + 1) % options.length]!.id };
     }) as CarouselSlide[];
     onChange({ ...project, status: "draft", slides });
   }
@@ -91,7 +90,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
       <div className="section-heading">
         <div><span>Editor visual</span><h2>{project.title}</h2></div>
         <div className="editor-heading-actions">
-          <button type="button" className="secondary-button" onClick={varyDesign}>Variar diseño</button>
+          <button type="button" className="secondary-button" onClick={varyDesign}>Probar otra composición</button>
         </div>
       </div>
       <div className="editor-preferences">
@@ -111,7 +110,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             <option value="text-led">Texto protagonista</option>
           </select>
         </label>
-        <p>Cambiar perfil, plantilla o asset es local y no consume tokens.</p>
+        <p>Estos cambios se ven al instante y no vuelven a llamar a la IA.</p>
       </div>
       <div className="editor-workbench">
         <nav className="slide-navigator" aria-label="Páginas del carrusel">
@@ -143,7 +142,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
                   <button type="button" disabled={selectedIndex === project.slides.length - 2} onClick={() => moveContent(selectedIndex, 1)} aria-label={`Mover página ${selectedIndex + 1} hacia adelante`}>→</button>
                 </>
               )}
-              {onRegenerateSlide && <button type="button" className="regen-slide" disabled={busy || project.id === "kalliom-demo"} onClick={() => onRegenerateSlide(slide.id)}>Regenerar</button>}
+              {onRegenerateSlide && <button type="button" className="regen-slide" disabled={busy || project.id === "kalliom-demo"} onClick={() => onRegenerateSlide(slide.id)}>Mejorar texto</button>}
             </span>
           </div>
           <label className="editor-field">
@@ -151,6 +150,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             <select value={slide.templateId} onChange={(event) => updateSlide({ ...slide, templateId: event.target.value as CarouselSlide["templateId"] })}>
               {templatesForType(slide.type).map((template) => <option key={template.id} value={template.id}>{template.label}</option>)}
             </select>
+            <small className="template-hint">{templatesForType(slide.type).find((template) => template.id === slide.templateId)?.description ?? "Plantilla anterior: elige una composición recomendada para actualizarla."}</small>
           </label>
           <TextField label="Título" value={slide.title} maxLength={slide.type === "cover" ? TEXT_LIMITS.cover.title : slide.type === "content" ? TEXT_LIMITS.content.title : TEXT_LIMITS.closing.title} onChange={(title) => updateSlide({ ...slide, title })} />
           {slide.type === "cover" && <TextField label="Subtítulo" value={slide.subtitle} maxLength={TEXT_LIMITS.cover.subtitle} multiline onChange={(subtitle) => updateSlide({ ...slide, subtitle })} />}
@@ -158,14 +158,14 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
           {slide.type === "content" && <TextField label="Destacado" value={slide.highlight} maxLength={TEXT_LIMITS.content.highlight} multiline onChange={(highlight) => updateSlide({ ...slide, highlight })} />}
           {slide.type === "closing" && <TextField label="CTA" value={slide.cta} maxLength={TEXT_LIMITS.closing.cta} multiline onChange={(cta) => updateSlide({ ...slide, cta })} />}
           <AssetPicker
-            assets={assetCatalog.filter((asset) => asset.compatibleLayouts.includes(slide.type))}
+            assets={recommendedAssetCatalog.filter((asset) => asset.compatibleLayouts.includes(slide.type))}
             selectedId={slide.assetId ?? automaticAssignments[slide.id]}
             onSelect={(assetId) => updateSlide({ ...slide, assetId })}
           />
         </aside>
       </div>
       <details className="linkedin-drawer">
-        <summary><span>Descripción para LinkedIn</span><small>{project.linkedInCopy.length}/3000</small></summary>
+        <summary><span>Texto para acompañar la publicación</span><small>{project.linkedInCopy.length}/3000</small></summary>
         <textarea value={project.linkedInCopy} maxLength={3000} onChange={(event) => onChange({ ...project, status: "draft", linkedInCopy: event.target.value })} />
       </details>
     </section>

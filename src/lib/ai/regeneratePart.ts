@@ -39,7 +39,7 @@ export async function regenerateProjectPart(project: CarouselProject, target: Re
   const slide = target.kind === "slide" ? project.slides.find((item) => item.id === target.slideId) : undefined;
   if (target.kind === "slide" && !slide) throw new Error("SLIDE_NOT_FOUND");
   const schema = schemaFor(target, slide);
-  const model = process.env.OPENAI_MODEL ?? "gpt-5.6-luna";
+  const model = process.env.OPENAI_MODEL ?? "gpt-5.6-terra";
   const context = {
     topic: project.topic,
     title: project.title,
@@ -52,11 +52,11 @@ export async function regenerateProjectPart(project: CarouselProject, target: Re
     input: [
       {
         role: "system",
-        content: "Reescribe únicamente el fragmento solicitado de un carrusel B2B. Aporta un ángulo más concreto y memorable, conserva coherencia con el resto y no inventes cifras, estudios ni testimonios. Devuelve solo la estructura solicitada.",
+        content: "Reescribe únicamente el fragmento solicitado de un carrusel B2B. Mejora especificidad, utilidad, ritmo y claridad; conserva la progresión del resto. Evita frases promocionales, clichés y repeticiones. No inventes cifras, estudios, clientes ni testimonios. Devuelve solo la estructura solicitada.",
       },
       {
         role: "user",
-        content: `Objetivo: regenerar ${target.kind}${target.kind === "slide" ? ` ${target.slideId}` : ""}.\nContexto: ${JSON.stringify(context)}\nNo repitas literalmente los títulos existentes.`,
+        content: `Objetivo: regenerar ${target.kind}${target.kind === "slide" ? ` ${target.slideId}` : ""}.\nContexto: ${JSON.stringify(context)}\nEl resultado debe aportar una idea nueva y concreta, no repetir literalmente los títulos existentes ni el tema.`,
       },
     ],
     reasoning: { effort: "low" },

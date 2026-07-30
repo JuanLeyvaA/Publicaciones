@@ -4,7 +4,7 @@ import "./generator.css";
 
 export const metadata: Metadata = {
   title: "Kalliom Content Engine",
-  description: "Motor interno de carruseles para LinkedIn",
+  description: "Motor interno para crear carruseles editoriales",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
