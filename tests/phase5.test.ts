@@ -71,6 +71,14 @@ describe("Fase 5", () => {
     expect(report.issues.map((issue) => issue.code)).toContain("SIMILAR_TO_HISTORY");
   });
 
+  it("señala carruseles con una cadencia de títulos demasiado formulaica", () => {
+    const formulaic = {
+      ...demoProject,
+      slides: demoProject.slides.map((slide, index) => ({ ...slide, title: `La decisión que cambia el proceso ${index}` })),
+    };
+    expect(reviewProject(formulaic).issues.map((issue) => issue.code)).toContain("FORMULAIC_TITLE_RHYTHM");
+  });
+
   it("deja la exportación persistida únicamente en PDF", async () => {
     const rendering = await fs.readFile(path.resolve("src/lib/rendering/renderSlides.ts"), "utf8");
     const route = await fs.readFile(path.resolve("src/app/api/projects/[projectId]/export/route.ts"), "utf8");
@@ -95,5 +103,12 @@ describe("Fase 5", () => {
     expect(library).toMatch(/draggable|onDrop/);
     expect(library).toMatch(/Nuevas|Ya usadas|No me interesan/);
     expect(stateRoute).toMatch(/updateContentState/);
+  });
+
+  it("ajusta textos en la vista previa y espera ese ajuste antes de exportar", async () => {
+    const autoFit = await fs.readFile(path.resolve("src/components/templates/SlideAutoFit.tsx"), "utf8");
+    const rendering = await fs.readFile(path.resolve("src/lib/rendering/renderSlides.ts"), "utf8");
+    expect(autoFit).toMatch(/data-autofit|layoutReady|56/);
+    expect(rendering).toMatch(/layoutReady|leftElement\.contains/);
   });
 });

@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it } from "vitest";
-import { buildCarouselPrompt, creativeDirectionFor, SYSTEM_PROMPT } from "@/lib/ai/prompt";
+import { buildCarouselPrompt, creativeBriefFor, creativeDirectionFor, SYSTEM_PROMPT } from "@/lib/ai/prompt";
 import { selectTemplateId, templateCatalog, templatesForType } from "@/lib/templates/catalog";
 
 describe("Sistema de plantillas", () => {
@@ -38,5 +38,18 @@ describe("Dirección creativa", () => {
     expect(SYSTEM_PROMPT).toContain("no recurras por defecto a listas");
     expect(SYSTEM_PROMPT).toContain("No inventes cifras");
     expect(SYSTEM_PROMPT).toContain("Cada página aporta algo nuevo");
+  });
+
+  it("combina voces, ritmos, aperturas y mundos visuales en lugar de una sola fórmula", () => {
+    const briefs = Array.from({ length: 30 }, (_, index) => creativeBriefFor({
+      ...input,
+      topic: `Problema empresarial específico número ${index}`,
+      slideCount: 5 + index % 3,
+    }));
+    expect(new Set(briefs.map((brief) => brief.narrative)).size).toBeGreaterThanOrEqual(8);
+    expect(new Set(briefs.map((brief) => brief.voice)).size).toBeGreaterThanOrEqual(7);
+    expect(new Set(briefs.map((brief) => brief.visualWorld)).size).toBeGreaterThanOrEqual(7);
+    expect(buildCarouselPrompt(input)).toContain("Huella creativa de esta publicación");
+    expect(buildCarouselPrompt(input)).toContain("etiquetas simples en inglés");
   });
 });

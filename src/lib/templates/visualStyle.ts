@@ -3,29 +3,29 @@ import type { CarouselProject, CarouselSlide, TemplateId, VisualStyle } from "@/
 
 const preferences: Record<VisualStyle, Record<CarouselSlide["type"], TemplateId[]>> = {
   balanced: {
-    cover: ["cover", "cover-frame", "cover-grid", "cover-sidebar", "cover-bento", "cover-editorial", "cover-wave", "cover-staircase"],
-    content: ["content", "content-steps", "content-duo", "content-dashboard", "content-cards", "content-index", "content-wave", "content-staircase"],
-    closing: ["closing", "closing-panel", "closing-card", "closing-split", "closing-grid", "closing-editorial", "closing-wave", "closing-ticket"],
+    cover: ["cover", "cover-frame", "cover-grid", "cover-sidebar", "cover-bento", "cover-editorial", "cover-wave", "cover-staircase", "cover-arch", "cover-collage", "cover-portal", "cover-ribbon"],
+    content: ["content", "content-steps", "content-duo", "content-dashboard", "content-cards", "content-index", "content-wave", "content-staircase", "content-radial", "content-collage", "content-timeline", "content-magazine"],
+    closing: ["closing", "closing-panel", "closing-card", "closing-split", "closing-grid", "closing-editorial", "closing-wave", "closing-ticket", "closing-arch", "closing-collage", "closing-horizon", "closing-orbit"],
   },
   minimal: {
-    cover: ["cover-minimal", "cover-editorial", "cover-spotlight", "cover-stack", "cover-frame", "cover-arch", "cover-typographic"],
-    content: ["content-focus", "content-quote", "content-duo", "content-index", "content-spotlight", "content-poster", "content-radial"],
-    closing: ["closing-minimal", "closing-question", "closing-horizon", "closing-editorial", "closing-card", "closing-arch", "closing-poster"],
+    cover: ["cover-minimal", "cover-editorial", "cover-spotlight", "cover-stack", "cover-frame", "cover-arch", "cover-typographic", "cover-wave", "cover-sidebar", "cover-radar"],
+    content: ["content-focus", "content-quote", "content-duo", "content-index", "content-spotlight", "content-poster", "content-radial", "content-wave", "content-magazine", "content-staircase"],
+    closing: ["closing-minimal", "closing-question", "closing-horizon", "closing-editorial", "closing-card", "closing-arch", "closing-poster", "closing-wave", "closing-ticket", "closing-radar"],
   },
   bold: {
-    cover: ["cover-poster", "cover-diagonal", "cover-ribbon", "cover-portal", "cover-bento", "cover-terminal", "cover-radar", "cover-collage"],
-    content: ["content-quote", "content-data", "content-rings", "content-console", "content-magazine", "content-dashboard", "content-circuit", "content-collage"],
-    closing: ["closing-question", "closing-orbit", "closing-signal", "closing-stamp", "closing-banner", "closing-window", "closing-radar", "closing-collage"],
+    cover: ["cover-poster", "cover-diagonal", "cover-ribbon", "cover-portal", "cover-bento", "cover-terminal", "cover-radar", "cover-collage", "cover-staircase", "cover-typographic", "cover-grid", "cover-arch"],
+    content: ["content-quote", "content-data", "content-rings", "content-console", "content-magazine", "content-dashboard", "content-circuit", "content-collage", "content-staircase", "content-poster", "content-radial", "content-timeline"],
+    closing: ["closing-question", "closing-orbit", "closing-signal", "closing-stamp", "closing-banner", "closing-window", "closing-radar", "closing-collage", "closing-poster", "closing-ticket", "closing-wave", "closing-arch"],
   },
   "image-led": {
-    cover: ["cover-split", "cover-sidebar", "cover-portal", "cover-ribbon", "cover-poster", "cover-grid", "cover-collage", "cover-wave"],
-    content: ["content-data", "content-magazine", "content-rings", "content", "content-spotlight", "content-console", "content-collage", "content-wave"],
-    closing: ["closing-orbit", "closing-signal", "closing-split", "closing-horizon", "closing-panel", "closing-window", "closing-collage", "closing-wave"],
+    cover: ["cover-split", "cover-sidebar", "cover-portal", "cover-ribbon", "cover-poster", "cover-grid", "cover-collage", "cover-wave", "cover-radar", "cover-staircase", "cover-diagonal", "cover-bento"],
+    content: ["content-data", "content-magazine", "content-rings", "content", "content-spotlight", "content-console", "content-collage", "content-wave", "content-radial", "content-circuit", "content-dashboard", "content-timeline"],
+    closing: ["closing-orbit", "closing-signal", "closing-split", "closing-horizon", "closing-panel", "closing-window", "closing-collage", "closing-wave", "closing-radar", "closing-arch", "closing-ticket", "closing-stamp"],
   },
   "text-led": {
-    cover: ["cover-minimal", "cover-editorial", "cover-terminal", "cover-stack", "cover-bento", "cover-typographic", "cover-staircase"],
-    content: ["content-focus", "content-blueprint", "content-index", "content-duo", "content-steps", "content-poster", "content-staircase"],
-    closing: ["closing-minimal", "closing-editorial", "closing-grid", "closing-card", "closing-stamp", "closing-poster", "closing-ticket"],
+    cover: ["cover-minimal", "cover-editorial", "cover-terminal", "cover-stack", "cover-bento", "cover-typographic", "cover-staircase", "cover-frame", "cover-radar", "cover-arch"],
+    content: ["content-focus", "content-blueprint", "content-index", "content-duo", "content-steps", "content-poster", "content-staircase", "content-circuit", "content-radial", "content-quote"],
+    closing: ["closing-minimal", "closing-editorial", "closing-grid", "closing-card", "closing-stamp", "closing-poster", "closing-ticket", "closing-arch", "closing-radar", "closing-question"],
   },
 };
 

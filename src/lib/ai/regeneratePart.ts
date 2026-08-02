@@ -52,15 +52,15 @@ export async function regenerateProjectPart(project: CarouselProject, target: Re
     input: [
       {
         role: "system",
-        content: "Reescribe únicamente el fragmento solicitado de un carrusel B2B. Mejora especificidad, utilidad, ritmo y claridad; conserva la progresión del resto. Evita frases promocionales, clichés y repeticiones. No inventes cifras, estudios, clientes ni testimonios. Devuelve solo la estructura solicitada.",
+        content: "Reescribe únicamente el fragmento solicitado de un carrusel B2B. Debe sonar como una persona observadora y experimentada: natural, específica y con una cadencia distinta a los demás fragmentos. Conserva la progresión, pero cambia la construcción sintáctica y el punto de entrada. Evita frases promocionales, clichés, títulos con la fórmula ‘X no es Y: es Z’ y repeticiones. No inventes cifras, estudios, clientes ni testimonios. Devuelve solo la estructura solicitada.",
       },
       {
         role: "user",
-        content: `Objetivo: regenerar ${target.kind}${target.kind === "slide" ? ` ${target.slideId}` : ""}.\nContexto: ${JSON.stringify(context)}\nEl resultado debe aportar una idea nueva y concreta, no repetir literalmente los títulos existentes ni el tema.`,
+        content: `Objetivo: regenerar ${target.kind}${target.kind === "slide" ? ` ${target.slideId}` : ""}.\nContexto: ${JSON.stringify(context)}\nÉxito: aporta una observación nueva y concreta, usa una apertura diferente a los títulos existentes y evita la cadencia del fragmento actual. Mantén el dato o idea central cuando exista; no repitas literalmente el tema.`,
       },
     ],
-    reasoning: { effort: "low" },
-    text: { verbosity: "low", format: zodTextFormat(schema, `kalliom_${target.kind}`) },
+    reasoning: { effort: "medium" },
+    text: { verbosity: "medium", format: zodTextFormat(schema, `kalliom_${target.kind}`) },
   });
   if (!response.output_parsed) throw new Error("PARTIAL_REGENERATION_FAILED");
   return {

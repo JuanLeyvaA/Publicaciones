@@ -741,7 +741,7 @@ Motor visual Next.js, canvas fijo 1080 × 1350, tres plantillas, preview, Playwr
 
 ### Fase 2 — completada
 
-- Biblioteca de 116 recursos únicos: 100 SVG locales y 16 imágenes WebP originales en estilos 3D, fotográfico, clay, industrial, isométrico, risográfico, vidrio, neón, papercut, low-poly y cinematográfico.
+- Biblioteca de 120 recursos únicos: 100 SVG locales y 20 imágenes WebP originales en estilos 3D, documental, stop-motion, fotográfico, clay, industrial, isométrico, risográfico, biomórfico, retrofuturista, vidrio, neón, papercut, low-poly y cinematográfico.
 - Nuevas escenas con robots, asistentes, colaboración humano-IA, equipos, automatización industrial, analítica y comercio digital.
 - 20 conceptos por categoría, con posiciones, escalas y orientaciones equilibradas.
 - Metadata tipada en `src/lib/assets/catalog.ts`.
@@ -832,10 +832,14 @@ GET  /render/:projectId/:slideId
 - Cuarenta y una construcciones de fondo diferenciadas con retículas, terminales, mosaicos, portales, planos técnicos, dashboards, focos, franjas, horizontes y ondas; todas conservan la paleta Kalliom.
 - Selección automática distribuida por proyecto y tema para evitar que publicaciones con el mismo estilo visual reciban siempre la misma portada.
 - Ajuste tipográfico por densidad y detección geométrica de colisiones entre título, cuerpo, destacado y CTA.
+- Autoajuste geométrico también en la vista previa: reduce progresivamente solo los textos implicados, considera cabecera y pie, y la exportación espera a que el diseño quede estable.
 - Fallback visual seguro durante la exportación: si una composición elegida no admite un texto excepcionalmente largo, el PDF usa automáticamente una plantilla compatible sin bloquear la descarga.
 - Límites editoriales ampliados con reducción tipográfica progresiva para textos largos.
 - Exportación simplificada: el botón genera y descarga directamente un PDF con el título del proyecto como nombre.
 - Biblioteca visual de publicaciones con arrastre entre `Nuevas`, `Ya usadas` y `No me interesan`; el estado queda persistido y cada bandeja tiene desplazamiento propio.
+- Huella creativa automática por publicación: combina doce narrativas, diez voces, ocho ritmos, diez aperturas y diez mundos visuales para evitar una cadencia repetitiva.
+- Selección semántica bilingüe de assets y memoria de las ocho publicaciones recientes para penalizar imágenes, posiciones y estilos ya utilizados.
+- Doce variaciones internas de fondo y seis recortes de assets combinables con las sesenta y tres plantillas, siempre dentro de la paleta Kalliom.
 - La integración externa de LinkedIn fue retirada; el calendario se conserva como planificación interna y la publicación se realiza manualmente con el PDF descargado.
 - Estados de producción `draft`, `generated` y `exported`.
 

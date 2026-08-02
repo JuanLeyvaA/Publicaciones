@@ -14,6 +14,11 @@ const clichés = [
   "potenciar tu empresa",
   "solución innovadora",
   "quedarse atrás",
+  "más que nunca",
+  "ya no es una opción",
+  "en la era digital",
+  "dar el siguiente paso",
+  "puede marcar la diferencia",
 ];
 
 const vaguePhrases = [
@@ -30,6 +35,16 @@ function normalize(value: string) {
 
 function words(value: string) {
   return new Set(normalize(value).split(" ").filter((word) => word.length > 3));
+}
+
+function titleShape(value: string) {
+  const normalized = normalize(value);
+  if (value.trim().startsWith("¿")) return "question";
+  if (/\bno es\b.+\bes\b/.test(normalized) || /\bno se trata de\b/.test(normalized)) return "negation-contrast";
+  if (value.includes(":")) return "colon";
+  if (/^(el|la|los|las|un|una)\b/.test(normalized)) return "article";
+  if (/^\d+\b/.test(normalized)) return "number";
+  return "statement";
 }
 
 export function textSimilarity(left: string, right: string) {
@@ -73,6 +88,13 @@ export function reviewProject(project: CarouselProject, previousTitles: string[]
         issues.push({ code: "REPEATED_ARGUMENT", severity: "error", message: "Dos páginas desarrollan prácticamente el mismo argumento.", slideId: contentSlides[right]!.id });
       }
     }
+  }
+
+  const shapes = new Map<string, number>();
+  project.slides.forEach((slide) => shapes.set(titleShape(slide.title), (shapes.get(titleShape(slide.title)) ?? 0) + 1));
+  const dominantShape = [...shapes.entries()].sort((left, right) => right[1] - left[1])[0];
+  if (dominantShape && dominantShape[1] >= Math.max(3, Math.ceil(project.slides.length * 0.6))) {
+    issues.push({ code: "FORMULAIC_TITLE_RHYTHM", severity: "warning", message: "Demasiados títulos comparten la misma construcción; cambia preguntas, afirmaciones, escenas y contrastes." });
   }
 
   for (const cliché of clichés) {

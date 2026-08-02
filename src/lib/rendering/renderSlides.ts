@@ -57,6 +57,10 @@ export async function renderCarousel({ project: rawProject, baseUrl, workspaceRo
         const url = `${baseUrl}/render/${encodeURIComponent(project.id)}/${encodeURIComponent(slide.id)}?${query.toString()}`;
         await page.goto(url, { waitUntil: "networkidle" });
         await page.evaluate(async () => { await document.fonts.ready; });
+        await page.waitForFunction(() => {
+          const status = document.querySelector<HTMLElement>("#slide-canvas")?.dataset.layoutReady;
+          return status === "ready" || status === "exhausted";
+        }, undefined, { timeout: 5_000 }).catch(() => undefined);
         const assetsReady = await page.evaluate(() => Array.from(document.images).every((image) => image.complete && image.naturalWidth > 0));
         if (!assetsReady) throw new RenderError("ASSET_NOT_LOADED", `Uno o más assets no cargaron en ${slide.id}.`);
         canvas = page.locator("#slide-canvas");
@@ -77,18 +81,19 @@ export async function renderCarousel({ project: rawProject, baseUrl, workspaceRo
           });
           const collisionElements = Array.from(root.querySelectorAll<HTMLElement>("[data-collision-check]")).filter((element) => {
             const style = getComputedStyle(element);
-            return style.display !== "none" && style.visibility !== "hidden";
+            return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
           });
           for (let left = 0; left < collisionElements.length; left += 1) {
             const leftElement = collisionElements[left]!;
             const leftRect = leftElement.getBoundingClientRect();
             for (let right = left + 1; right < collisionElements.length; right += 1) {
               const rightElement = collisionElements[right]!;
+              if (leftElement.contains(rightElement) || rightElement.contains(leftElement)) continue;
               const rightRect = rightElement.getBoundingClientRect();
-              const overlaps = leftRect.left < rightRect.right - 2
-                && leftRect.right > rightRect.left + 2
-                && leftRect.top < rightRect.bottom - 2
-                && leftRect.bottom > rightRect.top + 2;
+              const overlaps = leftRect.left < rightRect.right - 3
+                && leftRect.right > rightRect.left + 3
+                && leftRect.top < rightRect.bottom - 3
+                && leftRect.bottom > rightRect.top + 3;
               if (overlaps) {
                 result.push({
                   element: `${leftElement.dataset.collisionCheck}-${rightElement.dataset.collisionCheck}`,

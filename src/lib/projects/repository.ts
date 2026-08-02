@@ -49,7 +49,14 @@ export async function persistGeneratedProject(input: CreateCarouselInput, cacheK
     linkedInCopy: linkedInCopy(output),
   };
   const styledProject = { ...applyVisualStyle(baseProject, input.visualStyle ?? "balanced"), status: "generated" as const };
-  const assignments = assignAssetsToProject(styledProject, recommendedAssetCatalog);
+  const recentProjects = await prisma.project.findMany({
+    where: { id: { not: id } },
+    orderBy: { updatedAt: "desc" },
+    take: 8,
+    select: { slides: { select: { assetId: true } } },
+  });
+  const recentlyUsedAssetIds = new Set(recentProjects.flatMap((project) => project.slides.flatMap((slide) => slide.assetId ? [slide.assetId] : [])));
+  const assignments = assignAssetsToProject(styledProject, recommendedAssetCatalog, recentlyUsedAssetIds);
   const previousTitles = await prisma.project.findMany({ where: { id: { not: id } }, orderBy: { updatedAt: "desc" }, take: 20, select: { title: true } });
   const projectWithAssets = { ...styledProject, slides: styledProject.slides.map((slide) => ({ ...slide, assetId: assignments[slide.id] })) };
   const project = { ...projectWithAssets, qualityReport: reviewProject(projectWithAssets, previousTitles.map((item) => item.title)) };

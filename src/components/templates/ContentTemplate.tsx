@@ -11,16 +11,16 @@ export function ContentTemplate({ slide, brand, index, total, asset }: Props) {
   const titleSize = Math.max(titleFontSize(slide.title, "content") - (density === "text-very-dense" ? 12 : density ? 6 : 0), 42);
   const bodySize = Math.max(bodyFontSize(slide.body) - (density === "text-very-dense" ? 5 : density ? 3 : 0), 22);
   return (
-    <TemplateFrame slideId={slide.id} variant="content" templateId={slide.templateId} brand={brand} index={index} total={total} asset={asset}>
+    <TemplateFrame slideId={slide.id} variant="content" templateId={slide.templateId} brand={brand} index={index} total={total} asset={asset} fitKey={`${slide.title}:${slide.body}:${slide.highlight}`}>
       <main className={`content-layout ${density}`.trim()} data-overflow-check="content-layout">
         <section className="content-copy">
           <div className="section-number">{String(slide.number).padStart(2, "0")}</div>
           <div className="eyebrow">Proceso clave</div>
-          <h1 data-collision-check="title" style={{ fontSize: titleSize, lineHeight: titleLineHeight(titleSize) }}>{slide.title}</h1>
-          <p data-collision-check="body" style={{ fontSize: bodySize }}>{slide.body}</p>
+          <h1 data-collision-check="title" data-autofit data-autofit-base={titleSize} data-autofit-min="34" style={{ fontSize: titleSize, lineHeight: titleLineHeight(titleSize) }}>{slide.title}</h1>
+          <p data-collision-check="body" data-autofit data-autofit-base={bodySize} data-autofit-min="18" style={{ fontSize: bodySize }}>{slide.body}</p>
           <aside className="highlight-box" data-overflow-check="highlight" data-collision-check="highlight">
             <span>Idea clave</span>
-            <strong>{slide.highlight}</strong>
+            <strong data-autofit data-autofit-min="17">{slide.highlight}</strong>
           </aside>
         </section>
         <aside className="visual-panel" aria-label="Composición visual decorativa">

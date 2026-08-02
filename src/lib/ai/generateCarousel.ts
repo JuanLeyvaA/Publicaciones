@@ -66,9 +66,9 @@ export class OpenAICarouselModel implements CarouselModel {
     const response = await this.client.responses.parse({
       model: this.model,
       input,
-      reasoning: { effort: "low" },
+      reasoning: { effort: "medium" },
       text: {
-        verbosity: "low",
+        verbosity: "medium",
         format: zodTextFormat(aiCarouselSchema, "kalliom_carousel"),
       },
     });
