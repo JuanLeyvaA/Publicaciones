@@ -155,6 +155,7 @@ export type CarouselProject = {
   brand: { name: string; website: string };
   slides: CarouselSlide[];
   linkedInCopy: string;
+  referenceImageUrls: string[];
 };
 
 export type OverflowIssue = {

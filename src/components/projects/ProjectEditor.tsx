@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AssetPicker } from "@/components/assets/AssetPicker";
 import { PreviewFrame } from "@/components/preview/PreviewFrame";
 import { SlideRenderer } from "@/components/slides/SlideRenderer";
-import { getAssetById, recommendedAssetCatalog } from "@/lib/assets/catalog";
+import { getProjectAsset, recommendedAssetCatalog, referenceImageAssets } from "@/lib/assets/catalog";
 import { assignAssetsToProject } from "@/lib/assets/selectAsset";
 import { TEXT_LIMITS } from "@/lib/constants";
 import { templatesForType } from "@/lib/templates/catalog";
@@ -54,6 +54,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
   const automaticAssignments = useMemo(() => assignAssetsToProject(project, recommendedAssetCatalog), [project]);
   const selectedIndex = Math.max(project.slides.findIndex((slide) => slide.id === selectedId), 0);
   const slide = project.slides[selectedIndex]!;
+  const displayedAssetId = getProjectAsset(project, slide.assetId)?.id ?? automaticAssignments[slide.id];
 
   useEffect(() => {
     if (!project.slides.some((item) => item.id === selectedId)) setSelectedId(project.slides[0]?.id ?? "");
@@ -90,7 +91,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
       <div className="section-heading">
         <div><span>Editor visual</span><h2>{project.title}</h2></div>
         <div className="editor-heading-actions">
-          <button type="button" className="secondary-button" onClick={varyDesign}>Probar otra composición</button>
+          <button type="button" className="secondary-button" onClick={varyDesign}>Cambiar dirección completa</button>
         </div>
       </div>
       <div className="editor-preferences">
@@ -110,7 +111,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             <option value="text-led">Texto protagonista</option>
           </select>
         </label>
-        <p>Estos cambios se ven al instante y no vuelven a llamar a la IA.</p>
+        <p>La portada define una de 12 direcciones creativas para todo el carrusel. Estos cambios se ven al instante y no vuelven a llamar a la IA.</p>
       </div>
       <div className="editor-workbench">
         <nav className="slide-navigator" aria-label="Páginas del carrusel">
@@ -124,7 +125,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
         </nav>
         <div className="active-slide-preview">
           <PreviewFrame label={`${slide.order + 1}. ${slide.type} · ${slide.templateId}`}>
-            <SlideRenderer project={project} slide={slide} asset={getAssetById(slide.assetId ?? automaticAssignments[slide.id])} />
+            <SlideRenderer project={project} slide={slide} asset={getProjectAsset(project, displayedAssetId)} />
           </PreviewFrame>
           <div className="preview-pager">
             <button type="button" disabled={selectedIndex === 0} onClick={() => setSelectedId(project.slides[selectedIndex - 1]!.id)}>← Anterior</button>
@@ -158,8 +159,8 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
           {slide.type === "content" && <TextField label="Destacado" value={slide.highlight} maxLength={TEXT_LIMITS.content.highlight} multiline onChange={(highlight) => updateSlide({ ...slide, highlight })} />}
           {slide.type === "closing" && <TextField label="CTA" value={slide.cta} maxLength={TEXT_LIMITS.closing.cta} multiline onChange={(cta) => updateSlide({ ...slide, cta })} />}
           <AssetPicker
-            assets={recommendedAssetCatalog.filter((asset) => asset.compatibleLayouts.includes(slide.type))}
-            selectedId={slide.assetId ?? automaticAssignments[slide.id]}
+            assets={[...referenceImageAssets(project.referenceImageUrls), ...recommendedAssetCatalog].filter((asset) => asset.compatibleLayouts.includes(slide.type))}
+            selectedId={displayedAssetId}
             onSelect={(assetId) => updateSlide({ ...slide, assetId })}
           />
         </aside>

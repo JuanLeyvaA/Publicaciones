@@ -8,6 +8,18 @@ describe("schemas de IA", () => {
     expect(createCarouselInputSchema.safeParse({ ...base, slideCount: 11 }).success).toBe(false);
   });
 
+  it("acepta hasta seis fotos reales como referencia visual", () => {
+    const input = createCarouselInputSchema.safeParse({
+      topic: "Tema válido",
+      slideCount: 5,
+      category: "automation",
+      language: "es",
+      tone: "professional",
+      referenceImageUrls: ["/uploads/equipo-1.jpg", "/uploads/tablero_2.webp"],
+    });
+    expect(input.success).toBe(true);
+  });
+
   it("rechaza HTML y estructuras incompletas", () => {
     const result = aiCarouselSchema.safeParse({
       title: "<b>Título</b>",

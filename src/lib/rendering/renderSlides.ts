@@ -9,7 +9,7 @@ import { createPdfFromPngs } from "@/lib/rendering/createPdf";
 import { validateDimensions } from "@/lib/rendering/validateDimensions";
 import { carouselProjectSchema } from "@/lib/validation/project-schema";
 import type { CarouselProject, OverflowIssue } from "@/types/carousel";
-import { getAssetById, recommendedAssetCatalog } from "@/lib/assets/catalog";
+import { getProjectAsset, recommendedAssetCatalog } from "@/lib/assets/catalog";
 import { assignAssetsToProject } from "@/lib/assets/selectAsset";
 import type { CarouselSlide, TemplateId } from "@/types/carousel";
 
@@ -34,7 +34,7 @@ export async function renderCarousel({ project: rawProject, baseUrl, workspaceRo
     ...validatedProject,
     slides: validatedProject.slides.map((slide) => {
       const requested = assetAssignments[slide.id];
-      const assetId = getAssetById(requested)?.id ?? automaticAssignments[slide.id];
+      const assetId = getProjectAsset(validatedProject, requested)?.id ?? automaticAssignments[slide.id];
       return { ...slide, assetId };
     }),
   };

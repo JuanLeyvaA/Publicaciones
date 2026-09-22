@@ -1,4 +1,5 @@
 import { templatesForType } from "@/lib/templates/catalog";
+import { artDirectionForCover, type ArtDirectionId } from "@/lib/templates/artDirection";
 import type { CarouselProject, CarouselSlide, TemplateId, VisualStyle } from "@/types/carousel";
 
 const preferences: Record<VisualStyle, Record<CarouselSlide["type"], TemplateId[]>> = {
@@ -42,15 +43,41 @@ function stableHash(value: string) {
   return (hash ^ hash >>> 16) >>> 0;
 }
 
-export function applyVisualStyle(project: CarouselProject, style: VisualStyle): CarouselProject {
+export function applyVisualStyle(project: CarouselProject, style: VisualStyle, recentlyUsedTemplateIds: readonly TemplateId[] = []): CarouselProject {
+  const recentFrequency = recentlyUsedTemplateIds.reduce((frequency, id) => {
+    frequency.set(id, (frequency.get(id) ?? 0) + 1);
+    return frequency;
+  }, new Map<TemplateId, number>());
+  const recentDirectionFrequency = recentlyUsedTemplateIds.reduce((frequency, id) => {
+    if (!id.startsWith("cover")) return frequency;
+    const direction = artDirectionForCover(id);
+    frequency.set(direction, (frequency.get(direction) ?? 0) + 1);
+    return frequency;
+  }, new Map<ArtDirectionId, number>());
+  const usedInProject = new Set<TemplateId>();
   const slides = project.slides.map((slide) => {
     const preferred = preferences[style][slide.type];
     const compatible = new Set(templatesForType(slide.type).map((template) => template.id));
     const options = preferred.filter((id) => compatible.has(id));
-    const offset = stableHash(`${project.id}:${project.topic}:${style}:${slide.type}`) % options.length;
+    const ranked = options
+      .map((id) => ({
+        id,
+        recentUses: recentFrequency.get(id) ?? 0,
+        recentDirectionUses: slide.type === "cover" ? recentDirectionFrequency.get(artDirectionForCover(id)) ?? 0 : 0,
+        rank: stableHash(`${project.id}:${project.topic}:${style}:${slide.type}:${id}`),
+      }))
+      .sort((left, right) => left.recentDirectionUses - right.recentDirectionUses || left.recentUses - right.recentUses || left.rank - right.rank);
+    const unused = ranked.filter((option) => !usedInProject.has(option.id));
+    const candidates = unused.length ? unused : ranked;
+    const fewestDirectionUses = Math.min(...candidates.map((option) => option.recentDirectionUses));
+    const leastRepeatedDirection = candidates.filter((option) => option.recentDirectionUses === fewestDirectionUses);
+    const fewestRecentUses = Math.min(...leastRepeatedDirection.map((option) => option.recentUses));
+    const pool = leastRepeatedDirection.filter((option) => option.recentUses === fewestRecentUses);
+    const selected = pool[stableHash(`${project.id}:${slide.id}:${slide.order}`) % pool.length]!.id;
+    usedInProject.add(selected);
     return {
       ...slide,
-      templateId: options[(offset + slide.order) % options.length]!,
+      templateId: selected,
       assetId: style === "text-led" || style === "minimal" ? undefined : slide.assetId,
     };
   }) as CarouselSlide[];

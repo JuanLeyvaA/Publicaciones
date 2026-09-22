@@ -27,6 +27,21 @@ const vaguePhrases = [
   "generar valor",
   "impulsar el crecimiento",
   "tomar mejores decisiones",
+  "mas tiempo para crecer",
+  "conversaciones de mayor valor",
+  "vision clara del proceso",
+  "libera al equipo",
+  "sin perder el trato humano",
+  "experiencia del cliente",
+];
+
+const aiTurnsOfPhrase = [
+  "no es solo",
+  "no se trata de",
+  "la verdadera pregunta",
+  "a fin de cuentas",
+  "el secreto esta en",
+  "la respuesta es simple",
 ];
 
 function normalize(value: string) {
@@ -102,6 +117,9 @@ export function reviewProject(project: CarouselProject, previousTitles: string[]
   }
   for (const phrase of vaguePhrases) {
     if (normalize(allText).includes(normalize(phrase))) issues.push({ code: "VAGUE_CLAIM", severity: "info", message: `Aterriza “${phrase}” con una decisión, señal o ejemplo.` });
+  }
+  for (const phrase of aiTurnsOfPhrase) {
+    if (normalize(allText).includes(normalize(phrase))) issues.push({ code: "AI_SOUNDS_LIKE_AI", severity: "warning", message: `La fórmula “${phrase}” suele sonar prefabricada; sustitúyela por una observación concreta.` });
   }
 
   if (new Set(project.slides.map((slide) => slide.templateId)).size < Math.min(3, project.slides.length)) {

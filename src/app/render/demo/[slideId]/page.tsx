@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { SlideRenderer } from "@/components/slides/SlideRenderer";
 import { demoProject, getDemoSlide } from "@/data/demo-project";
-import { getAssetById, recommendedAssetCatalog } from "@/lib/assets/catalog";
+import { getRecommendedAssetById, recommendedAssetCatalog } from "@/lib/assets/catalog";
 import { assignAssetsToProject } from "@/lib/assets/selectAsset";
 import { isTemplateCompatible } from "@/lib/templates/catalog";
 
@@ -13,7 +13,7 @@ export default async function RenderSlidePage({ params, searchParams }: { params
   const slide = getDemoSlide(slideId);
   if (!slide) notFound();
   const automatic = assignAssetsToProject(demoProject, recommendedAssetCatalog);
-  const asset = getAssetById(requestedAssetId) ?? getAssetById(automatic[slide.id]);
+  const asset = getRecommendedAssetById(requestedAssetId) ?? getRecommendedAssetById(automatic[slide.id]);
   const renderedSlide = requestedTemplateId && isTemplateCompatible(slide.type, requestedTemplateId)
     ? { ...slide, templateId: requestedTemplateId }
     : slide;

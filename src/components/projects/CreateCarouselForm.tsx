@@ -17,12 +17,24 @@ type Props = {
 export function CreateCarouselForm({ onGenerated }: Props) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [referenceImages, setReferenceImages] = useState<File[]>([]);
+
+  async function uploadReferences() {
+    if (!referenceImages.length) return [];
+    const form = new FormData();
+    referenceImages.forEach((file) => form.append("images", file));
+    const response = await fetch("/api/media", { method: "POST", body: form });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error ?? "No fue posible cargar las imágenes.");
+    return result.urls as string[];
+  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
     setError("");
     const data = new FormData(event.currentTarget);
+    try {
     const payload = {
       topic: data.get("topic"),
       customTitle: data.get("customTitle") || undefined,
@@ -35,8 +47,8 @@ export function CreateCarouselForm({ onGenerated }: Props) {
       visualStyle: data.get("visualStyle"),
       scheduledAt: data.get("scheduledAt") ? new Date(String(data.get("scheduledAt"))).toISOString() : undefined,
       force: data.get("force") === "on",
+      referenceImageUrls: await uploadReferences(),
     };
-    try {
       const response = await fetch("/api/projects/generate", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -63,7 +75,7 @@ export function CreateCarouselForm({ onGenerated }: Props) {
         <label className="field"><span>Perfil editorial</span><select name="editorialProfile" defaultValue="kalliom-professional">{editorialProfiles.map((profile) => <option key={profile.id} value={profile.id}>{profile.label}</option>)}</select></label>
         <label className="field"><span>Estilo visual</span><select name="visualStyle" defaultValue="balanced"><option value="balanced">Equilibrado</option><option value="minimal">Minimalista</option><option value="bold">Impactante</option><option value="image-led">Assets protagonistas</option><option value="text-led">Texto protagonista</option></select></label>
         <label className="field"><span>Programar</span><input type="datetime-local" name="scheduledAt" /></label>
-        <label className="field field-wide"><span>CTA opcional</span><textarea name="callToAction" rows={2} maxLength={TEXT_LIMITS.closing.cta} placeholder="¿Qué proceso automatizarías primero?" /></label>
+        <label className="field field-wide"><span>Fotos o capturas reales</span><input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={(event) => setReferenceImages(Array.from(event.target.files ?? []).slice(0, 6))} /><small>{referenceImages.length ? `${referenceImages.length} imagen${referenceImages.length === 1 ? "" : "es"} lista${referenceImages.length === 1 ? "" : "s"}. Se usarán como visuales del carrusel.` : "Opcional · hasta 6 JPG, PNG o WEBP. Usa fotos, capturas o material propio."}</small></label>
         <label className="force-generation field-wide"><input type="checkbox" name="force" /><span>Crear una versión nueva <small>Úsalo si ya generaste este mismo tema y quieres otro enfoque.</small></span></label>
         <div className="generator-actions field-wide">
           <p>{error ? <span className="form-error">{error}</span> : "Podrás cambiar textos, composición y visuales antes de descargar."}</p>

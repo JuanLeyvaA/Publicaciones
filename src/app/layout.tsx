@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./generator.css";
+import "./art-directions.css";
 
 export const metadata: Metadata = {
   title: "Kalliom Content Engine",

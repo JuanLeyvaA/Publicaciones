@@ -1,5 +1,5 @@
 import assetManifest from "@/data/assets-manifest.json";
-import type { Asset, AssetCategory } from "@/types/carousel";
+import type { Asset, AssetCategory, CarouselProject } from "@/types/carousel";
 
 export const assetCatalog = assetManifest as Asset[];
 
@@ -11,13 +11,45 @@ const curatedVectorIds = new Set([
   "business-002", "business-003", "business-009", "business-013",
 ]);
 
+// Los renders raster actuales son imágenes sintéticas. La selección automática
+// usa ilustración gráfica para que la identidad visual no dependa de clichés de IA.
 export const recommendedAssetCatalog = assetCatalog.filter(
-  (asset) => asset.active && (asset.mediaType === "raster" || curatedVectorIds.has(asset.id)),
-).sort((left, right) => Number(right.mediaType === "raster") - Number(left.mediaType === "raster"));
+  (asset) => asset.active && curatedVectorIds.has(asset.id),
+);
 
 export function getAssetById(id?: string) {
   if (!id) return undefined;
   return assetCatalog.find((asset) => asset.id === id && asset.active);
+}
+
+export function getRecommendedAssetById(id?: string) {
+  const asset = getAssetById(id);
+  return asset?.mediaType === "raster" ? undefined : asset;
+}
+
+export function referenceImageAssets(urls: string[]): Asset[] {
+  return urls.map((path, index) => ({
+    id: `reference-${index + 1}`,
+    name: `foto de referencia ${index + 1}`,
+    motif: "fotografia aportada",
+    path,
+    category: "business",
+    tags: ["photo", "reference"],
+    orientation: "vertical",
+    transparent: false,
+    compatibleLayouts: ["cover", "content", "closing"],
+    placement: index % 2 ? "right" : "left",
+    scale: "large",
+    rotation: 0,
+    mediaType: "raster",
+    visualStyle: "user-photo",
+    active: true,
+  }));
+}
+
+export function getProjectAsset(project: Pick<CarouselProject, "referenceImageUrls">, id?: string) {
+  const reference = referenceImageAssets(project.referenceImageUrls).find((asset) => asset.id === id);
+  return reference ?? getRecommendedAssetById(id);
 }
 
 export function searchAssets(query: string, category?: AssetCategory) {

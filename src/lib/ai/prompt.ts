@@ -14,10 +14,13 @@ Objetivo: convertir un tema en un carrusel que ayude a entender, decidir o actua
 - Variar sintaxis, longitud y cadencia. Combina frases breves con otras más conversacionales y deja respirar las ideas.
 - Hacer que título, cuerpo y destacado se complementen sin parafrasearse.
 - Proponer sujetos, objetos, acciones y entornos que puedan convertirse en imágenes concretas.
+- Escribir como alguien que ha visto el problema: una bandeja de entrada, un traspaso entre personas, una reunión, una hoja de cálculo o una decisión que se pospone. Si no puedes sostener una afirmación con una escena, una señal o una consecuencia concreta, elimínala.
 
 Evita:
 - La fórmula repetida “X no es Y: es Z”, títulos que empiezan siempre con “La…” o “El…”, y varias páginas con la misma construcción gramatical.
 - Clichés, moralejas obvias, grandilocuencia, muletillas, definiciones de diccionario y frases que podrían pertenecer a cualquier empresa.
+- El lenguaje de presentación comercial: “mejorar la eficiencia”, “generar valor”, “impulsar el crecimiento”, “visión clara”, “más tiempo para crecer”, “conversaciones de mayor valor”, “sin perder el trato humano” y promesas parecidas sin explicar qué cambia en el trabajo.
+- Los cierres que explican la lección al lector. Prefiere terminar con una tensión, un criterio o una pregunta que una persona realmente querría responder.
 - Inventar cifras, estudios, clientes, testimonios o resultados. No inventes cifras ni autoridad para hacer más fuerte el texto.
 - Repetir literalmente el tema, el gancho de portada o una conclusión ya usada.
 
@@ -129,6 +132,7 @@ export function buildCarouselPrompt(input: CreateCarouselInput) {
   return [
     `Idioma: ${input.language === "es" ? "español natural" : "natural English"}. Tema: ${input.topic}.`,
     `Resultado: exactamente ${input.slideCount} páginas — 1 cover, ${input.slideCount - 2} content y 1 closing — más el texto de LinkedIn.`,
+    "Formato de lectura rápida: una sola idea por página. Títulos de hasta 8 palabras; cuerpo de una o dos frases de hasta 28 palabras; destacado de hasta 12 palabras. Si una idea necesita más texto, divídela o elimínala.",
     `Dirección editorial sugerida: ${brief.narrative}. Úsala como brújula, no como frase literal.`,
     "Huella creativa de esta publicación:",
     `- Voz: ${brief.voice}.`,
@@ -139,11 +143,15 @@ export function buildCarouselPrompt(input: CreateCarouselInput) {
     `Categoría: ${input.category}. Tono: ${toneLabels[input.tone]}.`,
     `Perfil: ${getEditorialProfile(input.editorialProfile).prompt}`,
     `Dirección visual: ${input.visualStyle ?? "balanced"}; escribe con suficiente aire para la composición.`,
+    input.referenceImageUrls?.length
+      ? `La publicación usará ${input.referenceImageUrls.length} fotografía(s) o captura(s) reales aportadas por la persona usuaria. Construye el argumento alrededor de detalles que puedan convivir con material real; no propongas robots, hologramas ni imágenes generadas.`
+      : "No hay fotografías de referencia; prioriza una composición gráfica sobria antes que una metáfora tecnológica.",
     input.avoidTopics?.length
       ? `Memoria editorial: aléjate de los enfoques, aperturas y títulos recientes siguientes: ${input.avoidTopics.join(" | ")}.`
       : "No hay publicaciones anteriores para comparar.",
     "Cada página intermedia debe tener un papel distinto en el argumento. No uses la misma estructura sintáctica en dos títulos consecutivos.",
-    "Los cuerpos deben sonar hablados y precisos, con al menos un detalle reconocible cuando sea pertinente. Los destacados expresan una consecuencia, criterio o pregunta nueva.",
+    "Los cuerpos deben sonar hablados y precisos. En al menos dos páginas incluye una escena, señal observable, decisión o fricción concreta; no inventes anécdotas, personas ni datos. Los destacados expresan una consecuencia, criterio o pregunta nueva.",
+    "Prueba de humanidad: lee cada frase aislada. Si podría publicarla cualquier consultora sobre cualquier tema, reescríbela con un verbo, objeto, momento o consecuencia específica. No expliques que algo es importante: muestra cuándo se vuelve un problema.",
     input.callToAction ? `CTA obligatorio: ${input.callToAction}.` : "Cierra con una invitación concreta a compartir una experiencia, decisión o desacuerdo; evita “¿qué opinas?” y “hablemos” sin contexto.",
     "Para visualTags usa entre 3 y 6 etiquetas simples en inglés y minúsculas. Incluye sujeto, acción, objeto o entorno; evita etiquetas abstractas como innovation o success cuando exista una imagen más concreta.",
     "El texto de LinkedIn debe poder leerse como una publicación independiente: gancho distinto a la portada, desarrollo con cadencia humana, pregunta específica y 2–6 hashtags. No resumas página por página.",

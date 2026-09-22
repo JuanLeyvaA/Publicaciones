@@ -107,6 +107,7 @@ export const ProjectScalarFieldEnum = {
   qualityScore: 'qualityScore',
   qualityReport: 'qualityReport',
   linkedInCopy: 'linkedInCopy',
+  referenceImages: 'referenceImages',
   model: 'model',
   estimatedTokens: 'estimatedTokens',
   createdAt: 'createdAt',

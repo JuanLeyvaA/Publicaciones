@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { demoProject } from "@/data/demo-project";
-import { assetCatalog, recommendedAssetCatalog, searchAssets } from "@/lib/assets/catalog";
+import { assetCatalog, getProjectAsset, getRecommendedAssetById, recommendedAssetCatalog, searchAssets } from "@/lib/assets/catalog";
 import { scoreAsset, semanticAssetAffinity } from "@/lib/assets/scoreAsset";
 import { assignAssetsToProject, selectAssetForSlide } from "@/lib/assets/selectAsset";
 import type { AssetPlacement } from "@/types/carousel";
@@ -39,9 +39,21 @@ describe("biblioteca local de assets", () => {
   });
 
   it("expone una selección curada sin perder la biblioteca completa", () => {
-    expect(recommendedAssetCatalog.length).toBeGreaterThanOrEqual(30);
+    expect(recommendedAssetCatalog.length).toBeGreaterThanOrEqual(20);
     expect(recommendedAssetCatalog.length).toBeLessThan(assetCatalog.length);
     expect(recommendedAssetCatalog.every((asset) => asset.active)).toBe(true);
+    expect(recommendedAssetCatalog.every((asset) => asset.mediaType !== "raster")).toBe(true);
+  });
+
+  it("no reutiliza renders sintéticos en la vista previa ni al exportar", () => {
+    expect(getRecommendedAssetById("raster-001")).toBeUndefined();
+    expect(getRecommendedAssetById("automation-002")?.mediaType).not.toBe("raster");
+  });
+
+  it("convierte fotos aportadas en visuales utilizables por el carrusel", () => {
+    const asset = getProjectAsset({ referenceImageUrls: ["/uploads/taller-real.jpg"] }, "reference-1");
+    expect(asset?.path).toBe("/uploads/taller-real.jpg");
+    expect(asset?.visualStyle).toBe("user-photo");
   });
 
   it("busca por categoría y etiquetas sin IA", () => {

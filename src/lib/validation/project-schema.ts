@@ -44,6 +44,7 @@ export const carouselProjectSchema = z.object({
   brand: z.object({ name: z.string().min(1).max(50), website: z.string().min(1).max(100) }),
   slides: z.array(slideSchema).min(3).max(10),
   linkedInCopy: z.string().max(3000),
+  referenceImageUrls: z.array(z.string().regex(/^\/uploads\/[a-zA-Z0-9._-]+$/)).max(6),
 }).superRefine((project, context) => {
   if (project.slides.length !== project.slideCount) context.addIssue({ code: "custom", path: ["slides"], message: "La cantidad de slides no coincide con slideCount." });
   if (project.slides[0]?.type !== "cover") context.addIssue({ code: "custom", path: ["slides", 0], message: "La primera página debe ser cover." });

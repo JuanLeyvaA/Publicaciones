@@ -18,6 +18,7 @@ type BatchItem = {
   editorialProfile: EditorialProfileId;
   visualStyle: VisualStyle;
   scheduledAt: string;
+  referenceImages: File[];
 };
 
 const categoryOptions = [
@@ -49,6 +50,7 @@ function newItem(overrides: Partial<BatchItem> = {}): BatchItem {
     editorialProfile: "kalliom-professional",
     visualStyle: "balanced",
     scheduledAt: "",
+    referenceImages: [],
     ...overrides,
   };
 }
@@ -91,16 +93,26 @@ export function BatchGenerator({ onCompleted }: Props) {
       return;
     }
     try {
+      const uploadReferences = async (files: File[]) => {
+        if (!files.length) return [];
+        const form = new FormData();
+        files.forEach((file) => form.append("images", file));
+        const response = await fetch("/api/media", { method: "POST", body: form });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error ?? "No fue posible cargar las imágenes.");
+        return result.urls as string[];
+      };
       const data = new FormData(event.currentTarget);
       const response = await fetch("/api/projects/batch", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          items: configured.map(({ id: _id, scheduledAt, ...item }) => ({
+          items: await Promise.all(configured.map(async ({ id: _id, scheduledAt, referenceImages, ...item }) => ({
             ...item,
             topic: item.topic.trim(),
             scheduledAt: scheduledAt ? new Date(scheduledAt).toISOString() : undefined,
-          })),
+            referenceImageUrls: await uploadReferences(referenceImages),
+          }))),
           force: data.get("force") === "on",
         }),
       });
@@ -141,6 +153,7 @@ export function BatchGenerator({ onCompleted }: Props) {
               <label className="field"><span>Perfil</span><select value={item.editorialProfile} onChange={(event) => updateItem(item.id, { editorialProfile: event.target.value as EditorialProfileId })}>{editorialProfiles.map((profile) => <option key={profile.id} value={profile.id}>{profile.label}</option>)}</select></label>
               <label className="field"><span>Estilo visual</span><select value={item.visualStyle} onChange={(event) => updateItem(item.id, { visualStyle: event.target.value as VisualStyle })}>{visualOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
               <label className="field"><span>Fecha editorial</span><input type="datetime-local" value={item.scheduledAt} onChange={(event) => updateItem(item.id, { scheduledAt: event.target.value })} /></label>
+              <label className="field batch-topic"><span>Fotos o capturas reales</span><input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={(event) => updateItem(item.id, { referenceImages: Array.from(event.target.files ?? []).slice(0, 6) })} /><small>{item.referenceImages.length ? `${item.referenceImages.length} imagen${item.referenceImages.length === 1 ? "" : "es"} lista${item.referenceImages.length === 1 ? "" : "s"}` : "Opcional · hasta 6 por publicación"}</small></label>
               <button type="button" className="batch-remove" disabled={items.length === 1} onClick={() => setItems((current) => current.filter((candidate) => candidate.id !== item.id))}>Eliminar</button>
             </fieldset>
           ))}

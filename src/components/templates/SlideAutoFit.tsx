@@ -84,6 +84,34 @@ export function SlideAutoFit({ fitKey }: { fitKey: string }) {
         const ordered = [...candidates].sort((a, b) => Number.parseFloat(getComputedStyle(b).fontSize) - Number.parseFloat(getComputedStyle(a).fontSize));
         if (!ordered.some(shrink)) break;
       }
+      if (unresolved) {
+        const safe = root.querySelector<HTMLElement>("[data-safe-area]")?.getBoundingClientRect() ?? root.getBoundingClientRect();
+        const stillOverflows = Array.from(root.querySelectorAll<HTMLElement>("[data-overflow-check]")).some((element) => {
+          const rect = element.getBoundingClientRect();
+          return element.scrollWidth > element.clientWidth + 1
+            || element.scrollHeight > element.clientHeight + 1
+            || rect.left < safe.left - 2
+            || rect.top < safe.top - 2
+            || rect.right > safe.right + 2
+            || rect.bottom > safe.bottom + 2;
+        });
+        const visibleCollisionElements = Array.from(root.querySelectorAll<HTMLElement>("[data-collision-check]")).filter((element) => {
+          const style = getComputedStyle(element);
+          return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+        });
+        let stillCollides = false;
+        for (let left = 0; left < visibleCollisionElements.length && !stillCollides; left += 1) {
+          for (let right = left + 1; right < visibleCollisionElements.length; right += 1) {
+            const a = visibleCollisionElements[left]!;
+            const b = visibleCollisionElements[right]!;
+            if (!a.contains(b) && !b.contains(a) && overlaps(a.getBoundingClientRect(), b.getBoundingClientRect())) {
+              stillCollides = true;
+              break;
+            }
+          }
+        }
+        unresolved = stillOverflows || stillCollides;
+      }
       root.dataset.layoutReady = unresolved ? "exhausted" : "ready";
     }
 

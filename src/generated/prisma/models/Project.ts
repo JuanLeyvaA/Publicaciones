@@ -62,6 +62,7 @@ export type ProjectMinAggregateOutputType = {
   qualityScore: number | null
   qualityReport: string | null
   linkedInCopy: string | null
+  referenceImages: string | null
   model: string | null
   estimatedTokens: number | null
   createdAt: Date | null
@@ -92,6 +93,7 @@ export type ProjectMaxAggregateOutputType = {
   qualityScore: number | null
   qualityReport: string | null
   linkedInCopy: string | null
+  referenceImages: string | null
   model: string | null
   estimatedTokens: number | null
   createdAt: Date | null
@@ -122,6 +124,7 @@ export type ProjectCountAggregateOutputType = {
   qualityScore: number
   qualityReport: number
   linkedInCopy: number
+  referenceImages: number
   model: number
   estimatedTokens: number
   createdAt: number
@@ -166,6 +169,7 @@ export type ProjectMinAggregateInputType = {
   qualityScore?: true
   qualityReport?: true
   linkedInCopy?: true
+  referenceImages?: true
   model?: true
   estimatedTokens?: true
   createdAt?: true
@@ -196,6 +200,7 @@ export type ProjectMaxAggregateInputType = {
   qualityScore?: true
   qualityReport?: true
   linkedInCopy?: true
+  referenceImages?: true
   model?: true
   estimatedTokens?: true
   createdAt?: true
@@ -226,6 +231,7 @@ export type ProjectCountAggregateInputType = {
   qualityScore?: true
   qualityReport?: true
   linkedInCopy?: true
+  referenceImages?: true
   model?: true
   estimatedTokens?: true
   createdAt?: true
@@ -343,6 +349,7 @@ export type ProjectGroupByOutputType = {
   qualityScore: number
   qualityReport: string
   linkedInCopy: string
+  referenceImages: string
   model: string
   estimatedTokens: number
   createdAt: Date
@@ -396,6 +403,7 @@ export type ProjectWhereInput = {
   qualityScore?: Prisma.IntFilter<"Project"> | number
   qualityReport?: Prisma.StringFilter<"Project"> | string
   linkedInCopy?: Prisma.StringFilter<"Project"> | string
+  referenceImages?: Prisma.StringFilter<"Project"> | string
   model?: Prisma.StringFilter<"Project"> | string
   estimatedTokens?: Prisma.IntFilter<"Project"> | number
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
@@ -428,6 +436,7 @@ export type ProjectOrderByWithRelationInput = {
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
+  referenceImages?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -463,6 +472,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   qualityScore?: Prisma.IntFilter<"Project"> | number
   qualityReport?: Prisma.StringFilter<"Project"> | string
   linkedInCopy?: Prisma.StringFilter<"Project"> | string
+  referenceImages?: Prisma.StringFilter<"Project"> | string
   model?: Prisma.StringFilter<"Project"> | string
   estimatedTokens?: Prisma.IntFilter<"Project"> | number
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
@@ -495,6 +505,7 @@ export type ProjectOrderByWithAggregationInput = {
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
+  referenceImages?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -533,6 +544,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   qualityScore?: Prisma.IntWithAggregatesFilter<"Project"> | number
   qualityReport?: Prisma.StringWithAggregatesFilter<"Project"> | string
   linkedInCopy?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  referenceImages?: Prisma.StringWithAggregatesFilter<"Project"> | string
   model?: Prisma.StringWithAggregatesFilter<"Project"> | string
   estimatedTokens?: Prisma.IntWithAggregatesFilter<"Project"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
@@ -562,6 +574,7 @@ export type ProjectCreateInput = {
   qualityScore?: number
   qualityReport?: string
   linkedInCopy: string
+  referenceImages?: string
   model: string
   estimatedTokens?: number
   createdAt?: Date | string
@@ -594,6 +607,7 @@ export type ProjectUncheckedCreateInput = {
   qualityScore?: number
   qualityReport?: string
   linkedInCopy: string
+  referenceImages?: string
   model: string
   estimatedTokens?: number
   createdAt?: Date | string
@@ -624,6 +638,7 @@ export type ProjectUpdateInput = {
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceImages?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -656,6 +671,7 @@ export type ProjectUncheckedUpdateInput = {
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceImages?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -687,6 +703,7 @@ export type ProjectCreateManyInput = {
   qualityScore?: number
   qualityReport?: string
   linkedInCopy: string
+  referenceImages?: string
   model: string
   estimatedTokens?: number
   createdAt?: Date | string
@@ -716,6 +733,7 @@ export type ProjectUpdateManyMutationInput = {
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceImages?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -746,6 +764,7 @@ export type ProjectUncheckedUpdateManyInput = {
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceImages?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -786,6 +805,7 @@ export type ProjectCountOrderByAggregateInput = {
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
+  referenceImages?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -822,6 +842,7 @@ export type ProjectMaxOrderByAggregateInput = {
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
+  referenceImages?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -852,6 +873,7 @@ export type ProjectMinOrderByAggregateInput = {
   qualityScore?: Prisma.SortOrder
   qualityReport?: Prisma.SortOrder
   linkedInCopy?: Prisma.SortOrder
+  referenceImages?: Prisma.SortOrder
   model?: Prisma.SortOrder
   estimatedTokens?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -956,6 +978,7 @@ export type ProjectCreateWithoutGenerationCacheInput = {
   qualityScore?: number
   qualityReport?: string
   linkedInCopy: string
+  referenceImages?: string
   model: string
   estimatedTokens?: number
   createdAt?: Date | string
@@ -986,6 +1009,7 @@ export type ProjectUncheckedCreateWithoutGenerationCacheInput = {
   qualityScore?: number
   qualityReport?: string
   linkedInCopy: string
+  referenceImages?: string
   model: string
   estimatedTokens?: number
   createdAt?: Date | string
@@ -1045,6 +1069,7 @@ export type ProjectScalarWhereInput = {
   qualityScore?: Prisma.IntFilter<"Project"> | number
   qualityReport?: Prisma.StringFilter<"Project"> | string
   linkedInCopy?: Prisma.StringFilter<"Project"> | string
+  referenceImages?: Prisma.StringFilter<"Project"> | string
   model?: Prisma.StringFilter<"Project"> | string
   estimatedTokens?: Prisma.IntFilter<"Project"> | number
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
@@ -1074,6 +1099,7 @@ export type ProjectCreateWithoutSlidesInput = {
   qualityScore?: number
   qualityReport?: string
   linkedInCopy: string
+  referenceImages?: string
   model: string
   estimatedTokens?: number
   createdAt?: Date | string
@@ -1105,6 +1131,7 @@ export type ProjectUncheckedCreateWithoutSlidesInput = {
   qualityScore?: number
   qualityReport?: string
   linkedInCopy: string
+  referenceImages?: string
   model: string
   estimatedTokens?: number
   createdAt?: Date | string
@@ -1150,6 +1177,7 @@ export type ProjectUpdateWithoutSlidesInput = {
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceImages?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1181,6 +1209,7 @@ export type ProjectUncheckedUpdateWithoutSlidesInput = {
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceImages?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1210,6 +1239,7 @@ export type ProjectCreateManyGenerationCacheInput = {
   qualityScore?: number
   qualityReport?: string
   linkedInCopy: string
+  referenceImages?: string
   model: string
   estimatedTokens?: number
   createdAt?: Date | string
@@ -1239,6 +1269,7 @@ export type ProjectUpdateWithoutGenerationCacheInput = {
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceImages?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1269,6 +1300,7 @@ export type ProjectUncheckedUpdateWithoutGenerationCacheInput = {
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceImages?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1299,6 +1331,7 @@ export type ProjectUncheckedUpdateManyWithoutGenerationCacheInput = {
   qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
   qualityReport?: Prisma.StringFieldUpdateOperationsInput | string
   linkedInCopy?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceImages?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   estimatedTokens?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1360,6 +1393,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   qualityScore?: boolean
   qualityReport?: boolean
   linkedInCopy?: boolean
+  referenceImages?: boolean
   model?: boolean
   estimatedTokens?: boolean
   createdAt?: boolean
@@ -1393,6 +1427,7 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   qualityScore?: boolean
   qualityReport?: boolean
   linkedInCopy?: boolean
+  referenceImages?: boolean
   model?: boolean
   estimatedTokens?: boolean
   createdAt?: boolean
@@ -1424,6 +1459,7 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   qualityScore?: boolean
   qualityReport?: boolean
   linkedInCopy?: boolean
+  referenceImages?: boolean
   model?: boolean
   estimatedTokens?: boolean
   createdAt?: boolean
@@ -1455,13 +1491,14 @@ export type ProjectSelectScalar = {
   qualityScore?: boolean
   qualityReport?: boolean
   linkedInCopy?: boolean
+  referenceImages?: boolean
   model?: boolean
   estimatedTokens?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cacheKey" | "topic" | "title" | "subtitle" | "slideCount" | "category" | "language" | "tone" | "status" | "editorialStatus" | "editorialProfile" | "visualStyle" | "contentState" | "scheduledAt" | "linkedInStatus" | "linkedInPostId" | "linkedInPublishedAt" | "linkedInError" | "batchId" | "qualityScore" | "qualityReport" | "linkedInCopy" | "model" | "estimatedTokens" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cacheKey" | "topic" | "title" | "subtitle" | "slideCount" | "category" | "language" | "tone" | "status" | "editorialStatus" | "editorialProfile" | "visualStyle" | "contentState" | "scheduledAt" | "linkedInStatus" | "linkedInPostId" | "linkedInPublishedAt" | "linkedInError" | "batchId" | "qualityScore" | "qualityReport" | "linkedInCopy" | "referenceImages" | "model" | "estimatedTokens" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   generationCache?: boolean | Prisma.GenerationCacheDefaultArgs<ExtArgs>
   slides?: boolean | Prisma.Project$slidesArgs<ExtArgs>
@@ -1507,6 +1544,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     qualityScore: number
     qualityReport: string
     linkedInCopy: string
+    referenceImages: string
     model: string
     estimatedTokens: number
     createdAt: Date
@@ -1959,6 +1997,7 @@ export interface ProjectFieldRefs {
   readonly qualityScore: Prisma.FieldRef<"Project", 'Int'>
   readonly qualityReport: Prisma.FieldRef<"Project", 'String'>
   readonly linkedInCopy: Prisma.FieldRef<"Project", 'String'>
+  readonly referenceImages: Prisma.FieldRef<"Project", 'String'>
   readonly model: Prisma.FieldRef<"Project", 'String'>
   readonly estimatedTokens: Prisma.FieldRef<"Project", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>

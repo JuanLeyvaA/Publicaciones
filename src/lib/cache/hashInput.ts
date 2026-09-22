@@ -5,7 +5,7 @@ function normalizeText(value?: string) {
   return value?.normalize("NFKC").trim().replace(/\s+/g, " ").toLowerCase() || undefined;
 }
 
-const GENERATION_VERSION = "editorial-quality-v2";
+const GENERATION_VERSION = "editorial-fast-read-v3";
 
 export function normalizeCarouselInput(input: CreateCarouselInput) {
   return {
@@ -19,6 +19,7 @@ export function normalizeCarouselInput(input: CreateCarouselInput) {
     callToAction: normalizeText(input.callToAction),
     editorialProfile: input.editorialProfile ?? "kalliom-professional",
     visualStyle: input.visualStyle ?? "balanced",
+    referenceImageUrls: input.referenceImageUrls ?? [],
   };
 }
 

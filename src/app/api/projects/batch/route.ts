@@ -18,6 +18,7 @@ const batchItemSchema = z.object({
   tone: z.enum(["educational", "direct", "professional"]),
   editorialProfile: z.enum(["kalliom-professional", "educator", "opinion", "executive", "case-study"]),
   visualStyle: z.enum(["balanced", "minimal", "bold", "image-led", "text-led"]),
+  referenceImageUrls: z.array(z.string().regex(/^\/uploads\/[a-zA-Z0-9._-]+$/)).max(6).optional(),
   scheduledAt: z.string().datetime().optional(),
 }).strict();
 

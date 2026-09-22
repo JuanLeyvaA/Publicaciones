@@ -8,6 +8,7 @@ import { editorialProfiles } from "@/lib/editorial/profiles";
 import { reviewProject } from "@/lib/quality/reviewProject";
 import { isTemplateCompatible } from "@/lib/templates/catalog";
 import { applyVisualStyle } from "@/lib/templates/visualStyle";
+import { artDirectionForCover } from "@/lib/templates/artDirection";
 import { carouselProjectSchema } from "@/lib/validation/project-schema";
 
 describe("Fase 5", () => {
@@ -61,6 +62,11 @@ describe("Fase 5", () => {
     expect(new Set(covers).size).toBeGreaterThanOrEqual(4);
   });
 
+  it("evita también la dirección creativa usada recientemente, no solo la plantilla exacta", () => {
+    const project = applyVisualStyle(demoProject, "balanced", Array.from({ length: 8 }, () => "cover" as const));
+    expect(artDirectionForCover(project.slides[0]!.templateId)).not.toBe("field-notes");
+  });
+
   it("detecta repetición interna e histórica sin usar IA", () => {
     const duplicate = {
       ...demoProject,
@@ -77,6 +83,18 @@ describe("Fase 5", () => {
       slides: demoProject.slides.map((slide, index) => ({ ...slide, title: `La decisión que cambia el proceso ${index}` })),
     };
     expect(reviewProject(formulaic).issues.map((issue) => issue.code)).toContain("FORMULAIC_TITLE_RHYTHM");
+  });
+
+  it("señala fórmulas genéricas que suelen hacer que el texto suene automatizado", () => {
+    const generic = {
+      ...demoProject,
+      slides: demoProject.slides.map((slide, index) => index === 1 && slide.type === "content"
+        ? { ...slide, body: "No se trata de mejorar la eficiencia; se trata de generar valor." }
+        : slide),
+    };
+    const codes = reviewProject(generic).issues.map((issue) => issue.code);
+    expect(codes).toContain("AI_SOUNDS_LIKE_AI");
+    expect(codes).toContain("VAGUE_CLAIM");
   });
 
   it("deja la exportación persistida únicamente en PDF", async () => {

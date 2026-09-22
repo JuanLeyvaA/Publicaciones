@@ -44,6 +44,7 @@ model Project {
   qualityScore     Int             @default(0)
   qualityReport    String          @default("{\"score\":0,\"issues\":[],\"checkedAt\":\"\"}")
   linkedInCopy     String
+  referenceImages  String          @default("[]")
   model            String
   estimatedTokens  Int             @default(0)
   createdAt        DateTime        @default(now())

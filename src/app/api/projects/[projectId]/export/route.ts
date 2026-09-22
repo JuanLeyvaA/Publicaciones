@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
 import { z, ZodError } from "zod";
-import { assetCatalog } from "@/lib/assets/catalog";
+import { getProjectAsset } from "@/lib/assets/catalog";
 import { getProjectById, setProjectStatus } from "@/lib/projects/repository";
 import { RenderError } from "@/lib/rendering/errors";
 import { renderCarousel } from "@/lib/rendering/renderSlides";
@@ -27,9 +27,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ pro
       ? carouselProjectSchema.parse(payload.project) as CarouselProject
       : storedProject;
     if (project.id !== projectId) return NextResponse.json({ error: "El ID del proyecto no coincide." }, { status: 400 });
-    const assetIds = new Set(assetCatalog.map((asset) => asset.id));
     for (const [slideId, assetId] of Object.entries(payload.assetAssignments)) {
-      if (!project.slides.some((slide) => slide.id === slideId) || !assetIds.has(assetId)) return NextResponse.json({ error: "Selección de asset inválida." }, { status: 400 });
+      if (!project.slides.some((slide) => slide.id === slideId) || !getProjectAsset(project, assetId)) return NextResponse.json({ error: "Selección de asset inválida." }, { status: 400 });
     }
     const result = await renderCarousel({ project, baseUrl: new URL(request.url).origin, workspaceRoot: process.cwd(), assetAssignments: payload.assetAssignments });
     if (projectId !== demoProject.id) await setProjectStatus(projectId, "exported");

@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it } from "vitest";
 import { buildCarouselPrompt, creativeBriefFor, creativeDirectionFor, SYSTEM_PROMPT } from "@/lib/ai/prompt";
+import { artDirectionCopy, artDirectionForCover, artDirectionIds } from "@/lib/templates/artDirection";
 import { selectTemplateId, templateCatalog, templatesForType } from "@/lib/templates/catalog";
 
 describe("Sistema de plantillas", () => {
@@ -51,5 +52,12 @@ describe("Dirección creativa", () => {
     expect(new Set(briefs.map((brief) => brief.visualWorld)).size).toBeGreaterThanOrEqual(7);
     expect(buildCarouselPrompt(input)).toContain("Huella creativa de esta publicación");
     expect(buildCarouselPrompt(input)).toContain("etiquetas simples en inglés");
+  });
+
+  it("convierte las portadas en doce identidades visuales completas", () => {
+    const directions = templatesForType("cover").map((template) => artDirectionForCover(template.id));
+    expect(new Set(directions)).toEqual(new Set(artDirectionIds));
+    expect(new Set(Object.values(artDirectionCopy).map((direction) => direction.coverKicker)).size).toBe(12);
+    expect(new Set(Object.values(artDirectionCopy).map((direction) => direction.ctaLabel)).size).toBe(12);
   });
 });

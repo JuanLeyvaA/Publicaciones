@@ -20,6 +20,7 @@ export const createCarouselInputSchema = z.object({
   scheduledAt: z.string().datetime().optional(),
   batchId: z.string().max(80).optional(),
   avoidTopics: z.array(z.string().min(1).max(240)).max(12).optional(),
+  referenceImageUrls: z.array(z.string().regex(/^\/uploads\/[a-zA-Z0-9._-]+$/)).max(6).optional(),
 }).strict();
 
 const tags = z.array(z.string().min(1).max(40)).min(1).max(6);

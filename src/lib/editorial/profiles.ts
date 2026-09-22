@@ -12,13 +12,13 @@ export const editorialProfiles: EditorialProfile[] = [
     id: "kalliom-professional",
     label: "Kalliom profesional",
     description: "Claro, cercano y orientado a decisiones.",
-    prompt: "Escribe con autoridad tranquila, claridad y utilidad práctica. Evita sonar promocional.",
+    prompt: "Escribe con autoridad tranquila y utilidad práctica. Habla de decisiones y fricciones reconocibles; evita el lenguaje de consultora y las conclusiones empaquetadas.",
   },
   {
     id: "educator",
     label: "Educativo",
     description: "Explica conceptos complejos con sencillez.",
-    prompt: "Enseña paso a paso sin infantilizar. Usa ejemplos concretos y una conclusión aplicable.",
+    prompt: "Enseña paso a paso sin infantilizar. Usa ejemplos concretos y deja un criterio aplicable, no una moraleja.",
   },
   {
     id: "opinion",

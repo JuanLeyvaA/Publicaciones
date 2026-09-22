@@ -47,16 +47,20 @@ export async function persistGeneratedProject(input: CreateCarouselInput, cacheK
     brand: { name: "Kalliom", website: "kalliom.com" },
     slides: outputToSlides(id, output),
     linkedInCopy: linkedInCopy(output),
+    referenceImageUrls: input.referenceImageUrls ?? [],
   };
-  const styledProject = { ...applyVisualStyle(baseProject, input.visualStyle ?? "balanced"), status: "generated" as const };
   const recentProjects = await prisma.project.findMany({
     where: { id: { not: id } },
     orderBy: { updatedAt: "desc" },
-    take: 8,
-    select: { slides: { select: { assetId: true } } },
+    take: 12,
+    select: { slides: { select: { assetId: true, templateId: true } } },
   });
+  const recentlyUsedTemplateIds = recentProjects.flatMap((project) => project.slides.map((slide) => slide.templateId as TemplateId));
+  const styledProject = { ...applyVisualStyle(baseProject, input.visualStyle ?? "balanced", recentlyUsedTemplateIds), status: "generated" as const };
   const recentlyUsedAssetIds = new Set(recentProjects.flatMap((project) => project.slides.flatMap((slide) => slide.assetId ? [slide.assetId] : [])));
-  const assignments = assignAssetsToProject(styledProject, recommendedAssetCatalog, recentlyUsedAssetIds);
+  const assignments = styledProject.referenceImageUrls.length
+    ? Object.fromEntries(styledProject.slides.map((slide, index) => [slide.id, `reference-${index % styledProject.referenceImageUrls.length + 1}`]))
+    : assignAssetsToProject(styledProject, recommendedAssetCatalog, recentlyUsedAssetIds);
   const previousTitles = await prisma.project.findMany({ where: { id: { not: id } }, orderBy: { updatedAt: "desc" }, take: 20, select: { title: true } });
   const projectWithAssets = { ...styledProject, slides: styledProject.slides.map((slide) => ({ ...slide, assetId: assignments[slide.id] })) };
   const project = { ...projectWithAssets, qualityReport: reviewProject(projectWithAssets, previousTitles.map((item) => item.title)) };
@@ -68,6 +72,7 @@ export async function persistGeneratedProject(input: CreateCarouselInput, cacheK
         title: project.title,
         subtitle: project.subtitle,
         linkedInCopy: project.linkedInCopy,
+        referenceImages: JSON.stringify(project.referenceImageUrls),
         model,
         estimatedTokens,
         status: "generated",
@@ -100,6 +105,7 @@ export async function persistGeneratedProject(input: CreateCarouselInput, cacheK
         qualityScore: project.qualityReport.score,
         qualityReport: JSON.stringify(project.qualityReport),
         linkedInCopy: project.linkedInCopy,
+        referenceImages: JSON.stringify(project.referenceImageUrls),
         model,
         estimatedTokens,
       },
@@ -130,6 +136,8 @@ export async function getProjectById(id: string): Promise<CarouselProject | null
   if (!record) return null;
   let qualityReport: CarouselProject["qualityReport"] = { score: record.qualityScore, issues: [], checkedAt: "" };
   try { qualityReport = JSON.parse(record.qualityReport) as CarouselProject["qualityReport"]; } catch {}
+  let referenceImageUrls: string[] = [];
+  try { referenceImageUrls = JSON.parse(record.referenceImages) as string[]; } catch {}
   const slides: CarouselSlide[] = record.slides.map((slide) => {
     const base = {
       id: slide.id,
@@ -164,6 +172,7 @@ export async function getProjectById(id: string): Promise<CarouselProject | null
     brand: { name: "Kalliom", website: "kalliom.com" },
     slides,
     linkedInCopy: record.linkedInCopy,
+    referenceImageUrls,
   };
 }
 
@@ -194,6 +203,7 @@ export async function updateProject(id: string, rawProject: unknown): Promise<Ca
         qualityScore: qualityReport.score,
         qualityReport: JSON.stringify(qualityReport),
         linkedInCopy: project.linkedInCopy,
+        referenceImages: JSON.stringify(project.referenceImageUrls),
       },
     });
     await transaction.slide.deleteMany({ where: { projectId: id } });
