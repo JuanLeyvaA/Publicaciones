@@ -10,6 +10,7 @@ const plainText = (minimum: number, maximum: number) => z.string().min(minimum).
 export const createCarouselInputSchema = z.object({
   topic: z.string().trim().min(3).max(240),
   customTitle: z.string().trim().max(TEXT_LIMITS.cover.title).optional().transform((value) => value || undefined),
+  manualBrief: z.string().trim().max(4000).optional().transform((value) => value || undefined),
   slideCount: z.coerce.number().int().min(3).max(10),
   category: categorySchema,
   language: languageSchema,

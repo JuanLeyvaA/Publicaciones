@@ -38,6 +38,7 @@ export function CreateCarouselForm({ onGenerated }: Props) {
     const payload = {
       topic: data.get("topic"),
       customTitle: data.get("customTitle") || undefined,
+      manualBrief: data.get("manualBrief") || undefined,
       slideCount: Number(data.get("slideCount")),
       category: data.get("category"),
       language: data.get("language"),
@@ -68,6 +69,7 @@ export function CreateCarouselForm({ onGenerated }: Props) {
       <form className="generator-form" onSubmit={submit}>
         <label className="field field-wide"><span>Tema</span><textarea name="topic" required minLength={3} maxLength={240} rows={2} defaultValue="Cómo automatizar una pyme sin perder el trato humano" /></label>
         <label className="field field-wide"><span>Título opcional</span><input name="customTitle" maxLength={TEXT_LIMITS.cover.title} placeholder="Déjalo vacío para generarlo automáticamente" /></label>
+        <label className="field field-wide"><span>Guion o instrucciones para la IA</span><textarea name="manualBrief" maxLength={4000} rows={8} placeholder={"Define el orden de las páginas, frases que deben conservarse, datos con su contexto y fuentes.\n\nEjemplo:\n1. Portada: ...\n2. Contexto: ...\n3. Cierre: ..."} /><small>Opcional · La IA seguirá este guion y lo ajustará a los límites visuales. Luego podrás editar cada texto en el editor.</small></label>
         <label className="field"><span>Páginas</span><select name="slideCount" defaultValue="5">{Array.from({ length: 8 }, (_, index) => index + 3).map((count) => <option key={count}>{count}</option>)}</select></label>
         <label className="field"><span>Categoría</span><select name="category" defaultValue="automation"><option value="automation">Automatización</option><option value="web">Web</option><option value="artificial-intelligence">Inteligencia artificial</option><option value="analytics">Analítica</option><option value="business">Negocios</option></select></label>
         <label className="field"><span>Idioma</span><select name="language" defaultValue="es"><option value="es">Español</option><option value="en">Inglés</option></select></label>

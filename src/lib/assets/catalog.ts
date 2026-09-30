@@ -47,9 +47,40 @@ export function referenceImageAssets(urls: string[]): Asset[] {
   }));
 }
 
+function uploadedImageAsset(path: string, index = 0): Asset | undefined {
+  const filename = path.match(/^\/uploads\/([a-zA-Z0-9-]+\.(?:jpg|png|webp))$/)?.[1];
+  if (!filename) return undefined;
+  return {
+    id: `upload-${filename}`,
+    name: `imagen guardada ${index + 1}`,
+    motif: "fotografia aportada",
+    path,
+    category: "business",
+    tags: ["photo", "saved", "upload"],
+    orientation: "vertical",
+    transparent: false,
+    compatibleLayouts: ["cover", "content", "closing"],
+    placement: index % 2 ? "right" : "left",
+    scale: "large",
+    rotation: 0,
+    mediaType: "raster",
+    visualStyle: "user-photo",
+    active: true,
+  };
+}
+
+/** Imágenes personales que ya se cargaron: aparecen en Visuales en todos los proyectos. */
+export function uploadedImageAssets(urls: string[]): Asset[] {
+  return urls.flatMap((path, index) => {
+    const asset = uploadedImageAsset(path, index);
+    return asset ? [asset] : [];
+  });
+}
+
 export function getProjectAsset(project: Pick<CarouselProject, "referenceImageUrls">, id?: string) {
   const reference = referenceImageAssets(project.referenceImageUrls).find((asset) => asset.id === id);
-  return reference ?? getRecommendedAssetById(id);
+  const uploaded = id?.startsWith("upload-") ? uploadedImageAsset(`/uploads/${id.slice("upload-".length)}`) : undefined;
+  return reference ?? uploaded ?? getRecommendedAssetById(id);
 }
 
 export function searchAssets(query: string, category?: AssetCategory) {

@@ -4,13 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import { AssetPicker } from "@/components/assets/AssetPicker";
 import { PreviewFrame } from "@/components/preview/PreviewFrame";
 import { SlideRenderer } from "@/components/slides/SlideRenderer";
-import { getProjectAsset, recommendedAssetCatalog, referenceImageAssets } from "@/lib/assets/catalog";
+import { getProjectAsset, recommendedAssetCatalog, referenceImageAssets, uploadedImageAssets } from "@/lib/assets/catalog";
 import { assignAssetsToProject } from "@/lib/assets/selectAsset";
 import { TEXT_LIMITS } from "@/lib/constants";
 import { templatesForType } from "@/lib/templates/catalog";
 import { applyVisualStyle } from "@/lib/templates/visualStyle";
 import { editorialProfiles } from "@/lib/editorial/profiles";
-import type { CarouselProject, CarouselSlide } from "@/types/carousel";
+import type { Asset, CarouselProject, CarouselSlide } from "@/types/carousel";
 
 type Props = {
   project: CarouselProject;
@@ -51,6 +51,7 @@ function TextField({ label, value, maxLength, multiline = false, onChange }: {
 
 export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = false }: Props) {
   const [selectedId, setSelectedId] = useState(project.slides[0]?.id ?? "");
+  const [savedVisuals, setSavedVisuals] = useState<Asset[]>([]);
   const automaticAssignments = useMemo(() => assignAssetsToProject(project, recommendedAssetCatalog), [project]);
   const selectedIndex = Math.max(project.slides.findIndex((slide) => slide.id === selectedId), 0);
   const slide = project.slides[selectedIndex]!;
@@ -59,6 +60,15 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
   useEffect(() => {
     if (!project.slides.some((item) => item.id === selectedId)) setSelectedId(project.slides[0]?.id ?? "");
   }, [project.id, project.slides, selectedId]);
+
+  useEffect(() => {
+    let active = true;
+    void fetch("/api/media")
+      .then((response) => response.ok ? response.json() : { urls: [] })
+      .then((result: { urls?: string[] }) => { if (active) setSavedVisuals(uploadedImageAssets(result.urls ?? [])); })
+      .catch(() => { if (active) setSavedVisuals([]); });
+    return () => { active = false; };
+  }, []);
 
   function updateSlide(nextSlide: CarouselSlide) {
     onChange(replaceSlide(project, nextSlide));
@@ -159,7 +169,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
           {slide.type === "content" && <TextField label="Destacado" value={slide.highlight} maxLength={TEXT_LIMITS.content.highlight} multiline onChange={(highlight) => updateSlide({ ...slide, highlight })} />}
           {slide.type === "closing" && <TextField label="CTA" value={slide.cta} maxLength={TEXT_LIMITS.closing.cta} multiline onChange={(cta) => updateSlide({ ...slide, cta })} />}
           <AssetPicker
-            assets={[...referenceImageAssets(project.referenceImageUrls), ...recommendedAssetCatalog].filter((asset) => asset.compatibleLayouts.includes(slide.type))}
+            assets={[...referenceImageAssets(project.referenceImageUrls), ...savedVisuals, ...recommendedAssetCatalog].filter((asset) => asset.compatibleLayouts.includes(slide.type))}
             selectedId={displayedAssetId}
             onSelect={(assetId) => updateSlide({ ...slide, assetId })}
           />

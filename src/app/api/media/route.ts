@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
 
@@ -11,6 +11,22 @@ const acceptedTypes: Record<string, string> = {
   "image/webp": "webp",
 };
 const maxBytes = 8 * 1024 * 1024;
+
+export async function GET() {
+  try {
+    const directory = path.join(process.cwd(), "public", "uploads");
+    const files = await readdir(directory, { withFileTypes: true });
+    const urls = files
+      .filter((file) => file.isFile() && /\.(jpg|png|webp)$/i.test(file.name))
+      .map((file) => `/uploads/${file.name}`)
+      .sort();
+    return NextResponse.json({ urls });
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code === "ENOENT") return NextResponse.json({ urls: [] });
+    return NextResponse.json({ error: "No fue posible cargar la biblioteca de visuales." }, { status: 500 });
+  }
+}
 
 export async function POST(request: Request) {
   try {

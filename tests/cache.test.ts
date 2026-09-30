@@ -12,6 +12,7 @@ const input: CreateCarouselInput = {
   language: "es",
   tone: "professional",
   callToAction: "¿Qué automatizarías primero?",
+  manualBrief: undefined,
 };
 
 const output: AiCarouselOutput = {
@@ -36,6 +37,12 @@ describe("hash y caché de generación", () => {
   it("normaliza espacios y mayúsculas antes de calcular el hash", () => {
     const equivalent = { ...input, topic: "  AUTOMATIZACIÓN   PARA PYMES " };
     expect(createGenerationCacheKey(input).key).toBe(createGenerationCacheKey(equivalent).key);
+  });
+
+  it("distingue los guiones manuales para no reutilizar otro carrusel", () => {
+    expect(createGenerationCacheKey(input).key).not.toBe(
+      createGenerationCacheKey({ ...input, manualBrief: "Primero explica el contexto y después los permisos." }).key,
+    );
   });
 
   it("hace una sola llamada y reutiliza el JSON en la segunda solicitud", async () => {

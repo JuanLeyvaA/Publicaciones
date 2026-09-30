@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { demoProject } from "@/data/demo-project";
-import { assetCatalog, getProjectAsset, getRecommendedAssetById, recommendedAssetCatalog, searchAssets } from "@/lib/assets/catalog";
+import { assetCatalog, getProjectAsset, getRecommendedAssetById, recommendedAssetCatalog, searchAssets, uploadedImageAssets } from "@/lib/assets/catalog";
 import { scoreAsset, semanticAssetAffinity } from "@/lib/assets/scoreAsset";
 import { assignAssetsToProject, selectAssetForSlide } from "@/lib/assets/selectAsset";
 import type { AssetPlacement } from "@/types/carousel";
@@ -54,6 +54,12 @@ describe("biblioteca local de assets", () => {
     const asset = getProjectAsset({ referenceImageUrls: ["/uploads/taller-real.jpg"] }, "reference-1");
     expect(asset?.path).toBe("/uploads/taller-real.jpg");
     expect(asset?.visualStyle).toBe("user-photo");
+  });
+
+  it("reutiliza una imagen cargada desde la biblioteca de visuales", () => {
+    const [asset] = uploadedImageAssets(["/uploads/9dd641e8-0ca7-4edf-ac0d-dc0cf73bd076.jpg"]);
+    expect(asset?.id).toBe("upload-9dd641e8-0ca7-4edf-ac0d-dc0cf73bd076.jpg");
+    expect(getProjectAsset({ referenceImageUrls: [] }, asset?.id)?.path).toBe(asset?.path);
   });
 
   it("busca por categoría y etiquetas sin IA", () => {

@@ -12,6 +12,7 @@ export function normalizeCarouselInput(input: CreateCarouselInput) {
     generationVersion: GENERATION_VERSION,
     topic: normalizeText(input.topic)!,
     customTitle: normalizeText(input.customTitle),
+    manualBrief: normalizeText(input.manualBrief),
     slideCount: input.slideCount,
     category: input.category,
     language: input.language,

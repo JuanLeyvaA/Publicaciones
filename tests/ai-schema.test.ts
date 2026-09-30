@@ -20,6 +20,14 @@ describe("schemas de IA", () => {
     expect(input.success).toBe(true);
   });
 
+  it("acepta un guion manual para dirigir la generación", () => {
+    const input = createCarouselInputSchema.safeParse({
+      topic: "Seguridad de agentes", manualBrief: "1. Portada\n2. Contexto\n3. Cierre", slideCount: 3,
+      category: "artificial-intelligence", language: "es", tone: "professional",
+    });
+    expect(input.success).toBe(true);
+  });
+
   it("rechaza HTML y estructuras incompletas", () => {
     const result = aiCarouselSchema.safeParse({
       title: "<b>Título</b>",

@@ -29,6 +29,7 @@ export function AssetPicker({ assets, selectedId, onSelect }: Props) {
       && (!term || `${asset.id} ${asset.name} ${asset.motif} ${asset.tags.join(" ")}`.toLowerCase().includes(term)));
   }, [assets, category, query]);
   const selected = assets.find((asset) => asset.id === selectedId);
+  const savedCount = assets.filter((asset) => asset.id.startsWith("upload-")).length;
   const displayName = (value?: string) => value
     ? value.replaceAll("-", " ").replace(/\b\w/g, (letter) => letter.toUpperCase())
     : "Sin visual";
@@ -41,7 +42,7 @@ export function AssetPicker({ assets, selectedId, onSelect }: Props) {
         <b>Elegir</b>
       </summary>
       <div className="asset-picker-panel">
-        <p className="asset-picker-intro">Selección curada para esta página · {filtered.length} opciones</p>
+        <p className="asset-picker-intro">Selección curada para esta página · {filtered.length} opciones{savedCount ? ` · ${savedCount} visual${savedCount === 1 ? "" : "es"} guardado${savedCount === 1 ? "" : "s"}` : ""}</p>
         <div className="asset-filters">
           <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar robot, equipo, datos…" aria-label="Buscar visuales" />
           <select value={category} onChange={(event) => setCategory(event.target.value as AssetCategory | "all")} aria-label="Filtrar por categoría">

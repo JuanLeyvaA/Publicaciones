@@ -140,6 +140,9 @@ export function buildCarouselPrompt(input: CreateCarouselInput) {
     `- Apertura: ${brief.opening}.`,
     `- Mundo visual: ${brief.visualWorld}.`,
     input.customTitle ? `Conserva exactamente este título: ${input.customTitle}.` : "Crea una portada específica, inesperada y fácil de decir en voz alta.",
+    input.manualBrief
+      ? `Guion e instrucciones de la persona usuaria (son prioritarios; respeta su orden, sus hechos y sus matices. Condensa solo para cumplir los límites de cada página):\n${input.manualBrief}`
+      : "No hay guion manual; propone una secuencia editorial propia.",
     `Categoría: ${input.category}. Tono: ${toneLabels[input.tone]}.`,
     `Perfil: ${getEditorialProfile(input.editorialProfile).prompt}`,
     `Dirección visual: ${input.visualStyle ?? "balanced"}; escribe con suficiente aire para la composición.`,
