@@ -72,6 +72,16 @@ export type EditorialProfileId = "kalliom-professional" | "educator" | "opinion"
 export type VisualStyle = "balanced" | "minimal" | "bold" | "image-led" | "text-led";
 export type ContentState = "new" | "used" | "discarded";
 
+export type SlideAppearance = {
+  showBackground?: boolean;
+  showDecor?: boolean;
+  showScene?: boolean;
+  showHeader?: boolean;
+  showFooter?: boolean;
+  showAsset?: boolean;
+  assetPlacement?: AssetPlacement;
+};
+
 export type QualityIssue = {
   code: string;
   severity: "info" | "warning" | "error";
@@ -110,6 +120,7 @@ type SlideBase = {
   visualTags: string[];
   templateId: TemplateId;
   assetId?: string;
+  appearance?: SlideAppearance;
 };
 
 export type CoverSlide = SlideBase & {

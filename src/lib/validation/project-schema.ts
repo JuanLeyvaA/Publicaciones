@@ -7,6 +7,11 @@ const base = {
   order: z.number().int().nonnegative(),
   visualTags: z.array(z.string().min(1).max(40)).max(10),
   assetId: z.string().max(80).optional(),
+  appearance: z.object({
+    showBackground: z.boolean().optional(), showDecor: z.boolean().optional(), showScene: z.boolean().optional(),
+    showHeader: z.boolean().optional(), showFooter: z.boolean().optional(), showAsset: z.boolean().optional(),
+    assetPlacement: z.enum(["left", "right", "top-left", "top-right", "bottom-left", "bottom-right", "center"]).optional(),
+  }).optional(),
 };
 
 const slideSchema = z.discriminatedUnion("type", [
@@ -52,6 +57,5 @@ export const carouselProjectSchema = z.object({
   project.slides.forEach((slide, index) => {
     if (slide.order !== index) context.addIssue({ code: "custom", path: ["slides", index, "order"], message: "El orden debe ser consecutivo." });
     if (!isTemplateCompatible(slide.type, slide.templateId)) context.addIssue({ code: "custom", path: ["slides", index, "templateId"], message: "La plantilla no es compatible con el tipo de página." });
-    if (slide.type === "content" && slide.number !== index) context.addIssue({ code: "custom", path: ["slides", index, "number"], message: "La numeración de contenido debe ser consecutiva." });
   });
 });

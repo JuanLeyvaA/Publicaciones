@@ -6,7 +6,7 @@ import { AssetVisual } from "@/components/assets/AssetVisual";
 import { SlideAutoFit } from "@/components/templates/SlideAutoFit";
 import { artDirectionClass, type ArtDirectionId } from "@/lib/templates/artDirection";
 import type { Asset } from "@/types/carousel";
-import type { TemplateId } from "@/types/carousel";
+import type { SlideAppearance, TemplateId } from "@/types/carousel";
 
 type Props = {
   children: ReactNode;
@@ -19,6 +19,7 @@ type Props = {
   asset?: Asset;
   fitKey: string;
   direction: ArtDirectionId;
+  appearance?: SlideAppearance;
 };
 
 function stableHash(value: string) {
@@ -30,25 +31,20 @@ function stableHash(value: string) {
   return hash >>> 0;
 }
 
-export function TemplateFrame({ children, slideId, variant, templateId, brand, index, total, asset, fitKey, direction }: Props) {
+export function TemplateFrame({ children, slideId, variant, templateId, brand, index, total, asset, fitKey, direction, appearance }: Props) {
   const scene = stableHash(`${slideId}:${templateId}:scene`) % 12;
   const composition = stableHash(`${slideId}:${templateId}:composition`) % 6;
   const assetFrame = stableHash(`${slideId}:${asset?.id ?? "none"}:frame`) % 6;
+  const placement = appearance?.assetPlacement ?? asset?.placement ?? "right";
   return (
     <SlideCanvas slideId={slideId} className={`template-${variant} template-layout-${templateId} ${artDirectionClass(direction)} asset-placement-${asset?.placement ?? "right"} background-variant-${scene} composition-variant-${composition} asset-frame-${assetFrame}`}>
-      <div className="background-art" aria-hidden="true" />
-      <div className="ambient-orb orb-one" aria-hidden="true" />
-      <div className="ambient-orb orb-two" aria-hidden="true" />
-      <div className="template-decor decor-one" aria-hidden="true" />
-      <div className="template-decor decor-two" aria-hidden="true" />
-      <div className="template-decor decor-three" aria-hidden="true" />
-      <div className="creative-frame" aria-hidden="true"><span /><span /><span /><span /></div>
-      <div className="noise" aria-hidden="true" />
-      <AssetVisual asset={asset} variant={variant} />
+      {appearance?.showBackground !== false && <><div className="background-art" aria-hidden="true" /><div className="noise" aria-hidden="true" /></>}
+      {appearance?.showDecor !== false && <><div className="ambient-orb orb-one" aria-hidden="true" /><div className="ambient-orb orb-two" aria-hidden="true" /><div className="template-decor decor-one" aria-hidden="true" /><div className="template-decor decor-two" aria-hidden="true" /><div className="template-decor decor-three" aria-hidden="true" /><div className="creative-frame" aria-hidden="true"><span /><span /><span /><span /></div></>}
+      {appearance?.showAsset !== false && <AssetVisual asset={asset ? { ...asset, placement } : undefined} variant={variant} />}
       <div className="safe-area" data-safe-area="true">
-        <SlideHeader brand={brand} index={index} total={total} direction={direction} />
+        {appearance?.showHeader !== false && <SlideHeader brand={brand} index={index} total={total} direction={direction} />}
         {children}
-        <SlideCounter index={index} total={total} direction={direction} />
+        {appearance?.showFooter !== false && <SlideCounter index={index} total={total} direction={direction} />}
         <SlideAutoFit fitKey={`${templateId}:${asset?.id ?? "none"}:${fitKey}`} />
       </div>
     </SlideCanvas>

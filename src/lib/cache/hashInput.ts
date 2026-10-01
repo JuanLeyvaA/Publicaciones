@@ -5,7 +5,8 @@ function normalizeText(value?: string) {
   return value?.normalize("NFKC").trim().replace(/\s+/g, " ").toLowerCase() || undefined;
 }
 
-const GENERATION_VERSION = "editorial-fast-read-v3";
+// Cambiar esta versión invalida resultados generados con instrucciones anteriores.
+const GENERATION_VERSION = "editorial-thread-v6";
 
 export function normalizeCarouselInput(input: CreateCarouselInput) {
   return {

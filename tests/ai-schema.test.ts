@@ -54,4 +54,20 @@ describe("schemas de IA", () => {
     });
     expect(() => validateOutputForInput(input, output)).toThrow(/esperaban 4/);
   });
+
+  it("asigna internamente el orden de las páginas aunque la IA repita sus números", () => {
+    const input = createCarouselInputSchema.parse({ topic: "Tema válido", slideCount: 4, category: "automation", language: "es", tone: "professional" });
+    const output = aiCarouselSchema.parse({
+      title: "Título", subtitle: "Subtítulo", category: "automation",
+      slides: [
+        { type: "cover", title: "Título", subtitle: "Subtítulo", visualTags: ["automation"] },
+        { type: "content", number: 9, title: "Primera", body: "Primer contenido.", highlight: "Primero.", visualTags: ["workflow"] },
+        { type: "content", number: 9, title: "Segunda", body: "Segundo contenido.", highlight: "Después.", visualTags: ["workflow"] },
+        { type: "closing", title: "Cierre", body: "Mensaje final.", cta: "Conversemos.", visualTags: ["business"] },
+      ],
+      linkedin: { hook: "Gancho.", body: "Cuerpo.", question: "¿Pregunta?", hashtags: ["#Uno", "#Dos"] },
+    });
+    const normalized = validateOutputForInput(input, output);
+    expect(normalized.slides.filter((slide) => slide.type === "content").map((slide) => slide.number)).toEqual([1, 2]);
+  });
 });

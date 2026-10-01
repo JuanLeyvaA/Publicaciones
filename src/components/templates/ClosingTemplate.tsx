@@ -13,7 +13,7 @@ export function ClosingTemplate({ slide, brand, website, index, total, asset, di
   const copy = artDirectionCopy[direction];
   return (
     <TemplateFrame slideId={slide.id} variant="closing" templateId={slide.templateId} brand={brand} index={index} total={total} asset={asset} fitKey={`${slide.title}:${slide.body}:${slide.cta}`} direction={direction}>
-      <div className="closing-scenography" aria-hidden="true"><span>{copy.displayWord}</span><i /><i /><i /></div>
+      {slide.appearance?.showScene !== false && <div className="closing-scenography" aria-hidden="true"><span>{copy.displayWord}</span><i /><i /><i /></div>}
       <main className={`closing-content${dense ? " text-dense" : ""}`} data-overflow-check="closing-content">
         <div className="closing-emblem">K</div>
         <div className="eyebrow">{copy.closingKicker}</div>

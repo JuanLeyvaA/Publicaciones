@@ -16,4 +16,11 @@ describe("validación del proyecto", () => {
     const invalid = { ...demoProject, slideCount: 4 };
     expect(carouselProjectSchema.safeParse(invalid).success).toBe(false);
   });
+
+  it("no bloquea la descarga por un número interno de contenido", () => {
+    const project = structuredClone(demoProject);
+    const content = project.slides.find((slide) => slide.type === "content");
+    if (content?.type === "content") content.number = 99;
+    expect(carouselProjectSchema.safeParse(project).success).toBe(true);
+  });
 });

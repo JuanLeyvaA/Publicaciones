@@ -125,6 +125,7 @@ export async function persistGeneratedProject(input: CreateCarouselInput, cacheK
         visualTags: JSON.stringify(slide.visualTags),
         templateId: slide.templateId,
         assetId: slide.assetId,
+        appearance: JSON.stringify(slide.appearance ?? {}),
       })),
     });
   });
@@ -144,6 +145,7 @@ export async function getProjectById(id: string): Promise<CarouselProject | null
       order: slide.order,
       visualTags: JSON.parse(slide.visualTags) as string[],
       assetId: slide.assetId ?? undefined,
+      appearance: (() => { try { return JSON.parse(slide.appearance) as CarouselSlide["appearance"]; } catch { return undefined; } })(),
     };
     const templateId: TemplateId = isTemplateCompatible(slide.type as CarouselSlide["type"], slide.templateId)
       ? slide.templateId as TemplateId
@@ -221,6 +223,7 @@ export async function updateProject(id: string, rawProject: unknown): Promise<Ca
         visualTags: JSON.stringify(slide.visualTags),
         templateId: slide.templateId,
         assetId: slide.assetId,
+        appearance: JSON.stringify(slide.appearance ?? {}),
       })),
     });
   });

@@ -129,7 +129,8 @@ export const SlideScalarFieldEnum = {
   cta: 'cta',
   visualTags: 'visualTags',
   templateId: 'templateId',
-  assetId: 'assetId'
+  assetId: 'assetId',
+  appearance: 'appearance'
 } as const
 
 export type SlideScalarFieldEnum = (typeof SlideScalarFieldEnum)[keyof typeof SlideScalarFieldEnum]

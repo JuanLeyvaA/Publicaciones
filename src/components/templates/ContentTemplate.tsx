@@ -25,7 +25,7 @@ export function ContentTemplate({ slide, brand, index, total, asset, direction }
             <strong data-autofit data-autofit-min="17">{slide.highlight}</strong>
           </aside>
         </section>
-        <aside className="visual-panel" aria-label="Composición visual decorativa">
+        {slide.appearance?.showScene !== false && <aside className="visual-panel" aria-label="Composición visual decorativa">
           <span className="visual-index">{String(slide.number).padStart(2, "0")}</span>
           <div className="visual-orbit" aria-hidden="true"><i /><i /><i /></div>
           <div className="visual-card card-one"><i /><b>{copy.visualSteps[0]}</b><small>{copy.visualSteps[1]}</small></div>
@@ -34,7 +34,7 @@ export function ContentTemplate({ slide, brand, index, total, asset, direction }
             {copy.visualSteps.map((step, stepIndex) => <span key={step}><i>{stepIndex + 1}</i>{step}</span>)}
           </div>
           <small className="visual-caption">{copy.visualCaption}</small>
-        </aside>
+        </aside>}
       </main>
     </TemplateFrame>
   );

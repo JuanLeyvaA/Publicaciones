@@ -10,7 +10,7 @@ import { TEXT_LIMITS } from "@/lib/constants";
 import { templatesForType } from "@/lib/templates/catalog";
 import { applyVisualStyle } from "@/lib/templates/visualStyle";
 import { editorialProfiles } from "@/lib/editorial/profiles";
-import type { Asset, CarouselProject, CarouselSlide } from "@/types/carousel";
+import type { Asset, AssetPlacement, CarouselProject, CarouselSlide, SlideAppearance } from "@/types/carousel";
 
 type Props = {
   project: CarouselProject;
@@ -72,6 +72,10 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
 
   function updateSlide(nextSlide: CarouselSlide) {
     onChange(replaceSlide(project, nextSlide));
+  }
+
+  function updateAppearance(next: Partial<SlideAppearance>) {
+    updateSlide({ ...slide, appearance: { ...slide.appearance, ...next } });
   }
 
   function moveContent(index: number, direction: -1 | 1) {
@@ -173,6 +177,23 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             selectedId={displayedAssetId}
             onSelect={(assetId) => updateSlide({ ...slide, assetId })}
           />
+          <details className="appearance-controls">
+            <summary>Elementos visuales</summary>
+            <p>Oculta lo que no aporte al mensaje o cambia la ubicación del visual. Estos ajustes también se conservan al descargar.</p>
+            <div className="appearance-toggles">
+              <label><input type="checkbox" checked={slide.appearance?.showBackground !== false} onChange={(event) => updateAppearance({ showBackground: event.target.checked })} /> Fondo</label>
+              <label><input type="checkbox" checked={slide.appearance?.showDecor !== false} onChange={(event) => updateAppearance({ showDecor: event.target.checked })} /> Figuras decorativas</label>
+              <label><input type="checkbox" checked={slide.appearance?.showScene !== false} onChange={(event) => updateAppearance({ showScene: event.target.checked })} /> Símbolos y textos decorativos</label>
+              <label><input type="checkbox" checked={slide.appearance?.showHeader !== false} onChange={(event) => updateAppearance({ showHeader: event.target.checked })} /> Marca y número superior</label>
+              <label><input type="checkbox" checked={slide.appearance?.showFooter !== false} onChange={(event) => updateAppearance({ showFooter: event.target.checked })} /> Progreso y número inferior</label>
+              <label><input type="checkbox" checked={slide.appearance?.showAsset !== false} onChange={(event) => updateAppearance({ showAsset: event.target.checked })} /> Imagen o ilustración</label>
+            </div>
+            <label className="editor-field"><span>Ubicación de imagen o ilustración</span>
+              <select value={slide.appearance?.assetPlacement ?? getProjectAsset(project, displayedAssetId)?.placement ?? "right"} onChange={(event) => updateAppearance({ assetPlacement: event.target.value as AssetPlacement })}>
+                <option value="left">Izquierda</option><option value="right">Derecha</option><option value="top-left">Arriba izquierda</option><option value="top-right">Arriba derecha</option><option value="bottom-left">Abajo izquierda</option><option value="bottom-right">Abajo derecha</option><option value="center">Centro</option>
+              </select>
+            </label>
+          </details>
         </aside>
       </div>
       <details className="linkedin-drawer">

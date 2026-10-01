@@ -47,6 +47,7 @@ export type SlideMinAggregateOutputType = {
   visualTags: string | null
   templateId: string | null
   assetId: string | null
+  appearance: string | null
 }
 
 export type SlideMaxAggregateOutputType = {
@@ -62,6 +63,7 @@ export type SlideMaxAggregateOutputType = {
   visualTags: string | null
   templateId: string | null
   assetId: string | null
+  appearance: string | null
 }
 
 export type SlideCountAggregateOutputType = {
@@ -77,6 +79,7 @@ export type SlideCountAggregateOutputType = {
   visualTags: number
   templateId: number
   assetId: number
+  appearance: number
   _all: number
 }
 
@@ -102,6 +105,7 @@ export type SlideMinAggregateInputType = {
   visualTags?: true
   templateId?: true
   assetId?: true
+  appearance?: true
 }
 
 export type SlideMaxAggregateInputType = {
@@ -117,6 +121,7 @@ export type SlideMaxAggregateInputType = {
   visualTags?: true
   templateId?: true
   assetId?: true
+  appearance?: true
 }
 
 export type SlideCountAggregateInputType = {
@@ -132,6 +137,7 @@ export type SlideCountAggregateInputType = {
   visualTags?: true
   templateId?: true
   assetId?: true
+  appearance?: true
   _all?: true
 }
 
@@ -234,6 +240,7 @@ export type SlideGroupByOutputType = {
   visualTags: string
   templateId: string
   assetId: string | null
+  appearance: string
   _count: SlideCountAggregateOutputType | null
   _avg: SlideAvgAggregateOutputType | null
   _sum: SlideSumAggregateOutputType | null
@@ -272,6 +279,7 @@ export type SlideWhereInput = {
   visualTags?: Prisma.StringFilter<"Slide"> | string
   templateId?: Prisma.StringFilter<"Slide"> | string
   assetId?: Prisma.StringNullableFilter<"Slide"> | string | null
+  appearance?: Prisma.StringFilter<"Slide"> | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
 }
 
@@ -288,6 +296,7 @@ export type SlideOrderByWithRelationInput = {
   visualTags?: Prisma.SortOrder
   templateId?: Prisma.SortOrder
   assetId?: Prisma.SortOrderInput | Prisma.SortOrder
+  appearance?: Prisma.SortOrder
   project?: Prisma.ProjectOrderByWithRelationInput
 }
 
@@ -308,6 +317,7 @@ export type SlideWhereUniqueInput = Prisma.AtLeast<{
   visualTags?: Prisma.StringFilter<"Slide"> | string
   templateId?: Prisma.StringFilter<"Slide"> | string
   assetId?: Prisma.StringNullableFilter<"Slide"> | string | null
+  appearance?: Prisma.StringFilter<"Slide"> | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
 }, "id" | "projectId_order">
 
@@ -324,6 +334,7 @@ export type SlideOrderByWithAggregationInput = {
   visualTags?: Prisma.SortOrder
   templateId?: Prisma.SortOrder
   assetId?: Prisma.SortOrderInput | Prisma.SortOrder
+  appearance?: Prisma.SortOrder
   _count?: Prisma.SlideCountOrderByAggregateInput
   _avg?: Prisma.SlideAvgOrderByAggregateInput
   _max?: Prisma.SlideMaxOrderByAggregateInput
@@ -347,6 +358,7 @@ export type SlideScalarWhereWithAggregatesInput = {
   visualTags?: Prisma.StringWithAggregatesFilter<"Slide"> | string
   templateId?: Prisma.StringWithAggregatesFilter<"Slide"> | string
   assetId?: Prisma.StringNullableWithAggregatesFilter<"Slide"> | string | null
+  appearance?: Prisma.StringWithAggregatesFilter<"Slide"> | string
 }
 
 export type SlideCreateInput = {
@@ -361,6 +373,7 @@ export type SlideCreateInput = {
   visualTags: string
   templateId: string
   assetId?: string | null
+  appearance?: string
   project: Prisma.ProjectCreateNestedOneWithoutSlidesInput
 }
 
@@ -377,6 +390,7 @@ export type SlideUncheckedCreateInput = {
   visualTags: string
   templateId: string
   assetId?: string | null
+  appearance?: string
 }
 
 export type SlideUpdateInput = {
@@ -391,6 +405,7 @@ export type SlideUpdateInput = {
   visualTags?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appearance?: Prisma.StringFieldUpdateOperationsInput | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutSlidesNestedInput
 }
 
@@ -407,6 +422,7 @@ export type SlideUncheckedUpdateInput = {
   visualTags?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appearance?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SlideCreateManyInput = {
@@ -422,6 +438,7 @@ export type SlideCreateManyInput = {
   visualTags: string
   templateId: string
   assetId?: string | null
+  appearance?: string
 }
 
 export type SlideUpdateManyMutationInput = {
@@ -436,6 +453,7 @@ export type SlideUpdateManyMutationInput = {
   visualTags?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appearance?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SlideUncheckedUpdateManyInput = {
@@ -451,6 +469,7 @@ export type SlideUncheckedUpdateManyInput = {
   visualTags?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appearance?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SlideListRelationFilter = {
@@ -481,6 +500,7 @@ export type SlideCountOrderByAggregateInput = {
   visualTags?: Prisma.SortOrder
   templateId?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
+  appearance?: Prisma.SortOrder
 }
 
 export type SlideAvgOrderByAggregateInput = {
@@ -500,6 +520,7 @@ export type SlideMaxOrderByAggregateInput = {
   visualTags?: Prisma.SortOrder
   templateId?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
+  appearance?: Prisma.SortOrder
 }
 
 export type SlideMinOrderByAggregateInput = {
@@ -515,6 +536,7 @@ export type SlideMinOrderByAggregateInput = {
   visualTags?: Prisma.SortOrder
   templateId?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
+  appearance?: Prisma.SortOrder
 }
 
 export type SlideSumOrderByAggregateInput = {
@@ -575,6 +597,7 @@ export type SlideCreateWithoutProjectInput = {
   visualTags: string
   templateId: string
   assetId?: string | null
+  appearance?: string
 }
 
 export type SlideUncheckedCreateWithoutProjectInput = {
@@ -589,6 +612,7 @@ export type SlideUncheckedCreateWithoutProjectInput = {
   visualTags: string
   templateId: string
   assetId?: string | null
+  appearance?: string
 }
 
 export type SlideCreateOrConnectWithoutProjectInput = {
@@ -632,6 +656,7 @@ export type SlideScalarWhereInput = {
   visualTags?: Prisma.StringFilter<"Slide"> | string
   templateId?: Prisma.StringFilter<"Slide"> | string
   assetId?: Prisma.StringNullableFilter<"Slide"> | string | null
+  appearance?: Prisma.StringFilter<"Slide"> | string
 }
 
 export type SlideCreateManyProjectInput = {
@@ -646,6 +671,7 @@ export type SlideCreateManyProjectInput = {
   visualTags: string
   templateId: string
   assetId?: string | null
+  appearance?: string
 }
 
 export type SlideUpdateWithoutProjectInput = {
@@ -660,6 +686,7 @@ export type SlideUpdateWithoutProjectInput = {
   visualTags?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appearance?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SlideUncheckedUpdateWithoutProjectInput = {
@@ -674,6 +701,7 @@ export type SlideUncheckedUpdateWithoutProjectInput = {
   visualTags?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appearance?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SlideUncheckedUpdateManyWithoutProjectInput = {
@@ -688,6 +716,7 @@ export type SlideUncheckedUpdateManyWithoutProjectInput = {
   visualTags?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appearance?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -705,6 +734,7 @@ export type SlideSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   visualTags?: boolean
   templateId?: boolean
   assetId?: boolean
+  appearance?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["slide"]>
 
@@ -721,6 +751,7 @@ export type SlideSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   visualTags?: boolean
   templateId?: boolean
   assetId?: boolean
+  appearance?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["slide"]>
 
@@ -737,6 +768,7 @@ export type SlideSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   visualTags?: boolean
   templateId?: boolean
   assetId?: boolean
+  appearance?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["slide"]>
 
@@ -753,9 +785,10 @@ export type SlideSelectScalar = {
   visualTags?: boolean
   templateId?: boolean
   assetId?: boolean
+  appearance?: boolean
 }
 
-export type SlideOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "order" | "type" | "title" | "subtitle" | "body" | "highlight" | "cta" | "visualTags" | "templateId" | "assetId", ExtArgs["result"]["slide"]>
+export type SlideOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "order" | "type" | "title" | "subtitle" | "body" | "highlight" | "cta" | "visualTags" | "templateId" | "assetId" | "appearance", ExtArgs["result"]["slide"]>
 export type SlideInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }
@@ -784,6 +817,7 @@ export type $SlidePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     visualTags: string
     templateId: string
     assetId: string | null
+    appearance: string
   }, ExtArgs["result"]["slide"]>
   composites: {}
 }
@@ -1220,6 +1254,7 @@ export interface SlideFieldRefs {
   readonly visualTags: Prisma.FieldRef<"Slide", 'String'>
   readonly templateId: Prisma.FieldRef<"Slide", 'String'>
   readonly assetId: Prisma.FieldRef<"Slide", 'String'>
+  readonly appearance: Prisma.FieldRef<"Slide", 'String'>
 }
     
 

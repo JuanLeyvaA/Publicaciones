@@ -12,13 +12,13 @@ export function CoverTemplate({ slide, brand, index, total, asset, direction }: 
   const copy = artDirectionCopy[direction];
   return (
     <TemplateFrame slideId={slide.id} variant="cover" templateId={slide.templateId} brand={brand} index={index} total={total} asset={asset} fitKey={`${slide.title}:${slide.subtitle}`} direction={direction}>
-      <div className="cover-scenography" aria-hidden="true">
+      {slide.appearance?.showScene !== false && <div className="cover-scenography" aria-hidden="true">
         <strong>{copy.displayWord}</strong>
         <span className="scene-mark mark-one">✦</span>
         <span className="scene-mark mark-two">+</span>
         <span className="scene-mark mark-three">●</span>
         <small>{copy.signature}</small>
-      </div>
+      </div>}
       <main className={`cover-content${dense ? " text-dense" : ""}`} data-overflow-check="cover-content">
         <div className="eyebrow">{copy.coverKicker}</div>
         <h1 data-collision-check="title" data-autofit data-autofit-base={size} data-autofit-min="36" style={{ fontSize: size, lineHeight: titleLineHeight(size) }}>{slide.title}</h1>

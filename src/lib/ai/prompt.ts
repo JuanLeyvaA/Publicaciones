@@ -10,6 +10,7 @@ Objetivo: convertir un tema en un carrusel que ayude a entender, decidir o actua
 Éxito significa:
 - Encontrar un ángulo específico y poco obvio, con una observación humana o una situación reconocible.
 - Construir una progresión donde Cada página aporta algo nuevo y cumple una función distinta.
+- Mantener un hilo conductor visible: la portada plantea una tensión o pregunta, cada página siguiente la desarrolla sin saltos y el cierre responde, transforma o deja una decisión coherente con esa misma idea.
 - Alternar escenas, preguntas, contrastes, explicaciones, ejemplos, objeciones y decisiones; no recurras por defecto a listas.
 - Variar sintaxis, longitud y cadencia. Combina frases breves con otras más conversacionales y deja respirar las ideas.
 - Hacer que título, cuerpo y destacado se complementen sin parafrasearse.
@@ -129,11 +130,15 @@ export function creativeDirectionFor(input: Pick<CreateCarouselInput, "topic" | 
 
 export function buildCarouselPrompt(input: CreateCarouselInput) {
   const brief = creativeBriefFor(input);
+  const hasManualBrief = Boolean(input.manualBrief);
   return [
-    `Idioma: ${input.language === "es" ? "español natural" : "natural English"}. Tema: ${input.topic}.`,
+    `Idioma: ${input.language === "es" ? "español natural" : "natural English"}. Tema o identificador breve: ${input.topic}.`,
     `Resultado: exactamente ${input.slideCount} páginas — 1 cover, ${input.slideCount - 2} content y 1 closing — más el texto de LinkedIn.`,
     "Formato de lectura rápida: una sola idea por página. Títulos de hasta 8 palabras; cuerpo de una o dos frases de hasta 28 palabras; destacado de hasta 12 palabras. Si una idea necesita más texto, divídela o elimínala.",
-    `Dirección editorial sugerida: ${brief.narrative}. Úsala como brújula, no como frase literal.`,
+    hasManualBrief
+      ? "Regla de prioridad: el guion es la fuente de verdad de cada página. Lee sus párrafos, líneas o viñetas en el orden escrito: el primero corresponde a la portada, los intermedios a las páginas de contenido y el último al cierre. La persona usuaria no tiene que numerarlos. El tema breve, la dirección editorial y la huella creativa solo ayudan a redactarlo; nunca sustituyen, reordenan ni arrastran contenido de otro encargo. Si hay conflicto, gana el guion."
+      : "No hay guion por página; usa el tema como fuente de verdad del encargo.",
+    `Dirección editorial sugerida: ${brief.narrative}. Úsala como brújula, no como frase literal${hasManualBrief ? " ni como alternativa al guion" : ""}.`,
     "Huella creativa de esta publicación:",
     `- Voz: ${brief.voice}.`,
     `- Ritmo: ${brief.rhythm}.`,
@@ -141,7 +146,7 @@ export function buildCarouselPrompt(input: CreateCarouselInput) {
     `- Mundo visual: ${brief.visualWorld}.`,
     input.customTitle ? `Conserva exactamente este título: ${input.customTitle}.` : "Crea una portada específica, inesperada y fácil de decir en voz alta.",
     input.manualBrief
-      ? `Guion e instrucciones de la persona usuaria (son prioritarios; respeta su orden, sus hechos y sus matices. Condensa solo para cumplir los límites de cada página):\n${input.manualBrief}`
+      ? `GUION AUTORITATIVO POR PÁGINA (ejecútalo de forma secuencial; conserva sus hechos, frases obligatorias, matices y el propósito de cada bloque. No requiere numeración. No recuperes contenido de solicitudes anteriores. Condensa únicamente para cumplir los límites visuales):\n${input.manualBrief}`
       : "No hay guion manual; propone una secuencia editorial propia.",
     `Categoría: ${input.category}. Tono: ${toneLabels[input.tone]}.`,
     `Perfil: ${getEditorialProfile(input.editorialProfile).prompt}`,
@@ -152,7 +157,7 @@ export function buildCarouselPrompt(input: CreateCarouselInput) {
     input.avoidTopics?.length
       ? `Memoria editorial: aléjate de los enfoques, aperturas y títulos recientes siguientes: ${input.avoidTopics.join(" | ")}.`
       : "No hay publicaciones anteriores para comparar.",
-    "Cada página intermedia debe tener un papel distinto en el argumento. No uses la misma estructura sintáctica en dos títulos consecutivos.",
+    "Cada página intermedia debe tener un papel distinto en el argumento. Mantén un hilo conductor: no escribas tarjetas independientes ni cambies de tema; cada página debe retomar una palabra, tensión, causa o pregunta de la anterior y preparar la siguiente. No uses la misma estructura sintáctica en dos títulos consecutivos.",
     "Los cuerpos deben sonar hablados y precisos. En al menos dos páginas incluye una escena, señal observable, decisión o fricción concreta; no inventes anécdotas, personas ni datos. Los destacados expresan una consecuencia, criterio o pregunta nueva.",
     "Prueba de humanidad: lee cada frase aislada. Si podría publicarla cualquier consultora sobre cualquier tema, reescríbela con un verbo, objeto, momento o consecuencia específica. No expliques que algo es importante: muestra cuándo se vuelve un problema.",
     input.callToAction ? `CTA obligatorio: ${input.callToAction}.` : "Cierra con una invitación concreta a compartir una experiencia, decisión o desacuerdo; evita “¿qué opinas?” y “hablemos” sin contexto.",

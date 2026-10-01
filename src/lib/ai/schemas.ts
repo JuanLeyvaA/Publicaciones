@@ -69,9 +69,12 @@ export function validateOutputForInput(input: CreateCarouselInput, output: AiCar
   if (output.slides[0]?.type !== "cover") throw new AiOutputError("INVALID_SLIDE_ORDER", "La primera página debe ser cover.");
   if (output.slides.at(-1)?.type !== "closing") throw new AiOutputError("INVALID_SLIDE_ORDER", "La última página debe ser closing.");
   if (output.slides.slice(1, -1).some((slide) => slide.type !== "content")) throw new AiOutputError("INVALID_SLIDE_ORDER", "Las páginas intermedias deben ser content.");
-  const numbers = output.slides.slice(1, -1).map((slide) => slide.type === "content" ? slide.number : 0);
-  if (numbers.some((number, index) => number !== index + 1)) throw new AiOutputError("INVALID_SLIDE_ORDER", "La numeración de contenido debe ser consecutiva.");
-  return output;
+  // El número es solo un detalle visual interno. El orden real es el de las páginas,
+  // así que no rechazamos un buen texto por una numeración que la IA haya repetido.
+  return {
+    ...output,
+    slides: output.slides.map((slide, index) => slide.type === "content" ? { ...slide, number: index } : slide),
+  };
 }
 
 export class AiOutputError extends Error {
