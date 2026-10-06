@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AssetPicker } from "@/components/assets/AssetPicker";
 import { PreviewFrame } from "@/components/preview/PreviewFrame";
+import { DraggablePanelPreview } from "@/components/preview/DraggablePanelPreview";
+import { ResizableTextPreview } from "@/components/preview/ResizableTextPreview";
+import { SelectableElements } from "@/components/preview/SelectableElements";
 import { SlideRenderer } from "@/components/slides/SlideRenderer";
 import { getProjectAsset, recommendedAssetCatalog, referenceImageAssets, uploadedImageAssets } from "@/lib/assets/catalog";
 import { assignAssetsToProject } from "@/lib/assets/selectAsset";
@@ -10,6 +13,7 @@ import { TEXT_LIMITS } from "@/lib/constants";
 import { templatesForType } from "@/lib/templates/catalog";
 import { applyVisualStyle } from "@/lib/templates/visualStyle";
 import { editorialProfiles } from "@/lib/editorial/profiles";
+import { artDirectionForCover, editableDirectionCopy } from "@/lib/templates/artDirection";
 import type { Asset, AssetPlacement, CarouselProject, CarouselSlide, SlideAppearance } from "@/types/carousel";
 
 type Props = {
@@ -52,9 +56,34 @@ function TextField({ label, value, maxLength, multiline = false, onChange }: {
 export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = false }: Props) {
   const [selectedId, setSelectedId] = useState(project.slides[0]?.id ?? "");
   const [savedVisuals, setSavedVisuals] = useState<Asset[]>([]);
+  const [dragMode, setDragMode] = useState<"panel" | "elements" | "resize">("panel");
+  const preview = useRef<HTMLDivElement>(null);
   const automaticAssignments = useMemo(() => assignAssetsToProject(project, recommendedAssetCatalog), [project]);
   const selectedIndex = Math.max(project.slides.findIndex((slide) => slide.id === selectedId), 0);
   const slide = project.slides[selectedIndex]!;
+  const direction = artDirectionForCover(project.slides[0]?.templateId ?? slide.templateId);
+  const copy = editableDirectionCopy(direction, slide.appearance);
+  const extraTexts: Array<[keyof NonNullable<SlideAppearance["texts"]>, string, string]> = [
+    ["series", "Texto de cabecera y pie", slide.appearance?.texts?.series ?? direction.replace("-", " ")],
+    ...(slide.type === "cover" ? [
+      ["coverKicker", "Etiqueta sobre el título", copy.coverKicker],
+      ["coverBadge", "Insignia de portada", copy.coverBadge],
+      ["displayWord", "Palabra decorativa", copy.displayWord],
+      ["signature", "Firma decorativa", copy.signature],
+    ] as Array<[keyof NonNullable<SlideAppearance["texts"]>, string, string]> : slide.type === "content" ? [
+      ["contentKicker", "Etiqueta sobre el título", copy.contentKicker],
+      ["highlightLabel", "Etiqueta del destacado", copy.highlightLabel],
+      ["visualCaption", "Frase del panel visual", copy.visualCaption],
+      ["step1", "Texto visual 1", copy.visualSteps[0]],
+      ["step2", "Texto visual 2", copy.visualSteps[1]],
+      ["step3", "Texto visual 3", copy.visualSteps[2]],
+    ] as Array<[keyof NonNullable<SlideAppearance["texts"]>, string, string]> : [
+      ["closingKicker", "Etiqueta sobre el título", copy.closingKicker],
+      ["ctaLabel", "Etiqueta de la llamada a la acción", copy.ctaLabel],
+      ["signature", "Firma del cierre", copy.signature],
+      ["displayWord", "Palabra decorativa", copy.displayWord],
+    ] as Array<[keyof NonNullable<SlideAppearance["texts"]>, string, string]>),
+  ];
   const displayedAssetId = getProjectAsset(project, slide.assetId)?.id ?? automaticAssignments[slide.id];
 
   useEffect(() => {
@@ -75,7 +104,16 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
   }
 
   function updateAppearance(next: Partial<SlideAppearance>) {
-    updateSlide({ ...slide, appearance: { ...slide.appearance, ...next } });
+    const geometryChanged = "panelPosition" in next || "elementPositions" in next || "textSizes" in next;
+    const fontSizes = { ...slide.appearance?.fontSizes };
+    if (geometryChanged) {
+      preview.current?.querySelectorAll<HTMLElement>("[data-autofit]").forEach((element) => {
+        const id = element.closest<HTMLElement>("[data-movable-element]")?.dataset.movableElement;
+        const size = Number.parseFloat(getComputedStyle(element).fontSize);
+        if (id && Number.isFinite(size) && size > 0 && size <= 300) fontSizes[id] = size;
+      });
+    }
+    updateSlide({ ...slide, appearance: { ...slide.appearance, ...(geometryChanged ? { fontSizes } : {}), ...next } });
   }
 
   function moveContent(index: number, direction: -1 | 1) {
@@ -137,10 +175,22 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             </button>
           ))}
         </nav>
-        <div className="active-slide-preview">
+        <div className="active-slide-preview" ref={preview}>
+          <div className="segmented-control" aria-label="Qué mover">
+            <button type="button" className={dragMode === "panel" ? "active" : ""} aria-pressed={dragMode === "panel"} onClick={() => setDragMode("panel")}>Mover panel</button>
+            <button type="button" className={dragMode === "elements" ? "active" : ""} aria-pressed={dragMode === "elements"} onClick={() => setDragMode("elements")}>Mover elementos</button>
+            <button type="button" className={dragMode === "resize" ? "active" : ""} aria-pressed={dragMode === "resize"} onClick={() => setDragMode("resize")}>Tamaño de textos</button>
+          </div>
+          <SelectableElements key={`${project.id}:${slide.id}:${slide.templateId}`} hiddenElements={slide.appearance?.hiddenElements ?? []} onDelete={(id) => updateAppearance({ hiddenElements: [...new Set([...(slide.appearance?.hiddenElements ?? []), id])] })} onRestore={(id) => updateAppearance({ hiddenElements: (slide.appearance?.hiddenElements ?? []).filter((item) => item !== id) })}>
+          <ResizableTextPreview key={`${project.id}:${slide.id}:${slide.templateId}:${dragMode}`} enabled={dragMode === "resize"} onResize={(id, size) => updateAppearance({ textSizes: { ...slide.appearance?.textSizes, [id]: size } })}>
+          <DraggablePanelPreview mode={dragMode === "resize" ? "elements" : dragMode} disabled={dragMode === "resize"} elementPositions={slide.appearance?.elementPositions} onMoveElement={(id, position) => updateAppearance({ elementPositions: { ...slide.appearance?.elementPositions, [id]: position } })} position={slide.appearance?.panelPosition ?? { x: 0, y: 0 }} onMove={(panelPosition) => updateAppearance({ panelPosition })}>
           <PreviewFrame label={`${slide.order + 1}. ${slide.type} · ${slide.templateId}`}>
             <SlideRenderer project={project} slide={slide} asset={getProjectAsset(project, displayedAssetId)} />
           </PreviewFrame>
+          </DraggablePanelPreview>
+          </ResizableTextPreview>
+          </SelectableElements>
+          <p className="panel-drag-hint">{dragMode === "resize" ? "Arrastra la esquina inferior derecha del cuadro de texto para cambiar su ancho y alto." : dragMode === "panel" ? "Arrastra el panel de texto para moverlo." : "Arrastra un título, texto, tarjeta o figura para moverlo por separado."} La imagen permanece fija.</p>
           <div className="preview-pager">
             <button type="button" disabled={selectedIndex === 0} onClick={() => setSelectedId(project.slides[selectedIndex - 1]!.id)}>← Anterior</button>
             <span>{selectedIndex + 1} / {project.slides.length}</span>
@@ -167,11 +217,31 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             </select>
             <small className="template-hint">{templatesForType(slide.type).find((template) => template.id === slide.templateId)?.description ?? "Plantilla anterior: elige una composición recomendada para actualizarla."}</small>
           </label>
+          <div className="panel-position-controls">
+            <span>Posición del panel de texto</span>
+            <div>
+              {(["x", "y"] as const).map((axis) => <label className="editor-field" key={axis}><span>{axis === "x" ? "Horizontal" : "Vertical"}</span><input type="number" step={1} min={axis === "x" ? -1080 : -1350} max={axis === "x" ? 1080 : 1350} value={slide.appearance?.panelPosition?.[axis] ?? 0} onChange={(event) => { const value = event.target.valueAsNumber; if (Number.isFinite(value)) updateAppearance({ panelPosition: { x: slide.appearance?.panelPosition?.x ?? 0, y: slide.appearance?.panelPosition?.y ?? 0, [axis]: Math.max(axis === "x" ? -1080 : -1350, Math.min(axis === "x" ? 1080 : 1350, value)) } }); }} /></label>)}
+            </div>
+            <button type="button" className="secondary-button" onClick={() => updateAppearance({ panelPosition: { x: 0, y: 0 } })}>Restablecer posición</button>
+            <button type="button" className="secondary-button" onClick={() => updateAppearance({ elementPositions: {} })}>Restablecer posiciones de elementos</button>
+            <button type="button" className="secondary-button" onClick={() => updateAppearance({ textSizes: {} })}>Restablecer tamaños de textos</button>
+          </div>
           <TextField label="Título" value={slide.title} maxLength={slide.type === "cover" ? TEXT_LIMITS.cover.title : slide.type === "content" ? TEXT_LIMITS.content.title : TEXT_LIMITS.closing.title} onChange={(title) => updateSlide({ ...slide, title })} />
           {slide.type === "cover" && <TextField label="Subtítulo" value={slide.subtitle} maxLength={TEXT_LIMITS.cover.subtitle} multiline onChange={(subtitle) => updateSlide({ ...slide, subtitle })} />}
           {(slide.type === "content" || slide.type === "closing") && <TextField label="Cuerpo" value={slide.body} maxLength={slide.type === "content" ? TEXT_LIMITS.content.body : TEXT_LIMITS.closing.body} multiline onChange={(body) => updateSlide({ ...slide, body })} />}
           {slide.type === "content" && <TextField label="Destacado" value={slide.highlight} maxLength={TEXT_LIMITS.content.highlight} multiline onChange={(highlight) => updateSlide({ ...slide, highlight })} />}
           {slide.type === "closing" && <TextField label="CTA" value={slide.cta} maxLength={TEXT_LIMITS.closing.cta} multiline onChange={(cta) => updateSlide({ ...slide, cta })} />}
+          <details className="appearance-controls" open>
+            <summary>Textos de la plantilla</summary>
+            <p>Puedes cambiar estas frases o dejar el campo vacío para quitarlas.</p>
+            {extraTexts.map(([key, label, value]) => <TextField key={key} label={label} value={value} maxLength={100} onChange={(text) => updateAppearance({ texts: { ...slide.appearance?.texts, [key]: text } })} />)}
+            <button type="button" className="secondary-button" onClick={() => updateAppearance({ texts: undefined })}>Restaurar textos de la plantilla</button>
+          </details>
+          <details className="appearance-controls">
+            <summary>Marca y sitio web</summary>
+            <TextField label="Nombre de marca" value={project.brand.name} maxLength={50} onChange={(name) => onChange({ ...project, status: "draft", brand: { ...project.brand, name } })} />
+            <TextField label="Sitio web" value={project.brand.website} maxLength={100} onChange={(website) => onChange({ ...project, status: "draft", brand: { ...project.brand, website } })} />
+          </details>
           <AssetPicker
             assets={[...referenceImageAssets(project.referenceImageUrls), ...savedVisuals, ...recommendedAssetCatalog].filter((asset) => asset.compatibleLayouts.includes(slide.type))}
             selectedId={displayedAssetId}

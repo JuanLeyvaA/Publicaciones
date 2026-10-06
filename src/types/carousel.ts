@@ -73,6 +73,12 @@ export type VisualStyle = "balanced" | "minimal" | "bold" | "image-led" | "text-
 export type ContentState = "new" | "used" | "discarded";
 
 export type SlideAppearance = {
+  panelPosition?: { x: number; y: number };
+  elementPositions?: Record<string, { x: number; y: number }>;
+  textSizes?: Record<string, { width: number; height: number }>;
+  fontSizes?: Record<string, number>;
+  hiddenElements?: string[];
+  texts?: Partial<Record<"coverKicker" | "coverBadge" | "displayWord" | "contentKicker" | "highlightLabel" | "visualCaption" | "step1" | "step2" | "step3" | "closingKicker" | "ctaLabel" | "signature" | "series", string>>;
   showBackground?: boolean;
   showDecor?: boolean;
   showScene?: boolean;

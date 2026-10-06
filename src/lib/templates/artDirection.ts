@@ -1,4 +1,10 @@
-import type { TemplateId } from "@/types/carousel";
+import type { SlideAppearance, TemplateId } from "@/types/carousel";
+
+export function editableDirectionCopy(direction: ArtDirectionId, appearance?: SlideAppearance): ArtDirectionCopy {
+  const defaults = artDirectionCopy[direction];
+  const { step1, step2, step3, series: _series, ...texts } = appearance?.texts ?? {};
+  return { ...defaults, ...texts, visualSteps: [step1 ?? defaults.visualSteps[0], step2 ?? defaults.visualSteps[1], step3 ?? defaults.visualSteps[2]] };
+}
 
 export const artDirectionIds = [
   "billboard",

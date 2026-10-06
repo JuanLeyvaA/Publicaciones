@@ -11,7 +11,7 @@ function overlaps(left: Rect, right: Rect, clearance = 2) {
     && left.bottom > right.top - clearance;
 }
 
-export function SlideAutoFit({ fitKey }: { fitKey: string }) {
+export function SlideAutoFit({ fitKey, manualLayout = false, fontSizes }: { fitKey: string; manualLayout?: boolean; fontSizes?: Record<string, number> }) {
   const marker = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
@@ -25,7 +25,16 @@ export function SlideAutoFit({ fitKey }: { fitKey: string }) {
       await document.fonts.ready;
       if (cancelled) return;
 
-      const targets = Array.from(root.querySelectorAll<HTMLElement>("[data-autofit]"));
+      const targets = Array.from(root.querySelectorAll<HTMLElement>("[data-autofit]")).filter((element) => !element.closest('[data-element-hidden="true"]'));
+      if (manualLayout) {
+        targets.forEach((element) => {
+          const id = element.closest<HTMLElement>("[data-movable-element]")?.dataset.movableElement;
+          const saved = id ? fontSizes?.[id] : undefined;
+          if (saved !== undefined) element.style.fontSize = `${saved}px`;
+        });
+        root.dataset.layoutReady = "ready";
+        return;
+      }
       targets.forEach((element) => {
         const explicitBase = Number.parseFloat(element.dataset.autofitBase || "");
         if (Number.isFinite(explicitBase)) element.style.fontSize = `${explicitBase}px`;
@@ -49,6 +58,7 @@ export function SlideAutoFit({ fitKey }: { fitKey: string }) {
       for (let pass = 0; pass < 56; pass += 1) {
         const safe = root.querySelector<HTMLElement>("[data-safe-area]")?.getBoundingClientRect() ?? root.getBoundingClientRect();
         const overflowContainers = Array.from(root.querySelectorAll<HTMLElement>("[data-overflow-check]")).filter((element) => {
+          if (element.closest('[data-element-hidden="true"]')) return false;
           const rect = element.getBoundingClientRect();
           return element.scrollWidth > element.clientWidth + 1
             || element.scrollHeight > element.clientHeight + 1
@@ -59,7 +69,7 @@ export function SlideAutoFit({ fitKey }: { fitKey: string }) {
         });
         const collisionElements = Array.from(root.querySelectorAll<HTMLElement>("[data-collision-check]")).filter((element) => {
           const style = getComputedStyle(element);
-          return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+          return !element.closest('[data-element-hidden="true"]') && style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
         });
         const collisions: Array<[HTMLElement, HTMLElement]> = [];
         for (let left = 0; left < collisionElements.length; left += 1) {
@@ -87,6 +97,7 @@ export function SlideAutoFit({ fitKey }: { fitKey: string }) {
       if (unresolved) {
         const safe = root.querySelector<HTMLElement>("[data-safe-area]")?.getBoundingClientRect() ?? root.getBoundingClientRect();
         const stillOverflows = Array.from(root.querySelectorAll<HTMLElement>("[data-overflow-check]")).some((element) => {
+          if (element.closest('[data-element-hidden="true"]')) return false;
           const rect = element.getBoundingClientRect();
           return element.scrollWidth > element.clientWidth + 1
             || element.scrollHeight > element.clientHeight + 1
@@ -97,7 +108,7 @@ export function SlideAutoFit({ fitKey }: { fitKey: string }) {
         });
         const visibleCollisionElements = Array.from(root.querySelectorAll<HTMLElement>("[data-collision-check]")).filter((element) => {
           const style = getComputedStyle(element);
-          return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+          return !element.closest('[data-element-hidden="true"]') && style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
         });
         let stillCollides = false;
         for (let left = 0; left < visibleCollisionElements.length && !stillCollides; left += 1) {
@@ -117,7 +128,7 @@ export function SlideAutoFit({ fitKey }: { fitKey: string }) {
 
     frame = requestAnimationFrame(() => { void fit(); });
     return () => { cancelled = true; cancelAnimationFrame(frame); };
-  }, [fitKey]);
+  }, [fitKey, manualLayout, fontSizes]);
 
   return <span ref={marker} className="layout-fit-marker" aria-hidden="true" />;
 }

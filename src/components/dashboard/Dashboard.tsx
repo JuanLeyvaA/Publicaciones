@@ -109,7 +109,9 @@ export function Dashboard({ project }: { project: CarouselProject }) {
       anchor.click();
       anchor.remove();
       setActiveProject({ ...persisted, status: "exported" });
-      setStatus(`PDF descargado: ${result.slideCount} páginas validadas.`);
+      setStatus(result.warnings?.length
+        ? `PDF descargado: ${result.slideCount} páginas. Hay advertencias de diseño en ${result.warnings.length} páginas por cruces o contenido fuera del margen; se conservó tu composición.`
+        : `PDF descargado: ${result.slideCount} páginas.`);
       await refreshHistory();
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "Error de exportación");

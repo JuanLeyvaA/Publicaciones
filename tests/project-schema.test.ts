@@ -6,6 +6,21 @@ import { TEXT_LIMITS } from "@/lib/constants";
 describe("validación del proyecto", () => {
   it("acepta el proyecto simulado válido", () => expect(carouselProjectSchema.safeParse(demoProject).success).toBe(true));
 
+  it("conserva frases editadas y permite quitar textos", () => {
+    const project = structuredClone(demoProject);
+    project.subtitle = "";
+    project.brand.website = "";
+    project.slides[0].appearance = { showHeader: false, texts: { coverBadge: "", signature: "Mi firma" } };
+    const content = project.slides.find((slide) => slide.type === "content")!;
+    if (content.type === "content") {
+      content.highlight = "";
+      content.appearance = { texts: { highlightLabel: "Mi etiqueta", step1: "" } };
+    }
+    const parsed = carouselProjectSchema.parse(project);
+    expect(parsed.slides[0].appearance?.texts).toEqual({ coverBadge: "", signature: "Mi firma" });
+    expect(parsed.slides.find((slide) => slide.type === "content")?.appearance?.texts?.highlightLabel).toBe("Mi etiqueta");
+  });
+
   it("rechaza textos fuera de límite", () => {
     const invalid = structuredClone(demoProject);
     invalid.slides[0].title = "x".repeat(TEXT_LIMITS.cover.title + 1);

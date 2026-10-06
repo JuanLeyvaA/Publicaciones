@@ -1,3 +1,5 @@
+import { movableElement } from "@/lib/templates/movableElement";
+import { hasManualLayout } from "@/lib/templates/manualLayout";
 import type { ReactNode } from "react";
 import { SlideCanvas } from "@/components/slides/SlideCanvas";
 import { SlideCounter } from "@/components/slides/SlideCounter";
@@ -37,15 +39,15 @@ export function TemplateFrame({ children, slideId, variant, templateId, brand, i
   const assetFrame = stableHash(`${slideId}:${asset?.id ?? "none"}:frame`) % 6;
   const placement = appearance?.assetPlacement ?? asset?.placement ?? "right";
   return (
-    <SlideCanvas slideId={slideId} className={`template-${variant} template-layout-${templateId} ${artDirectionClass(direction)} asset-placement-${asset?.placement ?? "right"} background-variant-${scene} composition-variant-${composition} asset-frame-${assetFrame}`}>
-      {appearance?.showBackground !== false && <><div className="background-art" aria-hidden="true" /><div className="noise" aria-hidden="true" /></>}
-      {appearance?.showDecor !== false && <><div className="ambient-orb orb-one" aria-hidden="true" /><div className="ambient-orb orb-two" aria-hidden="true" /><div className="template-decor decor-one" aria-hidden="true" /><div className="template-decor decor-two" aria-hidden="true" /><div className="template-decor decor-three" aria-hidden="true" /><div className="creative-frame" aria-hidden="true"><span /><span /><span /><span /></div></>}
-      {appearance?.showAsset !== false && <AssetVisual asset={asset ? { ...asset, placement } : undefined} variant={variant} />}
+    <SlideCanvas slideId={slideId} className={`template-${variant} template-layout-${templateId} ${artDirectionClass(direction)} asset-placement-${asset?.placement ?? "right"} background-variant-${scene} composition-variant-${composition} asset-frame-${assetFrame}${appearance?.hiddenElements?.includes("background") ? " background-removed" : ""}`}>
+      {appearance?.showBackground !== false && <><div className="background-art" data-selectable-element="background" data-element-hidden={appearance?.hiddenElements?.includes("background") ? "true" : undefined} aria-hidden="true" /><div className="noise" data-selectable-element="texture" data-element-hidden={appearance?.hiddenElements?.includes("texture") ? "true" : undefined} aria-hidden="true" /></>}
+      {appearance?.showDecor !== false && <><div className="ambient-orb orb-one" {...movableElement(appearance, "orb-one")} aria-hidden="true" /><div className="ambient-orb orb-two" {...movableElement(appearance, "orb-two")} aria-hidden="true" /><div className="template-decor decor-one" {...movableElement(appearance, "decor-one")} aria-hidden="true" /><div className="template-decor decor-two" {...movableElement(appearance, "decor-two")} aria-hidden="true" /><div className="template-decor decor-three" {...movableElement(appearance, "decor-three")} aria-hidden="true" /><div className="creative-frame" {...movableElement(appearance, "frame")} aria-hidden="true"><span /><span /><span /><span /></div></>}
+      {appearance?.showAsset !== false && !appearance?.hiddenElements?.includes("asset") && <AssetVisual asset={asset ? { ...asset, placement } : undefined} variant={variant} />}
       <div className="safe-area" data-safe-area="true">
-        {appearance?.showHeader !== false && <SlideHeader brand={brand} index={index} total={total} direction={direction} />}
+        {appearance?.showHeader !== false && !appearance?.hiddenElements?.includes("header") && <SlideHeader brand={brand} index={index} total={total} direction={direction} series={appearance?.texts?.series} />}
         {children}
-        {appearance?.showFooter !== false && <SlideCounter index={index} total={total} direction={direction} />}
-        <SlideAutoFit fitKey={`${templateId}:${asset?.id ?? "none"}:${fitKey}`} />
+        {appearance?.showFooter !== false && !appearance?.hiddenElements?.includes("footer") && <SlideCounter index={index} total={total} direction={direction} series={appearance?.texts?.series} />}
+        <SlideAutoFit manualLayout={hasManualLayout(appearance)} fontSizes={appearance?.fontSizes} fitKey={`${templateId}:${asset?.id ?? "none"}:${fitKey}:${JSON.stringify(appearance)}`} />
       </div>
     </SlideCanvas>
   );

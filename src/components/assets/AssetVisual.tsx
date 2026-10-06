@@ -8,6 +8,7 @@ export function AssetVisual({ asset, variant }: { asset?: Asset; variant: SlideT
     <div
       className={`asset-visual asset-visual-${variant} asset-placement-${asset.placement} asset-scale-${asset.scale} asset-media-${asset.mediaType ?? "vector"}${asset.visualStyle ? ` asset-style-${asset.visualStyle}` : ""}`}
       data-asset-id={asset.id}
+      data-selectable-element="asset"
       data-asset-placement={asset.placement}
       style={style}
       aria-hidden="true"

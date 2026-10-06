@@ -12,6 +12,7 @@ import type { CarouselProject, OverflowIssue } from "@/types/carousel";
 import { getProjectAsset, recommendedAssetCatalog } from "@/lib/assets/catalog";
 import { assignAssetsToProject } from "@/lib/assets/selectAsset";
 import type { CarouselSlide, TemplateId } from "@/types/carousel";
+import { hasManualLayout } from "@/lib/templates/manualLayout";
 
 type ExportOptions = { project: CarouselProject; baseUrl: string; workspaceRoot: string; assetAssignments?: Record<string, string>; persist?: boolean };
 const safeTemplate: Record<CarouselSlide["type"], TemplateId> = {
@@ -43,11 +44,14 @@ export async function renderCarousel({ project: rawProject, baseUrl, workspaceRo
   await fs.mkdir(slidesDirectory, { recursive: true });
   const browser = await chromium.launch(launchOptions());
   const pngPaths: string[] = [];
+  const warnings: Array<{ slideId: string; issues: OverflowIssue[] }> = [];
 
   try {
     const page = await browser.newPage({ viewport: { width: SLIDE_WIDTH, height: SLIDE_HEIGHT }, deviceScaleFactor: 1 });
     for (const slide of project.slides) {
-      const attempts = [...new Set([slide.templateId, safeTemplate[slide.type]])];
+      const attempts = persist || hasManualLayout(slide.appearance)
+        ? [slide.templateId]
+        : [...new Set([slide.templateId, safeTemplate[slide.type]])];
       let canvas = page.locator("#slide-canvas");
       let issues: OverflowIssue[] = [];
       for (const templateId of attempts) {
@@ -71,7 +75,8 @@ export async function renderCarousel({ project: rawProject, baseUrl, workspaceRo
           const rootRect = root.getBoundingClientRect();
           const safe = root.querySelector("[data-safe-area]")?.getBoundingClientRect() ?? rootRect;
           const result = Array.from(root.querySelectorAll<HTMLElement>("[data-overflow-check]")).flatMap((element) => {
-            const rect = element.getBoundingClientRect();
+            if (element.closest('[data-element-hidden="true"]')) return [];
+          const rect = element.getBoundingClientRect();
             const name = element.dataset.overflowCheck || element.tagName.toLowerCase();
             const elementIssues: OverflowIssue[] = [];
             if (element.scrollWidth > element.clientWidth + 1 || element.scrollHeight > element.clientHeight + 1) elementIssues.push({ element: name, reason: "content-overflow" });
@@ -81,7 +86,7 @@ export async function renderCarousel({ project: rawProject, baseUrl, workspaceRo
           });
           const collisionElements = Array.from(root.querySelectorAll<HTMLElement>("[data-collision-check]")).filter((element) => {
             const style = getComputedStyle(element);
-            return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+            return !element.closest('[data-element-hidden="true"]') && style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
           });
           for (let left = 0; left < collisionElements.length; left += 1) {
             const leftElement = collisionElements[left]!;
@@ -106,7 +111,10 @@ export async function renderCarousel({ project: rawProject, baseUrl, workspaceRo
         });
         if (!issues.length) break;
       }
-      if (issues.length) throw new RenderError("SLIDE_OVERFLOW", `No fue posible ajustar ${slide.id}: ${issues.map((issue) => `${issue.element}:${issue.reason}`).join(", ")}`);
+      if (issues.length) {
+        if (!persist) throw new RenderError("SLIDE_OVERFLOW", `No fue posible ajustar ${slide.id}: ${issues.map((issue) => `${issue.element}:${issue.reason}`).join(", ")}`);
+        warnings.push({ slideId: slide.id, issues });
+      }
       const pngPath = path.join(slidesDirectory, `slide-${String(slide.order + 1).padStart(2, "0")}.png`);
       await canvas.screenshot({ path: pngPath, type: "png", animations: "disabled" });
       await validateDimensions(pngPath);
@@ -134,5 +142,6 @@ export async function renderCarousel({ project: rawProject, baseUrl, workspaceRo
     slideCount: pngPaths.length,
     pdfPath: path.join(finalDirectory, "carousel.pdf"),
     validated: true,
+    warnings,
   };
 }
