@@ -16,6 +16,7 @@ const base = {
     texts: z.object(Object.fromEntries(["coverKicker", "coverBadge", "displayWord", "contentKicker", "highlightLabel", "visualCaption", "step1", "step2", "step3", "closingKicker", "ctaLabel", "signature", "series"].map((key) => [key, z.string().max(100).optional()]))).optional(),
     showBackground: z.boolean().optional(), showDecor: z.boolean().optional(), showScene: z.boolean().optional(),
     showHeader: z.boolean().optional(), showFooter: z.boolean().optional(), showAsset: z.boolean().optional(),
+    assetEditing: z.object({ scale: z.number().finite().min(0.25).max(3).optional(), rotation: z.number().finite().min(-180).max(180).optional(), opacity: z.number().finite().min(0).max(1).optional(), fit: z.enum(["cover", "contain"]).optional(), fullPhoto: z.boolean().optional() }).optional(),
     assetPlacement: z.enum(["left", "right", "top-left", "top-right", "bottom-left", "bottom-right", "center"]).optional(),
   }).optional(),
 };

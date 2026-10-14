@@ -56,7 +56,7 @@ function TextField({ label, value, maxLength, multiline = false, onChange }: {
 export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = false }: Props) {
   const [selectedId, setSelectedId] = useState(project.slides[0]?.id ?? "");
   const [savedVisuals, setSavedVisuals] = useState<Asset[]>([]);
-  const [dragMode, setDragMode] = useState<"panel" | "elements" | "resize">("panel");
+  const [dragMode, setDragMode] = useState<"panel" | "elements" | "resize" | "image">("panel");
   const preview = useRef<HTMLDivElement>(null);
   const automaticAssignments = useMemo(() => assignAssetsToProject(project, recommendedAssetCatalog), [project]);
   const selectedIndex = Math.max(project.slides.findIndex((slide) => slide.id === selectedId), 0);
@@ -180,6 +180,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             <button type="button" className={dragMode === "panel" ? "active" : ""} aria-pressed={dragMode === "panel"} onClick={() => setDragMode("panel")}>Mover panel</button>
             <button type="button" className={dragMode === "elements" ? "active" : ""} aria-pressed={dragMode === "elements"} onClick={() => setDragMode("elements")}>Mover elementos</button>
             <button type="button" className={dragMode === "resize" ? "active" : ""} aria-pressed={dragMode === "resize"} onClick={() => setDragMode("resize")}>Tamaño de textos</button>
+            <button type="button" className={dragMode === "image" ? "active" : ""} aria-pressed={dragMode === "image"} onClick={() => setDragMode("image")}>Mover imagen</button>
           </div>
           <SelectableElements key={`${project.id}:${slide.id}:${slide.templateId}`} hiddenElements={slide.appearance?.hiddenElements ?? []} onDelete={(id) => updateAppearance({ hiddenElements: [...new Set([...(slide.appearance?.hiddenElements ?? []), id])] })} onRestore={(id) => updateAppearance({ hiddenElements: (slide.appearance?.hiddenElements ?? []).filter((item) => item !== id) })}>
           <ResizableTextPreview key={`${project.id}:${slide.id}:${slide.templateId}:${dragMode}`} enabled={dragMode === "resize"} onResize={(id, size) => updateAppearance({ textSizes: { ...slide.appearance?.textSizes, [id]: size } })}>
@@ -190,7 +191,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
           </DraggablePanelPreview>
           </ResizableTextPreview>
           </SelectableElements>
-          <p className="panel-drag-hint">{dragMode === "resize" ? "Arrastra la esquina inferior derecha del cuadro de texto para cambiar su ancho y alto." : dragMode === "panel" ? "Arrastra el panel de texto para moverlo." : "Arrastra un título, texto, tarjeta o figura para moverlo por separado."} La imagen permanece fija.</p>
+          <p className="panel-drag-hint">{dragMode === "resize" ? "Arrastra la esquina inferior derecha del cuadro de texto para cambiar su ancho y alto." : dragMode === "panel" ? "Arrastra el panel de texto para moverlo." : dragMode === "image" ? "Arrastra la imagen para moverla. Ajusta su tamaño y apariencia en Imagen o foto." : "Arrastra un título, texto, tarjeta, figura o imagen para moverlo por separado."}</p>
           <div className="preview-pager">
             <button type="button" disabled={selectedIndex === 0} onClick={() => setSelectedId(project.slides[selectedIndex - 1]!.id)}>← Anterior</button>
             <span>{selectedIndex + 1} / {project.slides.length}</span>
@@ -247,6 +248,19 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             selectedId={displayedAssetId}
             onSelect={(assetId) => updateSlide({ ...slide, assetId })}
           />
+          <details className="appearance-controls" open>
+            <summary>Imagen o foto</summary>
+            <p>Ajusta la foto y usa «Mover imagen» para colocarla en la página.</p>
+            {([
+              ["scale", "Tamaño", 0.25, 3, 0.05, 1],
+              ["rotation", "Giro", -180, 180, 1, getProjectAsset(project, displayedAssetId)?.rotation ?? 0],
+              ["opacity", "Visibilidad", 0, 1, 0.05, 1],
+            ] as const).map(([key, label, min, max, step, fallback]) => <label className="editor-field" key={key}><span>{label}<small>{key === "rotation" ? `${slide.appearance?.assetEditing?.[key] ?? fallback}°` : `${Math.round((slide.appearance?.assetEditing?.[key] ?? fallback) * 100)}%`}</small></span><input type="range" min={min} max={max} step={step} value={slide.appearance?.assetEditing?.[key] ?? fallback} onChange={(event) => updateAppearance({ assetEditing: { ...slide.appearance?.assetEditing, [key]: event.target.valueAsNumber } })} /></label>)}
+            <label className="editor-field"><span>Encuadre</span><select value={slide.appearance?.assetEditing?.fit ?? "cover"} onChange={(event) => updateAppearance({ assetEditing: { ...slide.appearance?.assetEditing, fit: event.target.value as "cover" | "contain" } })}><option value="cover">Llenar el espacio</option><option value="contain">Mostrar foto completa</option></select></label>
+            <label><input type="checkbox" checked={slide.appearance?.assetEditing?.fullPhoto ?? false} onChange={(event) => updateAppearance({ assetEditing: { ...slide.appearance?.assetEditing, fullPhoto: event.target.checked } })} /> Quitar recorte decorativo</label>
+            <button type="button" className="secondary-button" onClick={() => updateAppearance({ assetEditing: { scale: 1, opacity: 1, rotation: 0, fit: "contain", fullPhoto: true }, showAsset: true, hiddenElements: (slide.appearance?.hiddenElements ?? []).filter((id) => id !== "asset") })}>Mostrar foto con claridad</button>
+            <button type="button" className="secondary-button" onClick={() => updateAppearance({ assetEditing: undefined, elementPositions: { ...slide.appearance?.elementPositions, asset: { x: 0, y: 0 } } })}>Restablecer imagen</button>
+          </details>
           <details className="appearance-controls">
             <summary>Elementos visuales</summary>
             <p>Oculta lo que no aporte al mensaje o cambia la ubicación del visual. Estos ajustes también se conservan al descargar.</p>

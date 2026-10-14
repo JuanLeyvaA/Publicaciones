@@ -209,3 +209,8 @@
 .element-selection-toolbar summary{cursor:pointer;margin-bottom:6px}
 .slide-canvas.background-removed{background:#08070d!important}
 .layer-selector{width:100%}
+
+.drag-mode-image .slide-canvas *{pointer-events:none!important}
+.drag-mode-image .slide-canvas [data-movable-element="asset"],.drag-mode-image .slide-canvas [data-movable-element="asset"] img{pointer-events:auto!important;cursor:grab;touch-action:none;user-select:none}
+.drag-mode-image [data-movable-element="asset"]:hover{outline:2px dashed #f4a62f;outline-offset:4px}
+.drag-mode-image [data-movable-element="asset"]:active{cursor:grabbing}

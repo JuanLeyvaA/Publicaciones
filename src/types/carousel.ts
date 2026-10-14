@@ -86,6 +86,7 @@ export type SlideAppearance = {
   showFooter?: boolean;
   showAsset?: boolean;
   assetPlacement?: AssetPlacement;
+  assetEditing?: { scale?: number; rotation?: number; opacity?: number; fit?: "cover" | "contain"; fullPhoto?: boolean };
 };
 
 export type QualityIssue = {

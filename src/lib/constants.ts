@@ -6,9 +6,9 @@ export const TITLE_FONT_SIZES = [74, 68, 62, 56, 50] as const;
 export const BODY_FONT_SIZES = [34, 32, 30, 28, 25] as const;
 
 export const TEXT_LIMITS = {
-  cover: { title: 58, subtitle: 90 },
-  content: { title: 52, body: 180, highlight: 72 },
-  closing: { title: 58, body: 130, cta: 90 },
+  cover: { title: 58, subtitle: 240 },
+  content: { title: 52, body: 300, highlight: 72 },
+  closing: { title: 58, body: 300, cta: 90 },
 } as const;
 
 export const EXPORT_ROOT = "exports";
