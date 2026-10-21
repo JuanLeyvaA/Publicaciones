@@ -28,6 +28,13 @@ describe("schemas de IA", () => {
     expect(input.success).toBe(true);
   });
 
+  it("conserva contextos largos y valida su límite", () => {
+    const base = { topic: "Tema válido", slideCount: 5, category: "automation", language: "es", tone: "professional" };
+    const manualBrief = "Contexto detallado.\n".repeat(1000).slice(0, 20000);
+    expect(createCarouselInputSchema.parse({ ...base, manualBrief }).manualBrief).toBe(manualBrief.trim());
+    expect(createCarouselInputSchema.safeParse({ ...base, manualBrief: "a".repeat(20001) }).success).toBe(false);
+  });
+
   it("rechaza HTML y estructuras incompletas", () => {
     const result = aiCarouselSchema.safeParse({
       title: "<b>Título</b>",

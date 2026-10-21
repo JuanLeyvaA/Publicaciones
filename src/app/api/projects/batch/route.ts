@@ -12,6 +12,7 @@ export const maxDuration = 300;
 
 const batchItemSchema = z.object({
   topic: z.string().trim().min(3).max(240),
+  manualBrief: createCarouselInputSchema.shape.manualBrief,
   slideCount: z.coerce.number().int().min(3).max(10),
   category: z.enum(["automation", "web", "artificial-intelligence", "analytics", "business"]),
   language: z.enum(["es", "en"]),

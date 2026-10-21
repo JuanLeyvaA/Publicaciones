@@ -35,18 +35,19 @@ function replaceSlide(project: CarouselProject, nextSlide: CarouselSlide): Carou
   };
 }
 
-function TextField({ label, value, maxLength, multiline = false, onChange }: {
+function TextField({ label, value, maxLength, multiline = false, className = "", onChange }: {
   label: string;
   value: string;
   maxLength: number;
   multiline?: boolean;
+  className?: string;
   onChange: (value: string) => void;
 }) {
   const control = multiline
     ? <textarea value={value} maxLength={maxLength} onChange={(event) => onChange(event.target.value)} />
     : <input value={value} maxLength={maxLength} onChange={(event) => onChange(event.target.value)} />;
   return (
-    <label className="editor-field">
+    <label className={`editor-field ${className}`}>
       <span>{label}<small className={value.length >= maxLength ? "at-limit" : ""}>{value.length}/{maxLength}</small></span>
       {control}
     </label>
@@ -182,6 +183,10 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             <button type="button" className={dragMode === "resize" ? "active" : ""} aria-pressed={dragMode === "resize"} onClick={() => setDragMode("resize")}>Tamaño de textos</button>
             <button type="button" className={dragMode === "image" ? "active" : ""} aria-pressed={dragMode === "image"} onClick={() => setDragMode("image")}>Mover imagen</button>
           </div>
+          <div className="preview-image-size">
+            <label className="editor-field"><span>Tamaño de la imagen</span><input aria-label="Tamaño de la imagen" type="range" min={25} max={300} step={5} value={Math.round((slide.appearance?.assetEditing?.scale ?? 1) * 100)} onChange={(event) => updateAppearance({ assetEditing: { ...slide.appearance?.assetEditing, scale: event.target.valueAsNumber / 100 } })} /></label>
+            <label className="editor-field"><span>Porcentaje</span><input aria-label="Tamaño de la imagen en porcentaje" type="number" min={25} max={300} step={5} value={Math.round((slide.appearance?.assetEditing?.scale ?? 1) * 100)} onChange={(event) => { const value = event.target.valueAsNumber; if (Number.isFinite(value)) updateAppearance({ assetEditing: { ...slide.appearance?.assetEditing, scale: Math.max(25, Math.min(300, value)) / 100 } }); }} /></label>
+          </div>
           <SelectableElements key={`${project.id}:${slide.id}:${slide.templateId}`} hiddenElements={slide.appearance?.hiddenElements ?? []} onDelete={(id) => updateAppearance({ hiddenElements: [...new Set([...(slide.appearance?.hiddenElements ?? []), id])] })} onRestore={(id) => updateAppearance({ hiddenElements: (slide.appearance?.hiddenElements ?? []).filter((item) => item !== id) })}>
           <ResizableTextPreview key={`${project.id}:${slide.id}:${slide.templateId}:${dragMode}`} enabled={dragMode === "resize"} onResize={(id, size) => updateAppearance({ textSizes: { ...slide.appearance?.textSizes, [id]: size } })}>
           <DraggablePanelPreview mode={dragMode === "resize" ? "elements" : dragMode} disabled={dragMode === "resize"} elementPositions={slide.appearance?.elementPositions} onMoveElement={(id, position) => updateAppearance({ elementPositions: { ...slide.appearance?.elementPositions, [id]: position } })} position={slide.appearance?.panelPosition ?? { x: 0, y: 0 }} onMove={(panelPosition) => updateAppearance({ panelPosition })}>
@@ -231,7 +236,7 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
           {slide.type === "cover" && <TextField label="Subtítulo" value={slide.subtitle} maxLength={TEXT_LIMITS.cover.subtitle} multiline onChange={(subtitle) => updateSlide({ ...slide, subtitle })} />}
           {(slide.type === "content" || slide.type === "closing") && <TextField label="Cuerpo" value={slide.body} maxLength={slide.type === "content" ? TEXT_LIMITS.content.body : TEXT_LIMITS.closing.body} multiline onChange={(body) => updateSlide({ ...slide, body })} />}
           {slide.type === "content" && <TextField label="Destacado" value={slide.highlight} maxLength={TEXT_LIMITS.content.highlight} multiline onChange={(highlight) => updateSlide({ ...slide, highlight })} />}
-          {slide.type === "closing" && <TextField label="CTA" value={slide.cta} maxLength={TEXT_LIMITS.closing.cta} multiline onChange={(cta) => updateSlide({ ...slide, cta })} />}
+          {slide.type === "closing" && <TextField className="cta-editor-field" label="CTA" value={slide.cta} maxLength={TEXT_LIMITS.closing.cta} multiline onChange={(cta) => updateSlide({ ...slide, cta })} />}
           <details className="appearance-controls" open>
             <summary>Textos de la plantilla</summary>
             <p>Puedes cambiar estas frases o dejar el campo vacío para quitarlas.</p>

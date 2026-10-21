@@ -8,7 +8,7 @@ export function AssetVisual({ asset, variant, appearance }: { asset?: Asset; var
   const style = {
     "--asset-rotation": `${editing?.rotation ?? asset.rotation}deg`,
     ...(editing?.scale !== undefined ? { "--asset-scale": editing.scale } : {}),
-    ...(editing?.opacity !== undefined ? { opacity: editing.opacity } : {}),
+    ...(editing?.opacity !== undefined ? { opacity: editing.opacity, "--asset-opacity": editing.opacity } : {}),
     ...(position ? { translate: `${position.x}px ${position.y}px` } : {}),
     ...(editing?.fullPhoto ? { clipPath: "none" } : {}),
   } as CSSProperties;
@@ -16,6 +16,7 @@ export function AssetVisual({ asset, variant, appearance }: { asset?: Asset; var
     <div
       className={`asset-visual asset-visual-${variant} asset-placement-${asset.placement} asset-scale-${asset.scale} asset-media-${asset.mediaType ?? "vector"}${asset.visualStyle ? ` asset-style-${asset.visualStyle}` : ""}`}
       data-asset-id={asset.id}
+      data-asset-opacity={editing?.opacity}
       data-selectable-element="asset"
       data-movable-element="asset"
       data-asset-placement={asset.placement}

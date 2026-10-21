@@ -11,6 +11,7 @@ type Props = {
 type BatchItem = {
   id: string;
   topic: string;
+  manualBrief: string;
   slideCount: number;
   category: AssetCategory;
   language: "es" | "en";
@@ -43,6 +44,7 @@ function newItem(overrides: Partial<BatchItem> = {}): BatchItem {
   return {
     id: `batch-item-${itemSequence}`,
     topic: "",
+    manualBrief: "",
     slideCount: 5,
     category: "automation",
     language: "es",
@@ -146,6 +148,7 @@ export function BatchGenerator({ onCompleted }: Props) {
             <fieldset className="batch-item" key={item.id}>
               <legend><span>{String(index + 1).padStart(2, "0")}</span> Publicación {index + 1}</legend>
               <label className="field batch-topic"><span>Tema</span><textarea required={index === 0} rows={2} maxLength={240} value={item.topic} onChange={(event) => updateItem(item.id, { topic: event.target.value })} placeholder="¿De qué debe hablar este carrusel?" /></label>
+              <label className="field batch-context"><span>Contexto e instrucciones</span><textarea rows={10} maxLength={20000} value={item.manualBrief} onChange={(event) => updateItem(item.id, { manualBrief: event.target.value })} placeholder="Escribe o pega aquí el contexto completo, datos, ejemplos, mensajes clave e instrucciones para las páginas." /><small>{item.manualBrief.length.toLocaleString("es-CO")} / 20.000 caracteres · Opcional. Puedes escribir varios párrafos e indicar el orden de las páginas.</small></label>
               <label className="field"><span>Páginas</span><select value={item.slideCount} onChange={(event) => updateItem(item.id, { slideCount: Number(event.target.value) })}>{Array.from({ length: 8 }, (_, pageIndex) => pageIndex + 3).map((count) => <option key={count}>{count}</option>)}</select></label>
               <label className="field"><span>Categoría</span><select value={item.category} onChange={(event) => updateItem(item.id, { category: event.target.value as AssetCategory })}>{categoryOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
               <label className="field"><span>Idioma</span><select value={item.language} onChange={(event) => updateItem(item.id, { language: event.target.value as BatchItem["language"] })}><option value="es">Español</option><option value="en">Inglés</option></select></label>

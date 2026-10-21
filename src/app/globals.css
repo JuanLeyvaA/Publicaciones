@@ -214,3 +214,13 @@
 .drag-mode-image .slide-canvas [data-movable-element="asset"],.drag-mode-image .slide-canvas [data-movable-element="asset"] img{pointer-events:auto!important;cursor:grab;touch-action:none;user-select:none}
 .drag-mode-image [data-movable-element="asset"]:hover{outline:2px dashed #f4a62f;outline-offset:4px}
 .drag-mode-image [data-movable-element="asset"]:active{cursor:grabbing}
+
+.batch-item .batch-context{grid-column:1/-1;grid-row:auto}.batch-item .batch-context textarea{width:100%;min-height:360px;resize:vertical;padding:16px;font-size:16px;line-height:1.7;color:#f4edf5}.batch-item .field>span{font-size:12px;color:#d8cddd}.batch-item .field input,.batch-item .field select{font-size:14px;min-height:42px}.batch-item .batch-topic textarea{font-size:16px;line-height:1.5}.batch-context small{color:#bfb1c9;font-size:13px}.batch-item .batch-context textarea::placeholder{color:#a99bb3;opacity:1}
+@media(max-width:700px){.batch-item .batch-context textarea{min-height:300px}}
+
+/* Explicit visibility from the editor takes priority over decorative template opacity. */
+.asset-visual[data-asset-opacity][data-selectable-element="asset"]{opacity:var(--asset-opacity)!important;mix-blend-mode:normal}
+
+.editor-control-panel .cta-editor-field textarea{min-height:150px;max-height:none;resize:vertical;font-size:14px;line-height:1.5}
+
+.preview-image-size{display:grid;grid-template-columns:minmax(0,1fr) 90px;align-items:center;gap:12px;margin:10px 0;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:#100d15}.preview-image-size input[type=range]{padding:8px 0;accent-color:var(--amber);cursor:pointer}

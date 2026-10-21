@@ -23,6 +23,8 @@ describe("edición de fotos", () => {
     expect(html).toContain("--asset-scale:1.8");
     expect(html).toContain("--asset-rotation:15deg");
     expect(html).toContain("opacity:1");
+    expect(html).toContain('data-asset-opacity="1"');
+    expect(html).toContain("--asset-opacity:1");
     expect(html).toContain("object-fit:contain");
     expect(html).toContain("clip-path:none");
     expect(html).toContain("mask-image:none");
