@@ -223,6 +223,18 @@ export function ProjectEditor({ project, onChange, onRegenerateSlide, busy = fal
             </select>
             <small className="template-hint">{templatesForType(slide.type).find((template) => template.id === slide.templateId)?.description ?? "Plantilla anterior: elige una composición recomendada para actualizarla."}</small>
           </label>
+          <details className="appearance-controls" open>
+            <summary>Color de los textos</summary>
+            <p>Usa blanco sobre zonas oscuras y negro sobre zonas claras.</p>
+            {[["title", "Título"], [slide.type === "cover" ? "subtitle" : "body", slide.type === "cover" ? "Subtítulo" : "Cuerpo"], ["kicker", "Antetítulo"], [slide.type === "content" ? "highlight" : slide.type === "closing" ? "cta" : "badge", slide.type === "content" ? "Destacado" : slide.type === "closing" ? "CTA" : "Etiqueta"]].map(([id, label]) => (
+              <div className="text-color-control" key={id}>
+                <label className="editor-field"><span>{label}</span><input type="color" aria-label={`Color de ${label}`} value={slide.appearance?.textColors?.[id] ?? "#ffffff"} onChange={(event) => updateAppearance({ textColors: { ...slide.appearance?.textColors, [id]: event.target.value } })} /></label>
+                <button type="button" className="secondary-button" onClick={() => updateAppearance({ textColors: { ...slide.appearance?.textColors, [id]: "#ffffff" } })}>Blanco</button>
+                <button type="button" className="secondary-button" onClick={() => updateAppearance({ textColors: { ...slide.appearance?.textColors, [id]: "#000000" } })}>Negro</button>
+              </div>
+            ))}
+            <button type="button" className="secondary-button" onClick={() => updateAppearance({ textColors: {} })}>Restaurar colores de la plantilla</button>
+          </details>
           <div className="panel-position-controls">
             <span>Posición del panel de texto</span>
             <div>

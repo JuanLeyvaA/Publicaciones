@@ -12,6 +12,7 @@ const base = {
     elementPositions: z.record(z.string().min(1).max(80), z.object({ x: z.number().finite().min(-1080).max(1080), y: z.number().finite().min(-1350).max(1350) })).optional(),
     textSizes: z.record(z.string().min(1).max(80), z.object({ width: z.number().finite().min(40).max(1080), height: z.number().finite().min(30).max(1350) })).optional(),
     fontSizes: z.record(z.string().min(1).max(80), z.number().finite().min(1).max(300)).optional(),
+    textColors: z.record(z.string().min(1).max(80), z.string().regex(/^#[0-9a-fA-F]{6}$/)).optional(),
     hiddenElements: z.array(z.string().min(1).max(80)).max(100).optional(),
     texts: z.object(Object.fromEntries(["coverKicker", "coverBadge", "displayWord", "contentKicker", "highlightLabel", "visualCaption", "step1", "step2", "step3", "closingKicker", "ctaLabel", "signature", "series"].map((key) => [key, z.string().max(100).optional()]))).optional(),
     showBackground: z.boolean().optional(), showDecor: z.boolean().optional(), showScene: z.boolean().optional(),
